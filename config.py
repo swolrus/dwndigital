@@ -1,5 +1,6 @@
 class BaseConfig:
-
+    DEBUG = True
+    
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
 
