@@ -9,13 +9,8 @@ def create_app():
     # create app instance
     app = Flask(__name__)
     
-    configkey = os.environ.get('FLASK_ENV') or 'development'
-    
     # read config from file
-    app.config.from_object(config.get_env_obj(configkey))
-
-    # engine = create_engine('sqlite:///app.db', echo=True)
-    # Session = sessionmaker(bind=engine)
+    app.config.from_object(config.ProductionConfig)
 
     with app.app_context():
     # context for the app

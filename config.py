@@ -1,6 +1,6 @@
 class BaseConfig:
-    DEBUG = True
-    
+    SECRET_KEY='something'
+
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
 
@@ -9,11 +9,3 @@ class TestingConfig(BaseConfig):
 
 class ProductionConfig(BaseConfig):
     DEBUG = False
-
-def get_env_obj(key):
-    return {
-        'development': 'config.DevelopmentConfig',
-        'testing': 'config.TestingConfig',
-        'production': 'config.ProductionConfig',
-    # default --
-    }.get(key, 'config.TestingConfig')
