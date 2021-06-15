@@ -1,21 +1,10 @@
 import os
 
-import secrets
-secret_key = secrets.token_hex(16)
-
-# from dotenv import load_dotenv
-
-# Load environment variables.
-# basedir = os.path.abspath(os.path.dirname(__file__))
-# load_dotenv(os.path.join(basedir, '.env'))
-
-
 class BaseConfig:
-    ''' Do not load this config directly. '''
-    APP_NAME = 'Payment Test'
+    APP_NAME = 'dwndigital'
     #LOGIN_REDIRECT_ENDPOINT = 'users.index'
     DEBUG = False
-    SECRET_KEY = secret_key
+    SECRET_KEY = 'secret_key'
 
     SESSION_COOKIE_SAMESITE = 'lax'
 
@@ -33,3 +22,10 @@ class DevelopmentConfig(BaseConfig):
 
 class ProductionConfig(BaseConfig):
     pass
+
+def get_env_obj(key):
+    return {
+        'development': 'config.DevelopmentConfig',
+        'production': 'config.ProductionConfig',
+    # default --
+    }.get(key, 'config.DevelopmentConfig')
