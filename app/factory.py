@@ -1,6 +1,7 @@
 from flask import Flask, render_template
+import config
 
-def create_app(config: object) -> object:
+def create_app(configkey: str) -> str:
     # creates an app instance with config defaulting to the FLASK_ENV
     # if param is passed will be used to set config instead of FLASK_ENV
     # see module config.mode for options
@@ -10,7 +11,7 @@ def create_app(config: object) -> object:
 
     with app.app_context():
     # context for the app
-        configure_app(app, config)
+        configure_app(app, configkey)
         configure_blueprints(app)
         configure_jinja(app)
         configure_error_handlers(app)
@@ -18,8 +19,8 @@ def create_app(config: object) -> object:
         return app
 
 
-def configure_app(app: object, config: object) -> None:
-    app.config.from_object(config)
+def configure_app(app: object, configkey: str) -> None:
+    app.config.from_object(config.get_env_obj(configkey))
 
 
 def configure_blueprints(app: object) -> None:
