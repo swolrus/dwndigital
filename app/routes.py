@@ -1,7 +1,8 @@
 from flask import current_app as app
 from flask import Flask, Blueprint, render_template, request, url_for, flash, redirect
+from app.common.models import *
 
-default = Blueprint('app', __name__)
+default_routes = Blueprint('app', __name__)
 
 # create app-wide context (dictionary containing templates and navigation) 
 @app.context_processor

@@ -12,6 +12,7 @@ def create_app(configkey: str) -> str:
     with app.app_context():
     # context for the app
         configure_app(app, configkey)
+        configure_extensions(app)
         configure_blueprints(app)
         configure_jinja(app)
         configure_error_handlers(app)
@@ -23,11 +24,20 @@ def configure_app(app: object, configkey: str) -> None:
     app.config.from_object(config.get_env_obj(configkey))
 
 
+def configure_extensions(app: object) -> None:
+    from app.common.extensions import db, migrate, login
+    db.init_app(app)
+    migrate.init_app(app, db)
+    login.init_app(app)
+
+
 def configure_blueprints(app: object) -> None:
-    from app.routes import default as default_blueprint
+    from app.routes import default_routes
+    from app.checkout.routes import checkapi_routes
+    from app.users.routes import users_routes
 
     # register each blueprint
-    for blueprint in [default_blueprint]:
+    for blueprint in [default_routes, checkapi_routes, users_routes]:
         app.register_blueprint(blueprint)
 
 

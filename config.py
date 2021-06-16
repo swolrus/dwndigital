@@ -1,5 +1,7 @@
 import os
 
+basedir = os.path.abspath(os.path.dirname(__file__))
+
 class BaseConfig:
     APP_NAME = 'dwndigital'
     #LOGIN_REDIRECT_ENDPOINT = 'users.index'
@@ -8,17 +10,16 @@ class BaseConfig:
 
     SESSION_COOKIE_SAMESITE = 'lax'
 
-    #SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI') \
-    #    or 'sqlite:///' + os.path.join(basedir, 'flask_boilerplate.db')
-    #SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI') \
+        or 'sqlite:///' + os.path.join(basedir, 'dwndigital.db')
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
     # If set to True SQLAlchemy will log all the statements issued to stderr
     # which can be useful for debugging.
-    #SQLALCHEMY_ECHO = False
+    SQLALCHEMY_ECHO = False
 
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
-
 
 class ProductionConfig(BaseConfig):
     pass

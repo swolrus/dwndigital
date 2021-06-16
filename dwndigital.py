@@ -1,7 +1,19 @@
 from app.factory import create_app
+from app.common.extensions import db, migrate, login
 import os
 
-if __name__ == "__main__":
-    configkey = os.environ.get('FLASK_ENV') or 'development'
-    app = create_app(configkey)
-    app.run(host='0.0.0.0')
+configkey = os.environ.get('FLASK_ENV') or 'development'
+app = create_app(configkey)
+
+@app.shell_context_processor
+def make_shell_context():
+    ''' Populate the shell.
+    Use `flask shell`.
+    '''
+    return {
+        'app': app,
+        'db': db,
+        'migrate': migrate,
+        'login': Login,
+        #'user': User,
+    }
