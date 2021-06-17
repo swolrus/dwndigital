@@ -27,7 +27,7 @@ class DevelopmentConfig(BaseConfig):
     DEBUG = True
 
 class ProductionConfig(BaseConfig):
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://dwn:brazy_secret@localhost:3306/dwndigital.db'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://dwn:brazy_secret@localhost:3306/dwndigital'
 
 def get_env_obj(key):
     return {
