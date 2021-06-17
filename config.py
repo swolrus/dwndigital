@@ -17,6 +17,11 @@ class BaseConfig:
     # which can be useful for debugging.
     SQLALCHEMY_ECHO = False
 
+class TestingConfig(BaseConfig):
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI') \
+        or 'sqlite:///' + os.path.join(basedir, 'testing-dwndigital.db')
+    TESTING = True
+    DEBUG = True
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
@@ -28,5 +33,6 @@ def get_env_obj(key):
     return {
         'development': 'config.DevelopmentConfig',
         'production': 'config.ProductionConfig',
+        'testing': 'config.TestingConfig',
     # default --
     }.get(key, 'config.DevelopmentConfig')
