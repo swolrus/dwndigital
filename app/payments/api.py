@@ -9,6 +9,12 @@ payments_api = Blueprint('payments', __name__, url_prefix='/payments')
 
 from app.payments import errors, tokens
 
+@payments_api.route('/', methods=['GET'])
+def test():
+    response = jsonify({ 'test': 'worked' })
+    response.status_code = 200
+    return response
+
 @payments_api.route('/<int:id>', methods=['GET'])
 def get_transaction(id):
     return jsonify(Transaction.query.get_or_404(id).to_dict())
@@ -32,7 +38,7 @@ def set_approved(id):
     return response
 
 
-@payments_api.route('/', methods=['PUT'])
+@payments_api.route('/create', methods=['PUT'])
 def create_transaction():
     data = request.get_json() or {}
     for item in ['name', 'email', 'address', 'item_id', 'quantity']:
