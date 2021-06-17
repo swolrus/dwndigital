@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from config import get_env_object
+from config import get_env_obj
 
 def create_app(configkey: str) -> str:
     # creates an app instance with config defaulting to the FLASK_ENV
