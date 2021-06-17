@@ -7,9 +7,6 @@ from flask import g
 configkey = os.environ.get('FLASK_ENV') or 'development'
 app = create_app(configkey)
 
-if configkey=='production':
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://username:password@localhost/db_name'
-
 @app.shell_context_processor
 def make_shell_context():
     ''' Populate the shell.
