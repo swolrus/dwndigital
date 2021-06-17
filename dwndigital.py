@@ -4,22 +4,20 @@ from app.payments.models import Buyer, Item, Transaction
 import os
 
 configkey = os.environ.get('FLASK_ENV') or 'development'
+app = create_app(configkey)
 
-if __name__ == "__main__":
-    app = create_app(configkey)
-    @app.shell_context_processor
-    def make_shell_context():
-        ''' Populate the shell.
-        Use `flask shell`.
-        '''
-        return {
-            'app': app,
-            'db': db,
-            'migrate': migrate,
-            'login': login,
-            'Buyer': Buyer,
-            'Item': Item,
-            'Transaction': Transaction,
-            #'user': User,
-        }
-    app.run(host='0.0.0.0')
+@app.shell_context_processor
+def make_shell_context():
+    ''' Populate the shell.
+    Use `flask shell`.
+    '''
+    return {
+        'app': app,
+        'db': db,
+        'migrate': migrate,
+        'login': login,
+        'Buyer': Buyer,
+        'Item': Item,
+        'Transaction': Transaction,
+        #'user': User,
+    }
