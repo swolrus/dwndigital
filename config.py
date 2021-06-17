@@ -10,9 +10,6 @@ class BaseConfig:
 
     SESSION_COOKIE_SAMESITE = 'lax'
 
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI') \
-        or 'sqlite:///' + os.path.join(basedir, 'dwndigital.db')
-    SQLALCHEMY_TRACK_MODIFICATIONS = True
     # If set to True SQLAlchemy will log all the statements issued to stderr
     # which can be useful for debugging.
     SQLALCHEMY_ECHO = False
@@ -24,10 +21,12 @@ class TestingConfig(BaseConfig):
     DEBUG = True
 
 class DevelopmentConfig(BaseConfig):
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI') \
+        or 'sqlite:///' + os.path.join(basedir, 'dwndigital.db')
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
     DEBUG = True
 
 class ProductionConfig(BaseConfig):
-    FLASK_APP='dwndigital.py'
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://dwndigital:2007@localhost:3306/dwndigital'
 
 def get_env_obj(key):
