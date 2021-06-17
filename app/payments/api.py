@@ -54,8 +54,6 @@ def webhook():
     print("paypal webhook")
     if request.method == 'POST':
         print(request.json)
-        with open("test.txt", "w") as fo:
-            fo.write(request.json)
         return '', 200
     else:
         errors.bad_request('Paypal Request Error')
