@@ -23,12 +23,12 @@ def get_transaction(id):
 def get_items():
     page = request.args.get('page', 1, type=int)
     per_page = min(request.args.get('per_page', 10, type=int), 100)
-    data = Item.to_collection_dict(Item.query, page, per_page, 'payments.get_items')
-    
+    data = Item.to_collection_dict(Item.query, page, per_page, 'Payments.get_items')
     return jsonify(data)
 
 @payments_api.route('/listener', methods=['POST'])
 def set_approved(id):
+
     transaction = Transaction.query.get_or_404(id)
     transaction.status = 'approved'
     transaction.commit()
@@ -38,7 +38,6 @@ def set_approved(id):
     response.headers['Location'] = url_for('payments.get_transaction', id=transaction.id)
     return response
 
-
 @payments_api.route('/create', methods=['PUT'])
 def create_transaction():
     data = request.get_json() or {}
@@ -47,10 +46,10 @@ def create_transaction():
             return errors.bad_request('Must include: name, email, address, item_id, quantity fields')
     if Buyer.query.filter_by(email=data['email']).first():
         return errors.bad_request('Please use a different email address')
-    
+
     buyer_id = Buyer(email=data['email'], name=data['name'], address=data['address']).commit().id
     transaction = Transaction(buyer_id=buyer_id, item_id=data['item_id'], quantity=data['quantity']).commit()
-    
+
     response = jsonify(transaction.to_dict())
     response.status_code = 201
     response.headers['Location'] = url_for('payments.get_transaction', id=transaction.id)

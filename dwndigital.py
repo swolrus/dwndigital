@@ -8,6 +8,11 @@ load_dotenv()
 configkey = os.environ.get('FLASK_ENV') or 'development'
 app = create_app(configkey)
 
+if __name__ != '__main__':
+    gunicorn_logger = logging.getLogger('gunicorn.error')
+    app.logger.handlers = gunicorn_logger.handlers
+    app.logger.setLevel(gunicorn_logger.level)
+
 @app.shell_context_processor
 def make_shell_context():
     ''' Populate the shell.
@@ -21,5 +26,5 @@ def make_shell_context():
         'Buyer': Buyer,
         'Item': Item,
         'Transaction': Transaction,
-        #'user': User,
+        #'User': User,
     }
