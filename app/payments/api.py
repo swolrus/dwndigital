@@ -23,7 +23,7 @@ def get_transaction(id):
 def get_items():
     page = request.args.get('page', 1, type=int)
     per_page = min(request.args.get('per_page', 10, type=int), 100)
-    data = Item.to_collection_dict(Item.query, page, per_page, 'Payments.get_items')
+    data = Item.to_collection_dict(Item.query, page, per_page, 'payments.get_items')
     return jsonify(data)
 
 @payments_api.route('/listener', methods=['POST'])

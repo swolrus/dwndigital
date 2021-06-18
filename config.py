@@ -2,17 +2,21 @@ import os
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
+from dotenv import load_dotenv
+load_dotenv(os.path.join(basedir, '.env'))
+
 class BaseConfig:
+    APP_NAME='dwn digital'
+    DEBUG = False
+
     # General Config
     SECRET_KEY = os.environ.get('SECRET_KEY')
     FLASK_APP = os.environ.get('FLASK_APP')
     FLASK_ENV = os.environ.get('FLASK_ENV')
 
-    APP_NAME='dwn digital'
-    DEBUG = False
-
     # Database
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URI")
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL") \
+        or 'sqlite:///' + os.path.join(basedir, 'dwndigital.db')
     # If set to True SQLAlchemy will log all the statements issued to stderr
     # which can be useful for debugging.
     SQLALCHEMY_ECHO = False
