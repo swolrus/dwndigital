@@ -49,5 +49,10 @@ flask shell
 ## Drop env Variables
 Having lingering environment variables can stop configuration from working correctly, must unset each to ensure that the app will load the correct vars.
 ```shell
+(drop env var)
 unset <VAR_NAME>
+
+(view error logs)
+cat /var/log/nginx/error.log
 ```
+

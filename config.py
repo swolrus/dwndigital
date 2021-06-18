@@ -29,7 +29,7 @@ class DevelopmentConfig(BaseConfig):
     DEBUG = True
 
 class ProductionConfig(BaseConfig):
-    pass
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI')
 
 def get_env_obj(key):
     return {
