@@ -1,7 +1,7 @@
 from app.factory import create_app
 from app.common.extensions import db, migrate, login
 from app.payments.models import Buyer, Item, Transaction
-import os
+import os, logging
 from dotenv import load_dotenv
 load_dotenv()
 
