@@ -19,17 +19,14 @@ class BaseConfig:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 class TestingConfig(BaseConfig):
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI') \
-        or 'sqlite:///' + os.path.join(basedir, 'testing-dwndigital.db')
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'testing-dwndigital.db')
     TESTING = True
 
 class DevelopmentConfig(BaseConfig):
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI') \
-        or 'sqlite:///' + os.path.join(basedir, 'dwndigital.db')
     DEBUG = True
 
 class ProductionConfig(BaseConfig):
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI')
+    pass
 
 def get_env_obj(key):
     return {
