@@ -38,6 +38,16 @@ context.configure(
         )
 ```
 
-Buyer(id=1, name='David Norris', email='me@dwn.digital', address='10 The Boulevard Floreat WA 6014').commit();
-Item(id=1, name='Kaiman x POSTMAN Fleece Hoody', price=70).commit();
-Transaction(buyer_id=1, item_id=1, quantity=2).commit();
+## DB Test Data Commands
+```shell
+flask shell
+>>Buyer(id=1, name='David Norris', email='me@dwn.digital', address='10 The Boulevard Floreat WA 6014').commit()
+>>Item(id=1, name='Kaiman x POSTMAN Fleece Hoody', price=70).commit()
+>>Transaction(buyer_id=1, item_id=1, quantity=2).commit()
+```
+
+## Drop env Variables
+Having lingering environment variables can stop configuration from working correctly, must unset each to ensure that the app will load the correct vars.
+```shell
+unset <VAR_NAME>
+```
