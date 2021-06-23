@@ -25,10 +25,9 @@ def configure_app(app: object, configkey: str) -> None:
 
 
 def configure_extensions(app: object) -> None:
-    from app.common.extensions import db, migrate, login
-    db.init_app(app)
-    migrate.init_app(app, db)
+    from app.common.extensions import login, db
     login.init_app(app)
+    db.init_app(app)
 
 
 def configure_blueprints(app: object) -> None:

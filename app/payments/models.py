@@ -1,12 +1,43 @@
-from app.common.extensions import db
-from app.common.models import BaseMixin, TimestampMixin, PaginatedAPIMixin
+from app.common.models import TimestampMixin
 from werkzeug.security import check_password_hash, generate_password_hash
+from app.common.extensions import db
+from bson.objectid import ObjectId
 
-class Buyer(BaseMixin, db.Model):
-    email = db.Column(db.String(64), unique=True)
-    name = db.Column(db.String(64), nullable=False)
-    address = db.Column(db.String(256), nullable=False)
+class Item(db.Document):
+    name = db.StringField(required=True, primary_key=True)
+    price = db.IntField(required=True)
+    displayname = db.StringField()
+    description = db.StringField()
+    
+class PurchasedItem(db.EmbeddedDocument):
+    item = db.ReferenceField(Item)
+    quantity = db.IntField(required=True)
 
+    def to_dict(self, include_email=False):
+        data = {
+            'name': self.name,
+            'price': self.price,
+            'quantity': self.quantity,
+        }
+        return data
+        
+class Transaction(db.EmbeddedDocument, TimestampMixin):
+    status = db.StringField(required=True)
+    items = db.ListField(db.EmbeddedDocumentField(PurchasedItem), default=list)
+
+    def get_total(self):
+        total = 0
+        for i in self.items:
+            total += i.item.price * i.quantity
+        return total
+
+class Buyer(db.Document):
+    email = db.StringField(required=True, primary_key=True)
+    name = db.StringField(required=True)
+    address = db.StringField(required=True)
+
+    transactions = db.ListField(db.EmbeddedDocumentField(Transaction), default=list)
+    
     def __init__(self, *args, **kwargs):
         # Set given email address to lowercase.
         kwargs.update({'email': kwargs.get('email').lower()})
@@ -21,44 +52,3 @@ class Buyer(BaseMixin, db.Model):
         if include_email:
             data['email'] = self.email
         return data
-
-
-class Item(BaseMixin, PaginatedAPIMixin, db.Model):
-    name = db.Column(db.String(64), nullable=False)
-    price = db.Column(db.Integer, nullable=False)
-
-    def to_dict(self, include_email=False):
-        data = {
-            'id': self.id,
-            'name': self.name,
-            'price': self.price,
-        }
-        return data
-
-
-class Transaction(BaseMixin, TimestampMixin, db.Model):
-    buyer_id = db.Column(db.Integer, db.ForeignKey(Buyer.id))
-    item_id = db.Column(db.Integer, db.ForeignKey(Item.id))
-    quantity = db.Column(db.Integer, nullable=False)
-    status = db.Column(db.String(16), default = 'pending')
-
-    item = db.relationship("Item", backref="transactions")
-    buyer = db.relationship("Buyer", backref="transactions")
-
-    def to_dict(self, include_email=False):
-        data = {
-            'id': self.id,
-            'buyer_id': self.buyer.id,
-            'buyer': self.buyer.name,
-            'email': self.buyer.email,
-            'adress': self.buyer.address,
-            'item_id': self.item.id,
-            'item': self.item.name,
-            'quantity': self.quantity,
-            'total': self.get_total(),
-            'status': self.status,
-        }
-        return data
-
-    def get_total(self):
-        return self.quantity * self.item.price

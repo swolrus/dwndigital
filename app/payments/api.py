@@ -1,8 +1,6 @@
-from flask import Blueprint
-from flask import jsonify
-from flask import request, url_for
+from flask import Blueprint, url_for, request, jsonify
 from app.common.extensions import db
-from app.payments.models import Buyer, Item, Transaction, Transaction
+from app.payments.models import Item, PurchasedItem, Buyer, Transaction
 
 
 payments_api = Blueprint('payments', __name__, url_prefix='/payments')
@@ -10,49 +8,65 @@ payments_api = Blueprint('payments', __name__, url_prefix='/payments')
 from app.payments import errors, tokens
 
 @payments_api.route('/', methods=['GET'])
-def test():
-    response = jsonify({ 'test': 'worked' })
-    response.status_code = 200
-    return response
-
-@payments_api.route('/<int:id>', methods=['GET'])
-def get_transaction(id):
-    return jsonify(Transaction.query.get_or_404(id).to_dict())
+def get_transaction():
+    email = requests.args.get('email')
+    return jsonify(Buyer.objects(email=email).get_or_404())
 
 @payments_api.route('/items', methods=['GET'])
 def get_items():
-    page = request.args.get('page', 1, type=int)
-    per_page = min(request.args.get('per_page', 10, type=int), 100)
-    data = Item.to_collection_dict(Item.query, page, per_page, 'payments.get_items')
+    data = Item.objects()
     return jsonify(data)
 
-@payments_api.route('/listener', methods=['POST'])
-def set_approved(id):
-
-    transaction = Transaction.query.get_or_404(id)
+@payments_api.route('/setapproved/<int:oid>', methods=['POST'])
+def set_approved(oid):
+    transaction = Transaction.objects(id=oid).get_or_404()
     transaction.status = 'approved'
-    transaction.commit()
+    transaction.save()
     
-    response = jsonify(transaction.to_dict())
+    response = jsonify(transaction)
     response.status_code = 201
-    response.headers['Location'] = url_for('payments.get_transaction', id=transaction.id)
+    response.headers['Location'] = url_for('payments.get_transaction', id=transaction.oid)
     return response
 
-@payments_api.route('/create', methods=['PUT'])
-def create_transaction():
-    data = request.get_json() or {}
-    for item in ['name', 'email', 'address', 'item_id', 'quantity']:
+@payments_api.route('/setitem', methods=['POST'])
+def set_item():
+    data = request.get_json()
+
+    for item in ['name', 'price', 'displayname', 'description']:
         if item not in data:
-            return errors.bad_request('Must include: name, email, address, item_id, quantity fields')
-    if Buyer.query.filter_by(email=data['email']).first():
-        return errors.bad_request('Please use a different email address')
+            return errors.bad_request('request must include: name, email, address fields')
 
-    buyer_id = Buyer(email=data['email'], name=data['name'], address=data['address']).commit().id
-    transaction = Transaction(buyer_id=buyer_id, item_id=data['item_id'], quantity=data['quantity']).commit()
+    item = Item(name=name, price=price, displayname=displayname, description=description)
+    item.save()
 
-    response = jsonify(transaction.to_dict())
+    return jsonify(item)
+
+@payments_api.route('/create', methods=['POST'])
+def create_transaction():
+    data = request.get_json()
+
+    for item in ['name', 'email', 'address', 'items']:
+        if item not in data:
+            return errors.bad_request('request must include: name, email, address fields')
+
+    buyer = Buyer.objects(email=data['email']).first()
+    if not buyer:
+        buyer = Buyer(email=data['email'], name=data['name'], address=data['address'])
+
+    transaction = Transaction(status='pending')
+    
+    for i in data['items']:
+        if not Item.objects(pk=item['id']).first():
+            return errors.bad_request('request contains invalid items')
+        item = PurchasedItem(item=i['id'], quantity=i['quantity'])
+        transaction.items.append(item)
+
+    buyer.transactions.append(transaction)
+    buyer.save()
+
+    response = jsonify(transaction)
     response.status_code = 201
-    response.headers['Location'] = url_for('payments.get_transaction', id=transaction.id)
+    response.headers['Location'] = url_for('payments.get_transaction')
     return response
 
 @payments_api.route('/wh', methods=['POST'])

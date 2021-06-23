@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        {% for field in form %}
+        <p>
+            {% if field.type in ('StringField', 'TextAreaField', 'PasswordField', 'IntegerField') %}
+            <label for="{{ field.id }}"
+                class="control-label{% if field.flags.required %} required{% endif %}">
+                {{ field.label.text }}
+            </label>
+        </p>
+        <p>
+            {% endif %}
+            {{ field(class_=class_, placeholder=placeholder) }}<br>
+            {% if field.errors %}
+            <span class="error help-inline">{{ field.errors|join(', ') }}</span>
+            {% endif %}
+        </p>
+        {% endfor %}
+    </form>
+{% endblock %}

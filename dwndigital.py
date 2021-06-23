@@ -1,6 +1,7 @@
 from app.factory import create_app
-from app.common.extensions import db, migrate, login
-from app.payments.models import Buyer, Item, Transaction
+from app.common.extensions import login, db
+from app.users.models import User
+from app.payments.models import Buyer, Item, PurchasedItem, Transaction
 import os, logging
 
 configkey = os.environ.get('FLASK_ENV') or 'development'
@@ -13,16 +14,17 @@ if __name__ != '__main__':
 
 @app.shell_context_processor
 def make_shell_context():
+    
     ''' Populate the shell.
     Use `flask shell`.
     '''
     return {
         'app': app,
         'db': db,
-        'migrate': migrate,
         'login': login,
         'Buyer': Buyer,
         'Item': Item,
+        'PurchasedItem': PurchasedItem,
         'Transaction': Transaction,
-        #'User': User,
+        'User': User,
     }
