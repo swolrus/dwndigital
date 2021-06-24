@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 dotenv_path = os.path.join(os.getcwd(), '.env')
 load_dotenv(dotenv_path)
+print(dotenv_path)
 
 class BaseConfig:
     # General Settings
@@ -12,7 +13,7 @@ class BaseConfig:
     FLASK_ENV = os.environ.get('FLASK_ENV')
 
     MONGODB_SETTINGS = {
-        'host': os.environ.get('DATABASE_URL')
+        'host': os.environ.get('DATABASE_URL') or 'fugg',
     }
 
     # Upload Settings
