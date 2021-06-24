@@ -2,7 +2,6 @@ import os
 from dotenv import load_dotenv
 dotenv_path = os.path.join(os.getcwd(), '.env')
 load_dotenv(dotenv_path)
-print(dotenv_path)
 
 class BaseConfig:
     # General Settings
