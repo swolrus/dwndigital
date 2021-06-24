@@ -1,61 +1,17 @@
-{% extends "base.html" %}
-{% block title %}PAYPAL CHECKOUT{% endblock %}
+{% extends the_template %}
+{% block title %}PREORDER{% endblock %}
 {% block content %}
-<div class="container">
-  <div class="row justify-content-md-center">
-    <div class="col-3">
-      <img src="{{ url_for('static', filename='img/HOODIE.png') }}" class="img-fluid">
-    </div>
-  </div>
-  <div class="row justify-content-center">
-    <div class="col-6">
-      <div id="paypal-button"></div>
-    </div>
-  </div>
-</div>
+
+  <section>
+    <h1>HOME</h1>
+  </section>
+  <section>
+    <img src="{{ url_for('static', filename='img/HOODIE.png') }}">
+  </section>
+  <section class="item">
+    <h3>PREORDER</h3>
+    <a href="{{ url_for('checkout') }}" class="fas fa-lg fa-coins action"></a>
+  </section>
 {% endblock %}
 {% block script %}
-<script src="https://www.paypalobjects.com/api/checkout.js"></script>
-<script>
-  paypal.Button.render({
-    // Configure environment
-    env: 'sandbox',
-    client: {
-      sandbox: 'AQVce-IvjMxu3rIQnkQE_6YGkWLKcXS7410E77YClYqRzOd-8xeFg7giN2b6_6usd7OfBH-EAVjcStIE',
-      production: 'demo_production_client_id'
-    },
-    // Customize button (optional)
-    locale: 'en_US',
-    style: {
-      size: 'medium',
-      color: 'black',
-      shape: 'rect',
-      lable: 'paypal',
-      tagline: 'false'
-    },
-
-    // Enable Pay Now checkout flow (optional)
-    commit: true,
-
-    // Set up a payment
-    payment: function(data, actions) {
-      return actions.payment.create({
-        transactions: [{
-          amount: {
-            total: '100',
-            currency: 'AUD'
-          }
-        }]
-      });
-    },
-    // Execute the payment
-    onAuthorize: function(data, actions) {
-      return actions.payment.execute().then(function() {
-        // Show a confirmation message to the buyer
-        window.alert('Thank you for your purchase!');
-      });
-    }
-  }, '#paypal-button');
-
-</script>
 {% endblock %}

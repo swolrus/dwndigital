@@ -4,19 +4,22 @@ from app.common.extensions import db
 from bson.objectid import ObjectId
 
 class Item(db.Document):
-    name = db.StringField(required=True, primary_key=True)
+    name = db.StringField(required=True)
     price = db.IntField(required=True)
-    displayname = db.StringField()
+    img = db.StringField(required=True)
+    active = db.BooleanField(required=True, default=True)
     description = db.StringField()
+    
+    def get_pk():
+        return str(self.pk)
     
 class PurchasedItem(db.EmbeddedDocument):
     item = db.ReferenceField(Item)
     quantity = db.IntField(required=True)
 
-    def to_dict(self, include_email=False):
+    def to_dict(self):
         data = {
             'name': self.name,
-            'price': self.price,
             'quantity': self.quantity,
         }
         return data

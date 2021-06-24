@@ -1,0 +1,9 @@
+section {
+    @extend .row;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+nav .navbar-nav {
+    margin-left:auto;
+}

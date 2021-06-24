@@ -32,11 +32,11 @@ def configure_extensions(app: object) -> None:
 
 def configure_blueprints(app: object) -> None:
     from app.routes import default_routes
-    from app.users.routes import users_routes
+    from app.admin.routes import admin_routes
     from app.payments.api import payments_api
 
     # register each blueprint
-    for blueprint in [default_routes, users_routes, payments_api]:
+    for blueprint in [default_routes, admin_routes, payments_api]:
         app.register_blueprint(blueprint)
 
 

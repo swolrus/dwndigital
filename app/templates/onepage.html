@@ -3,14 +3,18 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Ensures optimal rendering on mobile devices. -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
-    <title>{% block title %}{% endblock %}</title>
+    <title>OnepageTest</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
-  </head>
-  <body>
-    <script
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+   <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+   <script
       src="https://www.paypal.com/sdk/js?client-id=AQVce-IvjMxu3rIQnkQE_6YGkWLKcXS7410E77YClYqRzOd-8xeFg7giN2b6_6usd7OfBH-EAVjcStIE&components=buttons&currency=AUD"> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
     </script>
+  </head>
+  <body>
     <nav class="navbar navbar-light navbar-expand-md dwn-nav">
         <a class="navbar-brand" href="#">KAIMAN x POSTMAN</a>
         <label for="_1" class="collapse-state navbar-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
@@ -45,19 +49,17 @@
           </ul>
         </section>
         {% endif %}
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
+
         <section>
-            {% for message in messages %}
-            <p>{{ message }}</p>
-            {% endfor %}
+            <div id="test">
+
+            </div>
         </section>
-        {% endif %}
-        {% endwith %}
-        
-        {% block content %}{% endblock %}
-      </div>
+        </div>
     </main>
 </body>
-{% block script %}{% endblock %}
+<script type="text/babel">
+    const element = <h1>Hello from React</h1>; ReactDOM.render(element,
+    document.getElementById("test"));
+</script>
 </html>

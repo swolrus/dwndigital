@@ -1,7 +1,5 @@
 import os
 
-basedir = os.path.abspath(os.path.dirname(__file__))
-
 class BaseConfig:
     # General Settings
     APP_NAME='dwn digital'
@@ -13,6 +11,10 @@ class BaseConfig:
     MONGODB_SETTINGS = {
         'host': os.environ.get('DATABASE_URL')
     }
+
+    # Upload Settings
+    UPLOAD_STATIC_FOLDER = 'img/items'
+    ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 class TestingConfig(BaseConfig):
     TESTING = True

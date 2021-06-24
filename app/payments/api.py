@@ -1,6 +1,7 @@
-from flask import Blueprint, url_for, request, jsonify
+from flask import Blueprint, url_for, jsonify
 from app.common.extensions import db
 from app.payments.models import Item, PurchasedItem, Buyer, Transaction
+import requests
 
 
 payments_api = Blueprint('payments', __name__, url_prefix='/payments')
@@ -30,13 +31,13 @@ def set_approved(oid):
 
 @payments_api.route('/setitem', methods=['POST'])
 def set_item():
-    data = request.get_json()
+    data = requests.get_json()
 
-    for item in ['name', 'price', 'displayname', 'description']:
+    for item in ['name', 'description', 'price']:
         if item not in data:
             return errors.bad_request('request must include: name, email, address fields')
 
-    item = Item(name=name, price=price, displayname=displayname, description=description)
+    item = Item(name=name, description=description, price=price)
     item.save()
 
     return jsonify(item)
@@ -77,3 +78,8 @@ def webhook():
         return '', 200
     else:
         errors.bad_request('Paypal Request Error')
+
+@payments_api.route('/paypal-transaction-complete', methods=['POST'])
+def transaction_complete():
+    return redirect(url_for('home'))
+    

@@ -1,0 +1,12 @@
+{% extends the_template %}
+{% block title %}Created Item{% endblock %}
+{% block content %}
+<section>
+    <h1>Created Item</h1>
+    <p><b>ID: </b>{{ item.pk }}</p>
+    <p><b>Name: </b>{{ item.name }}</p>
+    <p><b>Description: </b>{{ item.description }}</p>
+    <p><b>Image-URL: </b>{{ item.img }}</p>
+    <p><b>Price: </b>{{ item.price }}</p>
+</section>
+{% endblock %}

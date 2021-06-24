@@ -1,6 +1,6 @@
 from app.factory import create_app
 from app.common.extensions import login, db
-from app.users.models import User
+from app.admin.models import User
 from app.payments.models import Buyer, Item, PurchasedItem, Transaction
 import os, logging
 

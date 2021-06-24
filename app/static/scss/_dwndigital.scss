@@ -1,17 +1,114 @@
 html, body {
     margin:0;
     height:100%;
+    color:rgb(138, 128, 113);
+}
+.dwn-nav {
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    max-width:50%;
+    margin:0 auto;
+    padding:2rem 0;
+    z-index:1030;
+
+    .navbar-brand {
+        color:rgb(117, 96, 66)!important;
+    }
+    .navbar-brand, .nav-link, .navbar-toggle {
+        background-color:white;
+        border-radius:0.2rem;
+        //border:1px solid rgb(116, 116, 116);
+        padding:0.2rem 1rem 0.8rem 1rem;
+        text-decoration-line: underline;
+        text-underline-offset: 0.5rem;
+        text-decoration-style: wavy;
+        background-color:white;
+    }
+
+    .navbar-nav .nav-item {
+        align-self:flex-start;
+        padding:0.5rem;
+    }
 }
 main {
-    height:100%;
     display:flex;
-    flex-direction:column;
+    justify-content:center;
+    min-height:100%;
 }
-.container {
-    margin:auto 0;
-}
-main .row {
-    display: flex;
+.wrapper {
+    display:flex;
     align-items: center;
-    justify-content: center;
+    justify-content:center;
+    flex-direction:column;
+    max-width:45%;
+    padding:5rem 0;
+}
+section {
+    margin:1rem 0;
+    img {
+        width:50%;
+        height:auto;
+    }
+}
+.item {
+    position:relative;
+    border-radius:0.2rem;
+    border:0.1rem solid rgba(0, 0, 0, .1);
+    box-shadow:0 .5rem 2rem rgba(0,0,0,.1);
+    background: radial-gradient(50px 50px at calc(100% - 1.33rem) calc(100% - 1.33rem), rgba(0, 0, 0, 0.05) 1.9rem, rgba(0, 0, 0, .2) 1.95rem, rgba(0, 0, 0, 0) 2rem);
+    padding:1rem;
+    a.action {
+        position:absolute;
+        right:0.75rem;
+        bottom:0.75rem;
+        width:auto;
+        padding:0;
+        text-decoration:none;
+        line-height:1.33rem;
+    }
+}
+input {
+    width:100%;
+}
+label {
+    margin-top:0.5rem;
+}
+a, .dwn-digital .nav-item .nav-link {
+    color:rgb(216, 139, 23)!important;
+    &:hover {
+        color:rgb(117, 96, 66)!important;
+    }
+    &.active {
+        color:rgb(117, 96, 66)!important;
+    }
+}
+#paypal-button {
+    margin-top: 1rem;
+}
+.collapse-state {
+    cursor: pointer;
+    display: none;
+}
+.collapse-state + input{
+    display: none; /* hide the checkboxes */
+}
+.collapse-state + input + div {
+    display:none;
+}
+.collapse-state + input:checked + div{
+    display:block;
+}
+@media only screen and (max-width: 768px) {
+    .wrapper {
+        max-width:80%;
+    }
+    .dwn-nav {
+        max-width:100%;
+        padding:2rem;
+    }
+    .collapse-state {
+        display:block;
+    }
 }
