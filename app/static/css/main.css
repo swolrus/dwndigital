@@ -6819,11 +6819,12 @@ input::placeholder {
   right: 0;
   max-width: 50%;
   margin: 0 auto;
-  padding: 1rem 0;
+  padding: 0.5rem 0;
   z-index: 1030;
 }
 .dwn-nav .navbar-brand {
   color: #917e63 !important;
+  font-weight: 750;
 }
 .dwn-nav .navbar-brand, .dwn-nav .nav-link, .dwn-nav .navbar-toggle {
   background-color: white;
@@ -6835,7 +6836,6 @@ input::placeholder {
   background-color: white;
 }
 .dwn-nav .navbar-nav .nav-item {
-  align-self: flex-start;
   padding: 0.5rem;
 }
 
@@ -6984,11 +6984,7 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-}
-
-nav .navbar-nav {
-  margin-left: auto;
+  width: auto;
 }
 
 /*# sourceMappingURL=main.css.map */
