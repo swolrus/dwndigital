@@ -84,7 +84,7 @@ class PayPalClient:
             dbitem = Item.objects().get(pk=item['id'])
 
             itemtotal = dbitem.price * item['quantity']
-            total += itemtotal
+            total += int(itemtotal)
             anitem = {
                 "name": dbitem.name,
                 "description": dbitem.description,
