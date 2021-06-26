@@ -10,7 +10,7 @@
   </section>
   <section class="item">
     <h3>PREORDER</h3>
-    <a href="{{ url_for('checkout') }}" class="fas fa-lg fa-coins action"></a>
+    <a href="{{ url_for('checkout') + '?pk=' + item.pk|string }}" class="action"><img src="{{ url_for('static', filename='buy-now.svg') }}"></a>
   </section>
 {% endblock %}
 {% block script %}

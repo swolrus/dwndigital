@@ -6,13 +6,13 @@
     <h1>{{ item.name }}</h1>
   </section>
   <section>
-    <img src="{{ url_for('static', filename=item.img) }}">
+    <img class="product" src="{{ url_for('static', filename=item.img) }}">
   </section>
   <section class="item">
     <h3>PREORDER</h3>
     <p>{{ item.description }}</p>
     <h4>{{ item.price }} AUD</h4>
-    <a href="{{ url_for('checkout') + '?pk=' + item.pk|string }}" class="fas fa-lg fa-coins action"></a>
+    <a href="{{ url_for('checkout') + '?item=' + item.pk|string }}" class="action"></a>
   </section>
 {% endfor %}
 {% endblock %}

@@ -10,7 +10,7 @@ html, body {
     right:0;
     max-width:50%;
     margin:0 auto;
-    padding:2rem 0;
+    padding:1rem 0;
     z-index:1030;
 
     .navbar-brand {
@@ -43,38 +43,65 @@ main {
     justify-content:center;
     flex-direction:column;
     max-width:45%;
-    padding:5rem 0;
+    padding:6rem 0 3rem 0;
 }
 section {
-    margin:1rem 0;
-    img {
-        width:50%;
-        height:auto;
-    }
+    width:100%;
+}
+img.product {
+    width:60%;
+    height:auto;
 }
 .item {
     position:relative;
-    border-radius:0.2rem;
-    border:0.1rem solid rgba(0, 0, 0, .1);
-    box-shadow:0 .5rem 2rem rgba(0,0,0,.1);
-    background: radial-gradient(50px 50px at calc(100% - 1.33rem) calc(100% - 1.33rem), rgba(0, 0, 0, 0.05) 1.9rem, rgba(0, 0, 0, .2) 1.95rem, rgba(0, 0, 0, 0) 2rem);
+    border-radius:0.12rem;
+    border:0.1rem solid rgba(117, 96, 66, .1);
+    box-shadow:0 .5rem 1rem rgba(0,0,0,.1);
+    background: radial-gradient(50px 50px at calc(100% - 1.33rem) calc(100% - 1.33rem), rgba(0, 0, 0, 0.05) 2.7rem, rgba(117, 96, 66, .3) 2.75rem, rgba(0, 0, 0, 0) 2.8rem);
     padding:1rem;
+    margin:2rem 0;
     a.action {
         position:absolute;
-        right:0.75rem;
-        bottom:0.75rem;
-        width:auto;
+        right:0;
+        bottom:0;
+        width:3.6rem;
+        height:3.6rem;
         padding:0;
         text-decoration:none;
-        line-height:1.33rem;
+        background-image: url("../img/buy-now-orange.svg");
+        background-position: right 0 bottom 0;
+        background-size:cover;
+        &:hover {
+            background-image: url("../img/buy-now-brown.svg");
+        }
     }
 }
-input {
+input, select {
     width:100%;
+    margin-bottom:0.5rem;
 }
-label {
-    margin-top:0.5rem;
+.inputsize {
+    width:auto;
+    flex-grow:1;
 }
+.quantity {
+    margin-bottom:0.5rem;
+    padding-top:0.1rem;
+    width:auto;
+    float:left;
+    input {
+        -webkit-appearance: none;
+        border: none;
+        text-align: center;
+        width: 32px;
+        font-size: 16px;
+    }
+    button {
+        padding:0.2rem 0.5rem;
+    }
+
+}
+
 a, .dwn-digital .nav-item .nav-link {
     color:rgb(216, 139, 23)!important;
     &:hover {
@@ -99,6 +126,25 @@ a, .dwn-digital .nav-item .nav-link {
 }
 .collapse-state + input:checked + div{
     display:block;
+}
+button, input[type="button"], input[type="submit"] {
+    background-color:rgba(117, 96, 66, 0.2);
+    display:inline-block;
+    padding:0.35em 1.2em;
+    border:0.12em solid rgb(117, 96, 66);
+    margin:0 0.3em 0.3em 0;
+    border-radius:0.12em;
+    box-sizing: border-box;
+    text-decoration:none;
+    font-family:'Roboto',sans-serif;
+    font-weight:300;
+    color:rgb(117, 96, 66);
+    text-align:center;
+    transition: all 0.2s;
+    &:hover {
+        color:#FFFFFF;
+        background-color:rgb(117, 96, 66);
+    }
 }
 @media only screen and (max-width: 768px) {
     .wrapper {

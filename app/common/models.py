@@ -4,7 +4,7 @@ from typing import Union
 from datetime import datetime
 
 
-class TimestampMixin:
+class TimestampMixin():
     creation_date = db.DateTimeField(default=datetime.utcnow)
     modified_date = db.DateTimeField()
 
@@ -13,4 +13,4 @@ class TimestampMixin:
 
     def save(self, *args, **kwargs):
         self.update_activity()
-        return super(db.Model, self).save(*args, **kwargs)
+        return super(db.Document, self).save(*args, **kwargs)

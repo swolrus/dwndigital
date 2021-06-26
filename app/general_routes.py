@@ -17,13 +17,8 @@ def home():
     data = Item.objects()
     return render_template('items.html', items=data)
 
-@app.route('/react')
-def react():
-    data = Item.objects()
-    return render_template('onepage.html')
-
 @app.route('/buy')
 def checkout():
-    pk = request.args.get('pk')
+    pk = request.args.get('item')
     item = Item.objects(pk=pk).get_or_404()
     return render_template('buy.html', item=item)

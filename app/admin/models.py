@@ -23,4 +23,4 @@ class User(db.Document, UserMixin, TimestampMixin):
 
 @login.user_loader
 def load_user(email):
-    return User.objects(email=email).get()
+    return User.objects().get(email=email)

@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>500</title>
-  </head>
-  <body>
-    <main>
-        500 error
-    </main>
-  </body>
-</html>
+{% extends the_template %}
+{% block title %}500 - Error{% endblock %}
+{% block content %}
+<section>
+  <h4>500 - Internal Server Error</h4>
+  <p>Something ain't write :/</p>
+</section>

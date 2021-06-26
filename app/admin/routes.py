@@ -1,14 +1,14 @@
 from flask import current_app as app
 from flask import Blueprint, url_for, request, redirect, render_template, flash
 from flask_login import current_user, login_user, logout_user, login_required
+from werkzeug.utils import secure_filename
+import os
+from app.common.util import allowed_file
 from app.admin.forms import LoginForm, RegisterForm
 from app.payments.forms import SetItemForm, DeleteItemForm
-from app.payments.models import Item
 from app.admin.models import User
+from app.payments.models import Item
 from app.payments import errors
-from werkzeug.utils import secure_filename
-from app.common.util import allowed_file
-import os
 
 admin_routes = Blueprint('admin', __name__, url_prefix='/admin')
 
@@ -16,6 +16,7 @@ admin_routes = Blueprint('admin', __name__, url_prefix='/admin')
 @login_required
 def create_item():
     form = SetItemForm()
+    ref = form.ref.data
     name = form.name.data
     price = form.price.data
     description = form.description.data
@@ -33,8 +34,11 @@ def create_item():
             abspath = os.path.join(app.root_path, 'static', relpath)
 
             file.save(abspath)
+        
+        else:
+            flash("Please make sure to select a PNG, JPEG, SVG or GIF")
 
-        item = Item(name=name, description=description, price=price, img=relpath).save()
+        item = Item(ref=ref, name=name, description=description, price=price, img=relpath).save()
         return render_template('admin/newitem.html', item=item)
 
     return render_template('form.html', title='Create Item', form=form)
@@ -45,15 +49,19 @@ def delete_item():
     form = DeleteItemForm()
     form.name.choices = [(item.pk, item.name) for item in Item.objects().all()]
     pk = form.name.data
+    if pk == None:
+        form.name.choices.append('No Items Exist!')
 
     if form.validate_on_submit():
         item = Item.objects().get(pk=pk).delete()
-        return redirect('admin.delete_item')
 
     return render_template('form.html', title='Delete Item', form=form)
 
 @admin_routes.route("/", methods=['GET','POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('admin.home'))
+
     form = LoginForm(next=request.args.get('next'))
     email = form.email.data
     password = form.password.data

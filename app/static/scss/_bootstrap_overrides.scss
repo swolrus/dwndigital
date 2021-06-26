@@ -4,22 +4,19 @@
 
 // *** Required
 @import "bootstrap/variables";
-@import "bootstrap/mixins";
 @import "bootstrap/utilities";
+@import "bootstrap/mixins";
 
 // *** Core with grid
 @import "bootstrap/root";
 @import "bootstrap/reboot";
 @import "bootstrap/type";
-@import "bootstrap/images";
 @import "bootstrap/grid";
 
 // *** Components
 @import "bootstrap/nav";
 @import "bootstrap/navbar";
-@import "bootstrap/buttons";
-@import "bootstrap/containers";
 
 // Utilities
-//@import "bootstrap/utilities/api";
+@import "bootstrap/utilities/api";
 // scss-docs-end import-stack

@@ -1,0 +1,28 @@
+{% extends the_template %}
+{% block title %}PREORDER{% endblock %}
+{% block content %}
+
+  <section>
+    <h1>Cheers {{ trans.name }}!</h1>
+  </section>
+  <section>
+    <h3>Transaction Complete</h3>
+    <h4>Items</h4>
+    {% for item in trans['items'] %}
+    <p>
+        <b>{{ item['quantity'] }} x {{ item['name'] }}</b><br>
+        {{ item['total'] }} AUD<br>
+    </p>
+    {% endfor %}
+    <h4>Total:</h4>
+    <p>{{ trans.total }}</p>
+    <h4>Customer</h4>
+    <p>
+        {{ trans['email'] }}<br>
+        {{ trans['name'] }}<br>
+        {{ trans['address'] }}<br>
+    </p>
+  </section>
+{% endblock %}
+{% block script %}
+{% endblock %}

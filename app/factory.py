@@ -25,13 +25,14 @@ def configure_app(app: object, configkey: str) -> None:
 
 
 def configure_extensions(app: object) -> None:
-    from app.common.extensions import login, db
+    from app.common.extensions import login, db, paypal
     login.init_app(app)
     db.init_app(app)
+    paypal.init_app(app)
 
 
 def configure_blueprints(app: object) -> None:
-    from app.routes import default_routes
+    from app.general_routes import default_routes
     from app.admin.routes import admin_routes
     from app.payments.api import payments_api
 
