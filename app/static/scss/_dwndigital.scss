@@ -54,7 +54,7 @@ main {
     padding:6rem 0 3rem 0;
 }
 img.product {
-    width:60%;
+    width:40%;
     height:auto;
 }
 .item {
@@ -64,7 +64,7 @@ img.product {
     box-shadow:0 .5rem 1rem rgba(0,0,0,.1);
     background: radial-gradient(50px 50px at calc(100% - 1.33rem) calc(100% - 1.33rem), rgba(0, 0, 0, 0.05) 2.7rem, rgba(117, 96, 66, .3) 2.75rem, rgba(0, 0, 0, 0) 2.8rem);
     padding:1rem;
-    margin:2rem 0;
+    margin:1rem 0;
     a.action {
         position:absolute;
         right:0;

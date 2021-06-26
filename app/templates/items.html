@@ -3,7 +3,7 @@
 {% block content %}
 {% for item in items %}
   <section>
-    <h1>{{ item.name }}</h1>
+    <h2>{{ item.name }}</h2>
   </section>
   <section>
     <img class="product" src="{{ url_for('static', filename=item.img) }}">
