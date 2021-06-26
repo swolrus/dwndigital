@@ -28,18 +28,19 @@ def create_item():
         if file.filename == '':
             flash('No selected file')
             return redirect(request.url)
-        if file and allowed_file(file.filename):
+        if not allowed_file(file.filename):
+            flash('Please use a valid image format')
+            return redirect(request.url)
+
+        if file:
             filename = secure_filename(file.filename)
             relpath = os.path.join(app.config['UPLOAD_STATIC_FOLDER'], filename)
             abspath = os.path.join(app.root_path, 'static', relpath)
 
             file.save(abspath)
-        
-        else:
-            flash("Please make sure to select a PNG, JPEG, SVG or GIF")
-
-        item = Item(ref=ref, name=name, description=description, price=price, img=relpath).save()
-        return render_template('admin/newitem.html', item=item)
+            
+            item = Item(ref=ref, name=name, description=description, price=price, img=relpath).save()
+            return render_template('admin/newitem.html', item=item)
 
     return render_template('form.html', title='Create Item', form=form)
 
@@ -49,12 +50,15 @@ def delete_item():
     form = DeleteItemForm()
     form.name.choices = [(item.pk, item.name) for item in Item.objects().all()]
     pk = form.name.data
-    if len(form.name.choices) == 0:
-        form.name.choices=['No Items Exist!']
 
     if form.validate_on_submit():
-        item = Item.objects().get(pk=pk).delete()
-        delete_item()
+        item = Item.objects().get(pk=pk)
+        form.name.choices.remove((item.pk, item.name))
+        flash("Deleted item: " + item.name)
+        item.delete()
+    
+    if len(form.name.choices) == 0:
+        form.name.choices=['No Items Exist!']
 
     return render_template('form.html', title='Delete Item', form=form)
 

@@ -21,7 +21,7 @@ class BaseConfig:
 
     # Upload Settings
     UPLOAD_STATIC_FOLDER = 'img/items'
-    ALLOWED_EXTENSIONS = ['png', 'jpg', 'jpeg', 'gif', '.svg']
+    ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'svg'])
 
 class TestingConfig(BaseConfig):
     TESTING = True
