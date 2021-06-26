@@ -13,7 +13,8 @@
                 {{ field.label.text }}
             </label>
             {% endif %}
-            {{ field(class_=class_, placeholder=placeholder) }}
+            {{ field(placeholder=placeholder) }}
+
             {% if field.errors %}
             <span class="error help-inline" style="color:cornflowerblue">{{ field.errors|join(', ') }}</span>
             {% endif %}

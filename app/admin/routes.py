@@ -49,11 +49,12 @@ def delete_item():
     form = DeleteItemForm()
     form.name.choices = [(item.pk, item.name) for item in Item.objects().all()]
     pk = form.name.data
-    if pk == None:
-        form.name.choices.append('No Items Exist!')
+    if len(form.name.choices) == 0:
+        form.name.choices=['No Items Exist!']
 
     if form.validate_on_submit():
         item = Item.objects().get(pk=pk).delete()
+        delete_item()
 
     return render_template('form.html', title='Delete Item', form=form)
 

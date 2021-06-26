@@ -13,12 +13,14 @@ class SetItemForm(FlaskForm):
     description = StringField('Description', validators=[
         v.DataRequired(),
     ])
-    img = FileField('Photo', validators=[FileRequired('File was empty!')])
+    img = FileField('Photo', validators=[
+        FileRequired('File was empty!')
+    ])
     price = IntegerField('Price', validators=[
         v.DataRequired(),
     ])
     submit = SubmitField('Create')
 
 class DeleteItemForm(FlaskForm):
-    name = SelectField('Item to delete', choices=[])
+    name = SelectField('Item', choices=[])
     submit = SubmitField('Delete')
