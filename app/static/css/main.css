@@ -120,7 +120,6 @@ input[type=text]:focus, input[type=number]:focus, input[type=password]:focus, se
 }
 
 input {
-  display: inline-block;
   -webkit-appearance: none;
   border: none;
   box-shadow: none;
@@ -189,6 +188,8 @@ button:hover, button:focus, .button:hover, .button:focus, input[type=button]:hov
   width: 8rem;
 }
 .quantity input {
+  border: none;
+  display: inline-block;
   text-align: center;
   width: 2rem;
   font-size: 16px;
