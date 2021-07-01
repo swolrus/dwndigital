@@ -51,7 +51,7 @@
 
 nav {
   margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: 1.5rem 1rem;
   display: flex;
 }
 nav ul {
@@ -98,16 +98,16 @@ nav .disabled {
 }
 
 @media only screen and (max-width: 768px) {
-  nav {
-    width: 100%;
+  nav.navbar {
+    width: 100% !important;
   }
-  nav ul {
+  nav.navbar ul {
     display: none;
   }
-  nav ul li {
+  nav.navbar ul li {
     margin-top: 0.4rem;
   }
-  nav .collapse-state {
+  nav.navbar .collapse-state {
     display: inline-block;
   }
 }

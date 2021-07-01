@@ -36,7 +36,7 @@
 }
 nav {
     margin: 0 auto;
-    padding: 2rem 1rem;
+    padding: 1.5rem 1rem;
     display: flex;
     ul {
         list-style: none;
@@ -79,8 +79,8 @@ nav {
     float: none;
 }
 @media only screen and (max-width: 768px) {
-    nav {
-        width: 100%;
+    nav.navbar {
+        width: 100%!important;
         ul {
             display: none;
             li {
