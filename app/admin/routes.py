@@ -60,13 +60,11 @@ def delete_item():
             item.delete()
         elif form.activate.data == True:
             item = Item.objects().get(pk=pk)
-            form.name.choices.remove((item.pk, item.name))
             flash("Ativated item: " + item.name)
             item.active = True
             item.save()
         elif form.deactivate.data == True:
             item = Item.objects().get(pk=pk)
-            form.name.choices.remove((item.pk, item.name))
             flash("Deactivated item: " + item.name)
             item.active = False
             item.save()
