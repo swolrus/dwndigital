@@ -17,11 +17,6 @@ input[type="text"], input[type="number"], input[type="password"], select {
         background-color: lighten($body-color, 50%)
     }
 }
-input {
-    -webkit-appearance: none;
-    border: none;
-    box-shadow: none;
-}
 button, .button, input[type="button"], input[type="submit"] {
     width: 100%;
     cursor: pointer;
@@ -79,8 +74,9 @@ button, .button, input[type="button"], input[type="submit"] {
     display: block;
     width: 8rem;
     input {
-        border: none;
         display: inline-block;
+        border: none;
+        box-shadow: none;
         text-align: center;
         width: 2rem;
         font-size: 16px;
@@ -92,4 +88,7 @@ button, .button, input[type="button"], input[type="submit"] {
         padding: 0;
         margin: 0;
     }
+}
+input {
+    -webkit-appearance: none;
 }
