@@ -17,7 +17,7 @@ input[type="text"], input[type="number"], input[type="password"], select {
         background-color: lighten($body-color, 50%)
     }
 }
-.form-submit input, button, .button, input[type="button"], input[type="submit"] {
+button {
     width: 100%;
     cursor: pointer;
     background-color: rgba(117, 96, 66, 0.2);

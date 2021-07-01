@@ -11,6 +11,8 @@
         {{ field(class_=class_, placeholder=placeholder) }}
         {{ label|safe }}
     </label>
+{% elif field.type == 'SubmitField' %}
+    <button id="{{ field.id }}" name="{{ field.name }}" type="submit">{{ field.placeholder.text }}</button>
 {% else %}
     {% if with_label %}
     <label for="{{ field.id }}">
