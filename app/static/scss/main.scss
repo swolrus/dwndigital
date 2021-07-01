@@ -1,3 +1,7 @@
-@import 'bootstrap_overrides';
-@import 'dwndigital';
-@import 'extend';
+@import "dwndigital/variables";
+@import "dwndigital/utilities";
+@import "dwndigital/navbar";
+@import "dwndigital/forms";
+@import "dwndigital/table";
+@import "dwndigital/grid";
+@import 'dwndigital/dwndigital';

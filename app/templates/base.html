@@ -8,53 +8,46 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
   </head>
   <body>
-    <nav class="navbar navbar-light navbar-expand-md dwn-nav">
-        <a class="navbar-brand" href="#">KAIMAN x POSTMAN</a>
-        <label for="_1" class="collapse-state navbar-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </label>
-        <input id="_1" type="checkbox">
-        <div class="navbar-collapse">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('home') }}">PREORDER</a>
-            </li>
-          </ul>
-        </div>
+    <nav class="navbar">
+      <a class="brand" href="/">KAIMAN x POSTMAN</a>
+      <label for="_1" class="collapse-state toggle" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </label>
+      <input id="_1" type="checkbox">
+      <ul>
+        <li>
+          <a href="{{ url_for('home') }}">PREORDER</a>
+        </li>
+      </ul>
     </nav>
-    <main>
-      <div class="wrapper">
+    <div class="wrapper">
+      <main>
         {% if current_user.is_authenticated %}
-        <section>
-          <ul class="nav">
-            <li class="nav-item">
-              <a class="nav-link disabled" href="">{{ current_user.email }}</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('admin.create_item') }}">Create Item</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('admin.delete_item') }}">Delete Item</a>
-            </li>
-            <li class="nav-item" style="float:right">
-              <a class="nav-link" style="color:red!important" href="{{ url_for('admin.logout') }}">Logout</a>
-            </li>
+        <nav>
+          <ul class="mr-auto">
+            <li><a href="{{ url_for('admin.create_item') }}">Create Item</a></li>
+            <li><a href="{{ url_for('admin.delete_item') }}">Activate/Delete Item</a></li>
           </ul>
-        </section>
+          <ul>
+            <li><a class="disabled" href="">{{ current_user.email }}</a></li>
+            <li><a style="color:red!important" href="{{ url_for('admin.logout') }}">Logout</a></li>
+          </ul>
+        </nav>
         {% endif %}
+        <header>
+          <h1>{{ title }}</h1>
         {% with messages = get_flashed_messages() %}
         {% if messages %}
-        <section>
-            {% for message in messages %}
-            <p>{{ message }}</p>
-            {% endfor %}
-        </section>
+          {% for message in messages %}
+          <p style="color:cornflowerblue">{{ message }}</p>
+          {% endfor %}
         {% endif %}
         {% endwith %}
+        </header>
         
         {% block content %}{% endblock %}
-      </div>
-    </main>
-</body>
-{% block script %}{% endblock %}
+      </main>
+    </div>
+    {% block script %}{% endblock %}
+  </body>
 </html>

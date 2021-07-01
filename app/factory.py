@@ -42,6 +42,8 @@ def configure_blueprints(app: object) -> None:
 
 
 def configure_jinja(app: object) -> None:
+    from app.common.util import to_pretty_json
+    app.jinja_env.filters['tojson_pretty'] = to_pretty_json
     app.jinja_env.lstrip_blocks = True
     app.jinja_env.trim_blocks = True
 

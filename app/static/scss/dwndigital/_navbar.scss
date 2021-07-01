@@ -1,0 +1,88 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 60%;
+    z-index: 1030;
+    a::after {
+        content: "";
+        position: absolute;
+        width: 70%;
+        left: 15%;
+        bottom: 0.6rem;
+        border-bottom: solid 1px;
+    }
+    .brand {
+        color: $body-color;
+        font-weight: 900;
+        font-size: 1.2rem;
+        margin-right: auto;
+    }
+    &:focus::before {
+        font-family: "Font Awesome 5 Free";
+        font-weight: 600;
+        font-size: 1rem;
+        content: "\f101";
+        position: absolute;
+        bottom: 0.3rem;
+        left: -0.3rem;
+        z-index: 1040;
+        color: $body-color;
+    }
+}
+nav {
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    display: flex;
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    li {
+        display: inline-block;
+    }
+    a, .brand {
+        display: inline-block;
+        padding: 0.6rem 0.7rem 0.8rem 0.7rem;
+        background-color: white;
+        border-radius: 0.2rem;
+        position: relative;
+        line-height: 2rem;
+        &.active {
+            color: $body-color;
+        }
+    }
+    .disabled {
+        color: $body-color;
+    }
+    
+}
+.collapse-state {
+    cursor: pointer;
+    display: none;
+    float: right;
+    background-color: white;
+    border-radius: 0.2rem;
+    padding: 0.5rem 1rem;
+}
+.collapse-state + input{
+    display: none; /* hide the checkboxes */
+}
+.collapse-state + input:checked + ul {
+    display: block;
+    float: none;
+}
+@media only screen and (max-width: 768px) {
+    nav {
+        width: 100%;
+        ul {
+            display: none;
+            margin-top: 1rem;
+        }
+        .collapse-state {
+            display: flex;
+        }
+    }
+}

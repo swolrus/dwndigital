@@ -3,7 +3,7 @@ from flask import Blueprint, url_for, request, redirect, render_template, flash
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.utils import secure_filename
 import os
-from app.common.util import allowed_file
+from app.common.util import allowed_file, toJSON
 from app.admin.forms import LoginForm, RegisterForm
 from app.payments.forms import SetItemForm, DeleteItemForm
 from app.admin.models import User
@@ -18,6 +18,7 @@ def create_item():
     form = SetItemForm()
     ref = form.ref.data
     name = form.name.data
+    active = form.active.data
     price = form.price.data
     description = form.description.data
 
@@ -39,7 +40,7 @@ def create_item():
 
             file.save(abspath)
             
-            item = Item(ref=ref, name=name, description=description, price=price, img=relpath).save()
+            item = Item(ref=ref, name=name, active=active, description=description, price=price, img=relpath).save()
             return render_template('admin/newitem.html', item=item)
 
     return render_template('form.html', title='Create Item', form=form)
@@ -52,10 +53,24 @@ def delete_item():
     pk = form.name.data
 
     if form.validate_on_submit():
-        item = Item.objects().get(pk=pk)
-        form.name.choices.remove((item.pk, item.name))
-        flash("Deleted item: " + item.name)
-        item.delete()
+        if form.delete.data == True:
+            item = Item.objects().get(pk=pk)
+            form.name.choices.remove((item.pk, item.name))
+            flash("Deleted item: " + item.name)
+            item.delete()
+        elif form.activate.data == True:
+            item = Item.objects().get(pk=pk)
+            form.name.choices.remove((item.pk, item.name))
+            flash("Ativated item: " + item.name)
+            item.active = True
+            item.save()
+        elif form.deactivate.data == True:
+            item = Item.objects().get(pk=pk)
+            form.name.choices.remove((item.pk, item.name))
+            flash("Deactivated item: " + item.name)
+            item.active = False
+            item.save()
+
     
     if len(form.name.choices) == 0:
         form.name.choices=['No Items Exist!']
@@ -69,14 +84,15 @@ def login():
 
     form = LoginForm(next=request.args.get('next'))
     email = form.email.data
+    remember_me = form.remember_me.data
     password = form.password.data
     
     if form.validate_on_submit():
-        user = User.objects(email=email).first()
+        user = User.objects(email=email).first() or False
 
         if user and user.check_password(password):
 
-            if login_user(user, remember=True):
+            if login_user(user, remember=remember_me):
                 user.update_activity()
 
                 #handle optionally redirecting to the next URL safely
@@ -94,7 +110,6 @@ def login():
     return render_template('form.html', title='Sign In', form=form)
 
 @admin_routes.route('/register', methods=['GET', 'POST'])
-@login_required
 def register():
     form = RegisterForm()
     email = form.email.data
@@ -102,9 +117,10 @@ def register():
     repeatpassword = form.repeatpassword.data
     
     if form.validate_on_submit():
-        user = User.objects(email=email).first()
+        user = User.objects(email=email).first() or False
         if not user:
-            user = User(email=email).set_password(password).save()
+            user = User(email=email).set_password(password)
+            user.save()
 
         return redirect(url_for('admin.login'))
 

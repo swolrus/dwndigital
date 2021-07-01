@@ -9,3 +9,7 @@ def allowed_file(filename):
 def toJSON(obj):
         return json.dumps(obj, default=lambda o: o.__dict__, 
             sort_keys=True, indent=4)
+
+def to_pretty_json(value):
+    return json.dumps(value, sort_keys=True,
+                      indent=4, separators=(',', ': '))

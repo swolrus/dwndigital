@@ -1,7 +1,6 @@
 from app.common.models import TimestampMixin
 from werkzeug.security import check_password_hash, generate_password_hash
 from app.common.extensions import db
-from bson.objectid import ObjectId
 
 class Item(db.Document):
     ref = db.StringField(required=True, primary_key=True)
@@ -20,7 +19,8 @@ class PurchasedItem(db.EmbeddedDocument):
         data = {
             'name': self.item.name,
             'quantity': self.quantity,
-            'total': self.item.price * self.quantity,
+            'price': str(self.item.price) + ' AUD',
+            'total': str(self.item.price * self.quantity) + ' AUD',
         }
         return data
         
@@ -34,10 +34,11 @@ class Buyer(db.Document):
         kwargs.update({'email': kwargs.get('email').lower()})
         super().__init__(*args, **kwargs)
 
-class Transaction(db.Document, TimestampMixin):
+class Transaction(TimestampMixin, db.Document):
     order_id = db.StringField(required=True, primary_key=True)
     status = db.StringField(required=True)
-    buyer = db.ReferenceField(Buyer)
+    response = db.StringField()
+    buyer = db.ReferenceField(Buyer, required=True)
     items = db.EmbeddedDocumentListField(PurchasedItem)
 
     def get_total(self):

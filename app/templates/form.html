@@ -1,24 +1,24 @@
 {% extends the_template %}
-
+{% import 'macros.html' as macros %}
+{% block title %}{{ title }}{% endblock %}
 {% block content %}
-<section>
-    <h1>{{ title }}</h1>
-</section>
 <section>
     <form action="" method="post" enctype="multipart/form-data">
         {% for field in form %}
-            {% if field.type in ('StringField', 'TextAreaField', 'PasswordField', 'IntegerField', 'FileField') %}
-            <label for="{{ field.id }}"
-                class="{% if field.flags.required %}required{% endif %}">
-                {{ field.label.text }}
-            </label>
-            {% endif %}
-            {{ field(placeholder=placeholder) }}
-
-            {% if field.errors %}
-            <span class="error help-inline" style="color:cornflowerblue">{{ field.errors|join(', ') }}</span>
-            {% endif %}
+            {{ macros.formfield(field) }}
         {% endfor %}
     </form>
 </section>
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+var fileselected = document.getElementById("file-selected");
+var fileinput = document.querySelector("input[type='file']");
+fileinput.addEventListener("change", function() {
+    var filename="File selected!";
+    var file = this.value.split("\\");
+    filename = file[file.length - 1];
+    fileselected.innerHTML=filename;
+})
+</script>
 {% endblock %}

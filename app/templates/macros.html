@@ -1,0 +1,33 @@
+{% macro formfield(field) %}
+{% set with_label=true if field.render_kw.label or False %}
+{% set label=field.render_kw.label or field.label.text %}
+{% set placeholder=field.render_kw.placeholder or field.label.text|capitalize + '...'  %}
+{% set class_=field.render_kw.class_ or ''  %}
+{% set class_=class_+' error-val' if field.errors else '' %}
+
+<div class="form-item">
+{% if field.type == 'BooleanField' %}
+    <label for="{{ field.id }}">
+        {{ field(class_=class_, placeholder=placeholder) }}
+        {{ label|safe }}
+    </label>
+{% else %}
+    {% if with_label %}
+    <label for="{{ field.id }}">
+        {{ label|safe }}
+    </label>
+    {% elif field.type == 'FileField' %}
+    <label for="{{ field.id }}" class="button">
+        {{ label|safe }}
+    </label>
+    <span id="file-selected"></span>
+    {% set class_=class_+' hidden' %}
+    {% endif %}
+    {{ field(class_=class_, placeholder=placeholder) }}
+{% endif %}
+
+{% if field.errors %}
+    <span class="error">{{ field.errors|join(', ') }} <i class="fas fa-arrow-up"></i></span>
+{% endif %}
+</div>
+{% endmacro %}

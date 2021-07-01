@@ -5,7 +5,7 @@ from app.common.extensions import db, login
 from app.common.models import TimestampMixin
 
 
-class User(db.Document, UserMixin, TimestampMixin):
+class User(TimestampMixin, UserMixin, db.Document):
     email = db.StringField(required=True, primary_key=True)
     password = db.StringField(required=True)
 

@@ -1,6 +1,7 @@
 from flask import current_app as app
 from paypalcheckoutsdk.core import PayPalHttpClient, SandboxEnvironment
 from paypalcheckoutsdk.orders import OrdersCreateRequest
+from paypalcheckoutsdk.orders import OrdersGetRequest
 
 import sys
 
@@ -35,6 +36,7 @@ class PayPalClient:
                         self.object_to_json(value) if not self.is_primittive(value) else\
                          value
         return result
+
     def array_to_json_array(self, json_array):
         result =[]
         if isinstance(json_array, list):
@@ -48,6 +50,16 @@ class PayPalClient:
 
     """ This is the sample function to create an order. It uses the
         JSON body returned by buildRequestBody() to create an order."""
+
+    #2. Set up your server to receive a call from the client
+    """You can use this function to retrieve an order by passing order ID as an argument"""   
+    def get_status(self, order_id):
+        """Method to get order"""
+        request = OrdersGetRequest(order_id)
+        #3. Call PayPal to get the transaction
+        response = self.client.execute(request)
+        #4. Save the transaction in your database. Implement logic to save transaction to your database for future reference.
+        return response.result.status
 
     def create_order(self, body):
         request = OrdersCreateRequest()
@@ -65,12 +77,13 @@ class PayPalClient:
                 print('\t{}: {}\tCall Type: {}'.format(link.rel, link.href, link.method))
             print('Total Amount: ' + response.result.purchase_units[0].amount.currency_code +
                                 response.result.purchase_units[0].amount.value)
-
+        
         return response
 
     """Setting up the JSON request body for creating the order. Set the intent in the
     request body to "CAPTURE" for capture intent flow."""
     def build_request(self, transaction):
+        from app.payments.models import Item
         shipmethod = transaction.get('shipmethod') or "AusPost"
         shipping = transaction.get('shipping') or "0"
         handling = transaction.get('handling')  or "0"
@@ -80,14 +93,14 @@ class PayPalClient:
         total = 0
         items = []
         for item in transaction['items']:
-            from app.payments.models import Item
-            dbitem = Item.objects().get(pk=item['id'])
+            dbitem = Item.objects(pk=item['id']).first()
+            print(dbitem.price)
+            print(item['quantity'])
 
-            itemtotal = dbitem.price * item['quantity']
-            total += int(itemtotal)
+            itemtotal = int(dbitem.price) * int(item['quantity'])
+            total += itemtotal
             anitem = {
                 "name": dbitem.name,
-                "description": dbitem.description,
                 "unit_amount": {
                     "currency_code": "AUD",
                     "value": str(dbitem.price),
@@ -145,7 +158,7 @@ class PayPalClient:
                             "full_name": transaction['firstname'],
                             "surname": transaction['lastname'],
                         },
-                        "address_line_1": transaction['address'],
+                        "address_line_1": transaction['street'],
                         "admin_area_1": transaction['state'],
                         "admin_area_2": transaction['city'],
                         "postal_code": transaction['postcode'],

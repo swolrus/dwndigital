@@ -1,0 +1,163 @@
+{% extends the_template %}
+{% import 'macros.html' as macros %}
+{% block title %}DETAILS{% endblock %}
+{% block content %}
+<header>
+  <h1>DETAILS</h1>
+</header>
+<article>
+  <aside>
+    <h3>Pre-order Details</h3>
+    <div id="prices"></div>
+    <div id="totalprice">
+      <h4>TOTAL:</h4><br>
+    </div>
+  </aside>
+  <section>
+    <form action="" method="post" enctype="multipart/form-data">
+      {{ form.csrf_token }}
+      <h3>Required Details</h3>
+      <div class="quantity form-item">
+        <label for="quantity"><i class="fas fa-times"></i> Quantity</label><br>
+        <button class="minus-btn" type="button" name="button">
+          <i class="fas fa-sm fa-minus"></i>
+        </button>
+
+        {{ form.quantity(class_=class_, placeholder=placeholder, value="1") }}
+
+        <button class="plus-btn" type="button" name="button">
+          <i class="fas fa-sm fa-plus"></i>
+        </button>
+        {% if form.quantity.errors %}
+        <span class="error">{{ form.quantity.errors|join(', ') }} <i class="fas fa-arrow-up"></i></span>
+        {% endif %}
+      </div>
+      <div class="inputsize form-item">
+        <label for="sizes"><i class="fas fa-tshirt"></i> Sizes</label>
+
+        {{ form.sizes(class_=class_, placeholder="Please list desired sizes...") }}
+
+        {% if form.sizes.errors %}
+        <span class="error">{{ form.sizes.errors|join(', ') }} <i class="fas fa-arrow-up"></i></span>
+        {% endif %}
+      </div>
+      <label for="firstname lastname"><i class="fas fa-mail"></i> Name</label>
+      <div class="row">
+        <div class="col-6 form-item">
+
+          {{ form.firstname(class_=class_, placeholder="First...") }}
+
+          {% if form.firstname.errors %}
+          <span class="error">{{ form.firstname.errors|join(', ') }} <i class="fas fa-arrow-up"></i></span>
+          {% endif %}
+        </div>
+        <div class="col-6 form-item">
+
+          {{ form.lastname(class_=class_, placeholder="Last...") }}
+
+          {% if form.lastname.errors %}
+          <span class="error">{{ form.lastname.errors|join(', ') }} <i class="fas fa-arrow-up"></i></span>
+          {% endif %}
+        </div>
+      </div>
+      <div class="form-item">
+        <label for="email"><i class="fas fa-envelope"></i> Email</label>
+
+        {{ form.email(class_=class_, placeholder="Email...") }}
+
+        {% if form.email.errors %}
+        <span class="error">{{ form.email.errors|join(', ') }} <i class="fas fa-arrow-up"></i></span>
+        {% endif %}
+      </div>
+      <div class="form-item">
+        <label for="street country city state postcode"><i class="fas fa-map-pin"></i> Address</label>
+
+        {{ form.street(class_=class_, placeholder="Unit/Number and Street...") }}
+
+        {% if form.street.errors %}
+        <span class="error">{{ form.street.errors|join(', ') }} <i class="fas fa-arrow-up"></i></span>
+        {% endif %}
+      </div>
+      <div class="form-item">
+
+        {{ form.country(class_=class_, placeholder="Country...") }}
+
+        {% if form.country.errors %}
+        <span class="error">{{ form.country.errors|join(', ') }} <i class="fas fa-arrow-up"></i></span>
+        {% endif %}
+      </div>
+      <div class="form-item">
+
+        {{ form.city(class_=class_, placeholder="City...") }}
+
+        {% if form.city.errors %}
+        <span class="error">{{ form.city.errors|join(', ') }} <i class="fas fa-arrow-up"></i></span>
+        {% endif %}
+      </div>
+      <div class="row">
+        <div class="col-6 form-item">
+
+          {{ form.state(class_=class_, placeholder="State...") }}
+
+          {% if form.state.errors %}
+          <span class="error">{{ form.state.errors|join(', ') }} <i class="fas fa-arrow-up"></i></span>
+          {% endif %}
+        </div>
+        <div class="col-6 form-item">
+
+          {{ form.postcode(class_=class_, placeholder="Postcode...") }}
+
+          {% if form.postcode.errors %}
+          <span class="error">{{ form.postcode.errors|join(', ') }} <i class="fas fa-arrow-up"></i></span>
+          {% endif %}
+        </div>
+      </div>
+      <div class="form-submit">
+        {{ form.submit }}
+      </div>
+    </form>
+  </section>
+</article>
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+    var input = document.getElementById('quantity')
+    function updateprices() {
+      document.getElementById('prices').innerHTML = parseInt(input.value) + ' x {{ item.name}}';
+      document.getElementById('totalprice').innerHTML = 
+        '<h5><b>TOTAL:</b></h5><h4>' + 
+        parseInt({{ item.price }} * input.value) + ' AUD' +
+        '</h4>';
+    };
+    updateprices();
+    document.querySelector('.minus-btn').addEventListener('click', function(e) {
+      e.preventDefault();
+      var value = parseInt(input.value);
+  
+      if (value > 2) {
+        value = value - 1;
+      } else {
+        value = 1;
+      }
+  
+      input.value = value;
+  
+      updateprices();
+    });
+  
+    document.querySelector('.plus-btn').addEventListener('click', function(e) {
+      e.preventDefault();
+      var value = parseInt(input.value);
+  
+      if (value < 4) {
+        value = value + 1;
+      } else {
+        value = 5;
+      }
+  
+      input.value = value;
+  
+      updateprices();
+    });
+  </script>
+{% endblock %}

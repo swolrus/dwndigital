@@ -1,7 +1,6 @@
 from flask import Blueprint, url_for, request, jsonify, render_template
 from app.common.extensions import db, paypal
 from app.payments.models import Item, PurchasedItem, Buyer, Transaction
-from app.common.util import toJSON
 
 
 payments_api = Blueprint('payments', __name__, url_prefix='/payments')
@@ -12,11 +11,11 @@ from app.payments import errors, tokens
 def create_transaction():
     data = request.get_json()
 
-    for item in ['firstname', 'lastname', 'email', 'address', 'country', 'city', 'state', 'postcode', 'items']:
+    for item in ['firstname', 'lastname', 'email', 'street', 'country', 'city', 'state', 'postcode', 'items']:
         if item not in data:
             return errors.bad_request('request must include: all fields')
 
-    address = data['address'] + ' ' + data['country'] + ' ' + data['city'] + ' ' + data['state'] + ' ' + data['postcode']
+    address = data['street'] + ' ' + data['country'] + ' ' + data['city'] + ' ' + data['state'] + ' ' + data['postcode']
     name = data['firstname'] + ' ' + data['lastname']
     buyer = Buyer.objects(email=data['email']).first()
     
@@ -34,22 +33,19 @@ def create_transaction():
     data = paypal.build_request(data)
     result = paypal.create_order(data)
 
-    transaction.order_id=result.result.id
+    transaction.order_id = result.result.id
     transaction.save()
-
-    response = toJSON(result.result)
     
-    return response
+    return toJSON(result.result)
 
 @payments_api.route('/items', methods=['GET'])
 def get_items():
     data = Item.objects()
     return jsonify(data)
 
-@payments_api.route('/reciept', methods=['GET'])
-def set_approved():
-    order_id=request.args.get('id')
-    transaction = Transaction.objects(pk=order_id).get_or_404()
+@payments_api.route('/reciept/<id>', methods=['GET'])
+def set_approved(id):
+    transaction = Transaction.objects().get_or_404(pk=id)
     trans = transaction.to_dict(include_email=True)
     
     return render_template('reciept.html', trans=trans)

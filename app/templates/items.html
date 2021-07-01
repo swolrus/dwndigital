@@ -1,19 +1,19 @@
 {% extends the_template %}
 {% block title %}PREORDER{% endblock %}
 {% block content %}
-{% for item in items %}
-  <section>
-    <h2>{{ item.name }}</h2>
-  </section>
-  <section>
-    <img class="product" src="{{ url_for('static', filename=item.img) }}">
-  </section>
+<header>
+  <h1>ITEMS</h1>
+</header>
+{% for item in items if item.active %}
+<article>
+  <img class="side" src="{{ url_for('static', filename=item.img) }}">
   <section class="item">
-    <h3>PREORDER</h3>
+    <h3>{{ item.name }}</h3>
     <p>{{ item.description }}</p>
     <h4>{{ item.price }} AUD</h4>
-    <a href="{{ url_for('checkout') + '?item=' + item.pk|string }}" class="action"></a>
+    <a href="{{ url_for('buy', ref=item.pk) }}" class="action"></a>
   </section>
+</article>
 {% endfor %}
 {% endblock %}
 {% block script %}

@@ -1,0 +1,114 @@
+// preload button images
+body::after{
+    position:absolute; width:0; height:0; overflow:hidden; z-index:-1; // hide images
+    content:    url(../img/buy-now-orange.svg)
+                url(../img/buy-now-brown.svg); // load images
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+*:focus {
+    outline: none;
+}
+html, body {
+    margin: 0;
+    height: 100%;
+    font-size: 16px;
+    font-family: 'Roboto',sans-serif;
+    color: $body-color;
+}
+h1, h2, h3, h4, h5 {
+    color: darken($body-color, 5%);
+    margin: 0.6rem 0;
+}
+a {
+    color: rgb(216, 139, 23);
+    text-decoration: none;
+    position: relative;
+    &:hover, &:focus {
+        color: $body-color;
+    }
+}
+header {
+    width: 100%;
+    text-align: center;
+    h1 {
+        margin: 0;
+    }
+}
+.wrapper {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100%;
+    width: 75%;
+    padding: 6rem 0 3rem 0;
+}
+main {
+    width: 100%;
+}
+article {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    & > *:first-child {
+        margin-right: 0;
+    }
+}
+aside {
+    flex: 1 1 200px;
+    height: auto;
+    margin: 1rem;
+}
+.side {
+    width: 200px;
+    margin: auto 1rem;
+}
+section {
+    flex: 1 1 400px;
+    margin: 1rem;
+}
+.item {
+    flex: 1 1 400px;
+    position: relative;
+    border-radius: 0.12rem;
+    border: 0.1rem solid rgba(117, 96, 66, .1);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
+    background: radial-gradient(50px 50px at calc(100% - 1.33rem) calc(100% - 1.33rem), rgba(0, 0, 0, 0.05) 2.7rem, rgba(117, 96, 66, .3) 2.75rem, rgba(0, 0, 0, 0) 2.8rem);
+    margin: 1rem;
+    padding: 1rem;
+    a.action {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 3.6rem;
+        height: 3.6rem;
+        padding: 0;
+        text-decoration: none;
+        background-image: url(../img/buy-now-orange.svg);
+        background-position: right 0 bottom 0;
+        background-size: cover;
+        &:hover, &:focus {
+            background-image: url(../img/buy-now-brown.svg);
+        }
+    }
+}
+.error {
+    color:cornflowerblue;
+    float: right;
+    display: block;
+}
+#paypal-button {
+    margin-top: 2rem;
+}
+@media only screen and (max-width: 900px) {
+    .wrapper {
+        width: 90%;
+    }
+}
+@media only screen and (min-width: 1258px) {
+    .wrapper {
+        width: 60%;
+    }
+}

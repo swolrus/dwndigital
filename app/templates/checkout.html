@@ -1,0 +1,76 @@
+{% extends the_template %}
+{% block title %}PAYPAL CHECKOUT{% endblock %}
+{% block content %}
+<article>
+  <aside>
+    <h3>Customer</h3>
+    <p><i class="fas fa-user"></i> {{ transaction['name'] }}</p>
+    <p><i class="fas fa-envelope"></i> {{ transaction['email'] }}</p>
+    <p><i class="fas fa-map-pin"></i> {{ transaction['address'] }}</p>
+  </aside>
+  <section>
+    <h3>Purchase</h3>
+    <table class="invoice">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Sizes</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for item in transaction['items'] %}
+        <tr>
+          <td>{{ item['name'] }}</td>
+          <td>{{ item['sizes'] }}</td>
+          <td>{{ item['quantity'] }}</td>
+          <td>{{ item['price'] }}</td>
+          <td>{{ item['total'] }}</td>
+        </tr>
+      {% endfor %}
+    {% if transaction['status'] == 'pending' %}
+        <tr>
+          <td colspan="5"><h3><b>DUE TODAY: </b>{{ transaction['total'] }}</h3></td>
+        </tr>
+      </tbody>
+    </table>
+    <div id="paypal-button"></div>
+    {% else %}
+        <tr>
+          <td colspan="5"><h3>ORDER {{ transaction['status'] }}</h3></td>
+        </tr>
+      </tbody>
+    </table>
+    {% endif %}
+  </section>
+</article>
+{% endblock %}
+{% block script %}
+<script
+  src="https://www.paypal.com/sdk/js?client-id=AQVce-IvjMxu3rIQnkQE_6YGkWLKcXS7410E77YClYqRzOd-8xeFg7giN2b6_6usd7OfBH-EAVjcStIE&components=buttons&currency=AUD"> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
+</script>
+<script>
+  paypal.Buttons({
+    style: {
+      height: 40,
+      layout: 'vertical',
+      color:  'black',
+      shape:  'rect',
+      label:  'checkout',
+    },
+    fundingSource: paypal.FUNDING.PAYPAL,
+    createOrder: function() {
+      return "{{ order_id }}"; // Use the key sent by your server's response, ex. 'id' or 'token'
+    },
+    onApprove: function(data, actions) {
+      // This function captures the funds from the transaction.
+      return actions.order.capture().then(function(details) {
+        // This function shows a transaction success message to your buyer.
+        window.location.href = "/reciept/" + data.orderID;
+      });
+    },
+  }).render('#paypal-button');
+</script>
+{% endblock %}
