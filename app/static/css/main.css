@@ -119,7 +119,7 @@ input[type=text]:focus, input[type=number]:focus, input[type=password]:focus, se
   background-color: #fbfaf8;
 }
 
-button, .button, input[type=button], input[type=submit] {
+.form-submit input, button, .button, input[type=button], input[type=submit] {
   width: 100%;
   cursor: pointer;
   background-color: rgba(117, 96, 66, 0.2);
@@ -135,7 +135,7 @@ button, .button, input[type=button], input[type=submit] {
   text-align: center;
   transition: all 0.2s;
 }
-button:hover, button:focus, .button:hover, .button:focus, input[type=button]:hover, input[type=button]:focus, input[type=submit]:hover, input[type=submit]:focus {
+.form-submit input:hover, .form-submit input:focus, button:hover, button:focus, .button:hover, .button:focus, input[type=button]:hover, input[type=button]:focus, input[type=submit]:hover, input[type=submit]:focus {
   color: #FFFFFF !important;
   background-color: #756042;
 }
