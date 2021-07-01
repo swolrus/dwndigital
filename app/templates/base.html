@@ -22,20 +22,20 @@
     </nav>
     <div class="wrapper">
       <main>
-        {% if current_user.is_authenticated %}
-        <nav>
-          <ul class="mr-auto">
-            <li><a href="{{ url_for('admin.create_item') }}">Create Item</a></li>
-            <li><a href="{{ url_for('admin.delete_item') }}">Activate/Delete Item</a></li>
-          </ul>
-          <ul>
-            <li><a class="disabled" href="/admin/home">{{ current_user.email }}</a></li>
-            <li><a style="color:red!important" href="{{ url_for('admin.logout') }}">Logout</a></li>
-          </ul>
-        </nav>
-        {% endif %}
         <header {{ 'style=margin-top:3rem' if home==true }}>
           <h1>{{ title|upper }}</h1>
+        {% if current_user.is_authenticated %}
+          <nav>
+            <ul class="mr-auto">
+              <li><a href="{{ url_for('admin.create_item') }}">Create Item</a></li>
+              <li><a href="{{ url_for('admin.delete_item') }}">Activate/Delete Item</a></li>
+            </ul>
+            <ul>
+              <li><a class="disabled" href="/admin/home">{{ current_user.email }}</a></li>
+              <li><a style="color:red!important" href="{{ url_for('admin.logout') }}">Logout</a></li>
+            </ul>
+          </nav>
+        {% endif %}
         {% with messages = get_flashed_messages() %}
         {% if messages %}
           {% for message in messages %}
