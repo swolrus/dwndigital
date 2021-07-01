@@ -1,9 +1,6 @@
 {% extends the_template %}
 {% block title %}PREORDER{% endblock %}
 {% block content %}
-<header>
-  <h1>ITEMS</h1>
-</header>
 {% for item in items if item.active %}
 <article>
   <img class="side" src="{{ url_for('static', filename=item.img) }}">

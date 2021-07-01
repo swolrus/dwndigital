@@ -17,8 +17,12 @@ def inject_dict_for_all_templates():
 
 @app.route('/')
 def home():
+    return render_template('base.html', title='WELCOME')
+
+@app.route('/drops')
+def drops():
     items = Item.objects()
-    return render_template('items.html', items=items)
+    return render_template('items.html', title='DROPS', items=items)
 
 @app.route('/buy/<ref>', methods=['GET', 'POST'])
 def buy(ref):
