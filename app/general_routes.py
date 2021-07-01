@@ -86,7 +86,7 @@ def approved(order_id):
     t = Transaction.objects().get_or_404(pk=order_id)
     status = paypal.get_status(order_id)
     print(status)
-    title = "Big ups " + t.buyer.name.split(" ")[1] + "! You'll hear from us soon x"
+    title = "Big ups " + t.buyer.name.split(" ")[0] + "! You'll hear from us soon x"
     t.status = status
     t.time_expires = None
     t.save()
