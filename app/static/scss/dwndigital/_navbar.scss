@@ -18,20 +18,10 @@
         border-bottom: solid 1px;
     }
     .brand {
+        display: inline-block;
         color: $body-color;
         font-weight: 900;
         font-size: 1.2rem;
-    }
-    &:focus::before {
-        font-family: "Font Awesome 5 Free";
-        font-weight: 600;
-        font-size: 1rem;
-        content: "\f101";
-        position: absolute;
-        bottom: 0.3rem;
-        left: -0.3rem;
-        z-index: 1040;
-        color: $body-color;
     }
 }
 nav {
@@ -47,7 +37,6 @@ nav {
         display: inline-block;
     }
     a, .brand {
-        display: inline-block;
         padding: 0.6rem 0.7rem 0.8rem 0.7rem;
         background-color: white;
         border-radius: 0.2rem;
