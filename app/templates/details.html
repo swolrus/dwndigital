@@ -127,6 +127,21 @@
         '</h4>';
     };
     updateprices();
+    input.addEventListener('change', function(e) {
+      e.preventDefault();
+      var value = parseInt(input.value);
+  
+      if (value > 5) {
+        value = 5;
+      }
+      if (value < 0) {
+        value = 0;
+      }
+  
+      input.value = value;
+  
+      updateprices();
+    });
     document.querySelector('.minus-btn').addEventListener('click', function(e) {
       e.preventDefault();
       var value = parseInt(input.value);
