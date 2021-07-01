@@ -55,17 +55,17 @@ def buy(ref):
         for i in data['items']:
             if not Item.objects().get(pk=i['id']):
                 return errors.bad_request('Request contains invalid items (ಠ¿ಠ)')
-            item = PurchasedItem(item=i['id'], quantity=i['quantity'])
+            item = PurchasedItem(item=i['id'], quantity=i['quantity'], sizes=i['sizes'])
             t.items.append(item)
         
         data = paypal.build_request(data)
         result = paypal.create_order(data)
 
         t.order_id = result.result.id
-        t.set_expire_at(600)
+        t.set_expire_at(900)
         t.save()
 
-        flash('This sale expires in 1 hour :)')
+        flash('This transaction is available to confirm for 15 minutes :)')
         return redirect(url_for('checkout', order_id=t.order_id))
 
     item = Item.objects().get_or_404(pk=ref)

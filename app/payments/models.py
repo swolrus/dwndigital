@@ -13,6 +13,7 @@ class Item(db.Document):
 class PurchasedItem(db.EmbeddedDocument):
     item = db.ReferenceField(Item)
     quantity = db.IntField(required=True)
+    sizes = db.StringField()
 
     def to_dict(self):
         item = Item.objects.get(pk=self.item.id)
@@ -21,6 +22,7 @@ class PurchasedItem(db.EmbeddedDocument):
             'quantity': self.quantity,
             'price': str(self.item.price) + ' AUD',
             'total': str(self.item.price * self.quantity) + ' AUD',
+            'sizes': self.sizes
         }
         return data
         
