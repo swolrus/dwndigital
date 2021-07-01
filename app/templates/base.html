@@ -34,7 +34,7 @@
           </ul>
         </nav>
         {% endif %}
-        <header>
+        <header {{ 'style=margin-top:3rem' if home==true }}>
           <h1>{{ title|upper }}</h1>
         {% with messages = get_flashed_messages() %}
         {% if messages %}

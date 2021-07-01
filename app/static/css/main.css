@@ -323,6 +323,7 @@ a:hover, a:focus {
 
 header {
   width: 100%;
+  margin-top: 7rem;
   text-align: center;
 }
 header h1 {
@@ -336,7 +337,7 @@ header h1 {
   justify-content: center;
   min-height: 100%;
   width: 75%;
-  padding: 4rem 0 3rem 0;
+  padding: 0 0 3rem 0;
 }
 
 main {

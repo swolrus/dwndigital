@@ -17,7 +17,7 @@ def inject_dict_for_all_templates():
 
 @app.route('/')
 def home():
-    return render_template('base.html', title='WELCOME')
+    return render_template('base.html', home=True, title='WELCOME')
 
 @app.route('/drops')
 def drops():
