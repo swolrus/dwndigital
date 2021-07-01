@@ -1,10 +1,14 @@
 .navbar {
+    display: inline-block;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     width: 60%;
     z-index: 1030;
+    ul {
+        float: right;
+    }
     a::after {
         content: "";
         position: absolute;
@@ -17,7 +21,6 @@
         color: $body-color;
         font-weight: 900;
         font-size: 1.2rem;
-        margin-right: auto;
     }
     &:focus::before {
         font-family: "Font Awesome 5 Free";
@@ -65,7 +68,8 @@ nav {
     float: right;
     background-color: white;
     border-radius: 0.2rem;
-    padding: 0.5rem 1rem;
+    font-size: 1.2rem;
+    padding: 1rem 1rem;
 }
 .collapse-state + input{
     display: none; /* hide the checkboxes */
@@ -79,10 +83,12 @@ nav {
         width: 100%;
         ul {
             display: none;
-            margin-top: 1rem;
+            li {
+                margin-top: 0.4rem;
+            }
         }
         .collapse-state {
-            display: flex;
+            display: inline-block;
         }
     }
 }

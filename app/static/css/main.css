@@ -13,12 +13,16 @@
 }
 
 .navbar {
+  display: inline-block;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   width: 60%;
   z-index: 1030;
+}
+.navbar ul {
+  float: right;
 }
 .navbar a::after {
   content: "";
@@ -32,7 +36,6 @@
   color: #917e63;
   font-weight: 900;
   font-size: 1.2rem;
-  margin-right: auto;
 }
 .navbar:focus::before {
   font-family: "Font Awesome 5 Free";
@@ -80,7 +83,8 @@ nav .disabled {
   float: right;
   background-color: white;
   border-radius: 0.2rem;
-  padding: 0.5rem 1rem;
+  font-size: 1.2rem;
+  padding: 1rem 1rem;
 }
 
 .collapse-state + input {
@@ -99,10 +103,12 @@ nav .disabled {
   }
   nav ul {
     display: none;
-    margin-top: 1rem;
+  }
+  nav ul li {
+    margin-top: 0.4rem;
   }
   nav .collapse-state {
-    display: flex;
+    display: inline-block;
   }
 }
 input[type=text], input[type=number], input[type=password], select {
@@ -129,13 +135,14 @@ button, .button, input[type=button], input[type=submit] {
   width: 100%;
   cursor: pointer;
   background-color: rgba(117, 96, 66, 0.2);
-  padding: 0.5em 1.2em;
+  padding: 0.6em 1.2em;
   border: 0.12em solid #917e63;
   margin: 0 0.3em 0.3em 0;
   border-radius: 0.12em;
   box-sizing: border-box;
   text-decoration: none;
   font-weight: 600;
+  font-size: 1rem;
   color: #917e63;
   text-align: center;
   transition: all 0.2s;
@@ -329,7 +336,7 @@ header h1 {
   justify-content: center;
   min-height: 100%;
   width: 75%;
-  padding: 6rem 0 3rem 0;
+  padding: 4rem 0 3rem 0;
 }
 
 main {
