@@ -29,7 +29,7 @@
             <li><a href="{{ url_for('admin.delete_item') }}">Activate/Delete Item</a></li>
           </ul>
           <ul>
-            <li><a class="disabled" href="">{{ current_user.email }}</a></li>
+            <li><a class="disabled" href="/admin/home">{{ current_user.email }}</a></li>
             <li><a style="color:red!important" href="{{ url_for('admin.logout') }}">Logout</a></li>
           </ul>
         </nav>

@@ -41,7 +41,7 @@ def create_item():
             file.save(abspath)
             
             item = Item(ref=ref, name=name, active=active, description=description, price=price, img=relpath).save()
-            return render_template('admin/newitem.html', item=item)
+            return render_template('admin/newitem.html', title='New Item', item=item)
 
     return render_template('form.html', title='Create Item', form=form)
 
@@ -123,7 +123,7 @@ def register():
         return redirect(url_for('admin.login'))
 
     else:
-        return render_template('form.html', form=form)
+        return render_template('form.html', title='Register', form=form)
 
 @admin_routes.route('/logout')
 @login_required
@@ -134,4 +134,4 @@ def logout():
 
 @admin_routes.route("/home")
 def home():
-    return render_template('admin/home.html')
+    return render_template('admin/home.html', title='Admin Home')
