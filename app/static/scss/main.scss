@@ -1,7 +1,8 @@
 @import "dwndigital/variables";
 @import "dwndigital/utilities";
-@import "dwndigital/navbar";
+@import 'dwndigital/dwndigital';
 @import "dwndigital/forms";
 @import "dwndigital/table";
 @import "dwndigital/grid";
-@import 'dwndigital/dwndigital';
+@import "dwndigital/navbar";
+@import 'normalise';
