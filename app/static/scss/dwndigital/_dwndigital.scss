@@ -6,27 +6,29 @@ body::after{
 }
 *, *::before, *::after {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font: inherit;
 }
 *:focus {
     outline: none;
 }
 html, body {
-    margin: 0;
     height: 100%;
     font-size: 16px;
     font-family: 'Roboto',sans-serif;
-    color: $body-color;
+    color: $color-body;
 }
 h1, h2, h3, h4, h5 {
-    color: darken($body-color, 5%);
+    color: darken($color-body, 5%);
     margin: 0.6rem 0;
 }
 a {
-    color: rgb(216, 139, 23);
+    color: $color-link;
     text-decoration: none;
     position: relative;
     &:hover, &:focus {
-        color: $body-color;
+        color: $color-body;
     }
 }
 header {
@@ -64,6 +66,7 @@ aside {
 }
 .side {
     width: 200px;
+    height: auto;
     margin: auto 1rem;
 }
 section {

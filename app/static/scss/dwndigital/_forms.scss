@@ -4,19 +4,19 @@ input[type="text"], input[type="number"], input[type="password"], select {
     width: 100%;
     border-radius: 0.12rem;
     border: 0.1rem solid rgba(117, 96, 66, .5);
-    color: $body-color;
+    color: $color-body;
     padding: 0.2rem 0.4rem;
     box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
     width:100%;
     font-family: inherit;
     font-size: inherit;
     &::placeholder {
-        color: lighten($body-color, 20%);
+        color: lighten($color-body, 20%);
     }
     &:focus {
         transform: scale(1.02, 1.06);
-        color: $body-color;
-        background-color: lighten($body-color, 50%)
+        color: $color-body;
+        background-color: lighten($color-body, 50%)
     }
 }
 button, .button, input[type="button"], input[type="submit"] {
@@ -24,19 +24,19 @@ button, .button, input[type="button"], input[type="submit"] {
     cursor: pointer;
     background-color: rgba(117, 96, 66, 0.2);
     padding: 0.6em 1.2em;
-    border: 0.12em solid $body-color;
+    border: 0.12em solid $color-body;
     margin: 0 0.3em 0.3em 0;
     border-radius: 0.12em;
     box-sizing: border-box;
     text-decoration: none;
     font-weight: 600;
     font-size: 1rem;
-    color: $body-color;
+    color: $color-body;
     text-align: center;
     transition: all 0.2s;
     &:hover, &:focus {
         color: #FFFFFF!important;
-        background-color: rgb(117, 96, 66);
+        background-color: $color-button;
     }
 }
 .button {
