@@ -400,7 +400,7 @@ nav .disabled {
   vertical-align: middle;
   transform: rotate(0deg);
   transform-origin: center;
-  transition: transform 500ms 700ms;
+  transition: transform 500ms 800ms;
 }
 
 .collapse-state + input {
