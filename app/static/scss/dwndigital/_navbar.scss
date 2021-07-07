@@ -1,9 +1,10 @@
 nav {
+    justify-content: space-between;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
     align-items: center;
     margin: 0 auto;
+    display: flex;
     ul {
         list-style: none;
     }
@@ -15,7 +16,6 @@ nav {
     .disabled {
         color: $color-body;
     }
-    
 }
 .navbar {
     position: fixed;
@@ -23,65 +23,71 @@ nav {
     left: 0;
     right: 0;
     width: 60%;
-    padding: 1.5rem 2rem;
-    background-color: #FFF;
+    padding: 0 1rem;
+    border-radius: 0.2rem;
     z-index: 1030;
     ul {
-        transition: width, max-height 300ms, opacity 0ms 300ms;
-    }
-    li {
-        display: inline-block;
+        width: auto;
+        margin-left: auto;
+        overflow: hidden;
+        z-index: 1000;
     }
     a {
+        float: right;
+        padding: 0.6rem 0.8rem;
+        text-transform: uppercase;
         position: relative;
-        display: block;
-    }
-    a::after {
-        content: "";
-        position: absolute;
-        left: 15%;
-        bottom: -0.2rem;
-        width: 70%;
-        border-bottom: solid 1px;
+        background-color: $color-bg-secondary;
+        border-radius: 0.2rem;
     }
     .brand {
-        margin-right: auto;
+        display: inline-block;
+        margin: 0.5rem 0;
         color: $color-body;
-        font-weight: 900;
         font-size: 1.2rem;
+        border-radius: 0.2rem;
     }
 }
 .collapse-state {
     cursor: pointer;
     display: none;
-    float: right;
-    background-color: white;
+    margin-left: auto;
+    padding: 0.6rem 0.8rem;
+    background-color: $color-bg-secondary;
     border-radius: 0.2rem;
     font-size: 1.2rem;
     z-index: 1050;
+    i {
+        vertical-align: middle;
+        transform: rotate(0deg);
+        transform-origin: center;
+        transition: transform 500ms 700ms;
+    }
 }
-.collapse-state + input{
+.collapse-state + input {
     display: none; /* hide the checkboxes */
 }
-.collapse-state + input:checked + ul {
-    width: 100%;
-    max-height: 100px;
-    opacity: 1;
-    width: auto;
-    max-height: 10rem;
+input:checked + .collapse-state {
+    i {
+        transform: rotate(180deg);
+        transition: transform 300ms;
+    }
+    & + ul {
+        display: block;
+        max-height: 500px;
+        transition: max-height 500ms ease-in;
+    }
 }
 @media only screen and (max-width: 768px) {
     nav.navbar {
-        width: 100%!important;
+        width: 100%;
         ul {
-            margin-top: 2rem;
             max-height: 0;
-            opacity: 0;
-            width: 0;
-            max-height: 0;
+            transition: max-height 500ms ease-out;
+            flex-basis: 100%;
         }
         .collapse-state {
-            display: inline-block;
+            display:table-cell;
         }
     }
 }

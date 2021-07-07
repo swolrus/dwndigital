@@ -15,20 +15,20 @@
   <body>
     <nav class="navbar">
       <a class="brand" href="/">KAIMAN x POSTMAN</a>
-      <label for="_1" class="collapse-state toggle" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
-        <i class="fas fa-bars"></i>
-      </label>
-      <input id="_1" type="checkbox">
       <ul>
         <li>
           <a href="{{ url_for('drops') }}">DROPS</a>
         </li>
       </ul>
     </nav>
+    <label for="_1" class="collapse-state toggle" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+    </label>
+    <input id="_1" type="checkbox">
     <div class="wrapper">
       <main>
-        <header {{ 'style=margin-top:3rem' if home==true }}>
-          <h1>{{ title|upper }}</h1>
+        <header {{ 'style=margin-top:1rem' if home==true }}>
+        <h1>{{ title }}<h1>
         {% if current_user.is_authenticated %}
           <nav>
             <ul class="mr-auto">
