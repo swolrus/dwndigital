@@ -385,6 +385,19 @@ nav .disabled {
   font-size: 1.2rem;
   border-radius: 0.2rem;
 }
+.navbar input {
+  display: none;
+  /* hide the checkboxes */
+}
+.navbar input:checked + .collapse-state i {
+  transform: rotate(180deg);
+  transition: transform 300ms;
+}
+.navbar input:checked + .collapse-state + ul {
+  display: block;
+  max-height: 500px;
+  transition: max-height 500ms ease-in;
+}
 
 .collapse-state {
   cursor: pointer;
@@ -401,21 +414,6 @@ nav .disabled {
   transform: rotate(0deg);
   transform-origin: center;
   transition: transform 500ms 800ms;
-}
-
-.collapse-state + input {
-  display: none;
-  /* hide the checkboxes */
-}
-
-input:checked + .collapse-state i {
-  transform: rotate(180deg);
-  transition: transform 300ms;
-}
-input:checked + .collapse-state + ul {
-  display: block;
-  max-height: 500px;
-  transition: max-height 500ms ease-in;
 }
 
 @media only screen and (max-width: 768px) {
