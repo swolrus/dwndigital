@@ -7,7 +7,7 @@
     <h3>Pre-order Details</h3>
     <div id="prices"></div>
     <div id="totalprice">
-      <h4>TOTAL:</h4><br>
+      <h4>TOTAL:</h4>
     </div>
   </aside>
   <section>
@@ -122,9 +122,9 @@
     function updateprices() {
       document.getElementById('prices').innerHTML = parseInt(input.value) + ' x {{ item.name}}';
       document.getElementById('totalprice').innerHTML = 
-        '<h5><b>TOTAL:</b></h5><h4>' + 
+        '<h5>TOTAL:<b> ' + 
         parseInt({{ item.price }} * input.value) + ' AUD' +
-        '</h4>';
+        '</b></h5>';
     };
     updateprices();
     input.addEventListener('change', function(e) {

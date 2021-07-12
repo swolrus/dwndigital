@@ -27,8 +27,8 @@
     </nav>
     <div class="wrapper">
       <main>
-        <header {{ 'style=margin-top:1rem' if home==true }}>
-        <h1>{{ title }}<h1>
+        <header>
+        <h1>{{ title }}</h1>
         {% if current_user.is_authenticated %}
           <nav>
             <ul class="mr-auto">

@@ -1,4 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;1,400&family=Roboto:ital@1&display=swap");
 .mr-auto {
   margin-right: auto;
 }
@@ -18,26 +19,14 @@ body::after {
   height: 0;
   overflow: hidden;
   z-index: -1;
-  content: url(../img/buy-now-orange.svg) url(../img/buy-now-brown.svg) url(../img/items/lush.png);
-}
-
-body::-webkit-scrollbar {
-  width: 0.25rem;
-}
-
-body::-webkit-scrollbar-track {
-  background: #fff;
-}
-
-body::-webkit-scrollbar-thumb {
-  background: #30a6b4;
+  content: url(../img/buy-now-orange.svg) url(../img/buy-now.svg) url(../img/items/lush.png);
 }
 
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font: inherit;
+  color: #917e63;
 }
 
 *:focus {
@@ -46,27 +35,26 @@ body::-webkit-scrollbar-thumb {
 
 html, body {
   height: 100%;
+}
+
+html {
   font-size: 16px;
-  font-family: "Quicksand", sans-serif;
-  color: #917e63;
   background-color: #f4f4f4;
+  font-family: "Roboto", sans-serif;
 }
 
-h1, h2, h3, h4, h5 {
-  color: #827159;
-  margin: 0.6rem 0;
+body::-webkit-scrollbar {
+  width: 0.25rem;
 }
-
-a {
-  color: #d88b17;
-  text-decoration: none;
-  position: relative;
+body::-webkit-scrollbar-track {
+  background: #fff;
 }
-a:hover, a:focus {
-  color: #917e63;
+body::-webkit-scrollbar-thumb {
+  background: #30a6b4;
 }
 
 header {
+  display: block;
   width: 100%;
   text-align: center;
 }
@@ -75,25 +63,23 @@ header h1 {
 }
 
 .wrapper {
-  margin: 0 auto;
+  width: 100%;
+  height: 80%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  min-height: 70%;
   padding: 0 12.5% 2rem 12.5%;
 }
 
 main {
   width: 100%;
+  margin: auto 0;
 }
 
 article {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-}
-article > *:first-child {
-  margin-right: 0;
+  margin-bottom: 1rem;
 }
 
 aside {
@@ -125,24 +111,118 @@ section {
 }
 .item a.action {
   position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 3.6rem;
-  height: 3.6rem;
+  right: 0.33rem;
+  bottom: 0.33rem;
+  width: 3rem;
+  height: 3rem;
   padding: 0;
   text-decoration: none;
   background-image: url(../img/buy-now-orange.svg);
   background-position: right 0 bottom 0;
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 .item a.action:hover, .item a.action:focus {
-  background-image: url(../img/buy-now-brown.svg);
+  background-image: url(../img/buy-now.svg);
 }
 
 .error {
   color: #B6B3FF;
-  float: right;
   display: block;
+}
+
+h1, h2, h3, h4, h5 {
+  color: #827159;
+  margin: 0.875rem 0;
+  font-family: "Lato", sans-serif;
+}
+
+h1 {
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  line-height: 3rem;
+  font-weight: 400;
+}
+
+h2 {
+  font-size: 1.5rem;
+  line-height: 3rem;
+  font-weight: 300;
+}
+
+h3 {
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+
+h4 {
+  font-size: 1.125rem;
+  font-weight: 400;
+  font-family: "Quicksand", sans-serif;
+}
+
+h5 {
+  font-size: 1rem;
+  text-transform: uppercase;
+  font-weight: 400;
+  font-family: "Quicksand", sans-serif;
+}
+
+p.intro {
+  font-size: 1.25rem;
+  line-height: 1.5rem;
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.2rem;
+}
+
+p + p {
+  margin-top: 0.5rem;
+}
+
+p + div {
+  margin-top: 1px;
+}
+
+blockquote {
+  margin: 1rem;
+  border-top: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  padding: 0.5rem 1rem;
+}
+
+blockquote p {
+  font-size: 1rem;
+  line-height: 1rem;
+  font-style: italic;
+  text-align: center;
+}
+
+abbr, acronym {
+  font-variant: small-caps;
+  cursor: help;
+  font-size: 0.75rem;
+  text-decoration: none;
+}
+
+.article strong {
+  font-variant: small-caps;
+  font-weight: normal;
+  font-size: 0.75rem;
+}
+
+a {
+  color: #d88b17;
+  text-decoration: none;
+  position: relative;
+}
+a:hover, a:focus {
+  color: #917e63;
 }
 
 #paypal-button {
@@ -151,12 +231,12 @@ section {
 
 @media only screen and (max-width: 900px) {
   .wrapper {
-    padding: 0 5% 2rem 5%;
+    padding: 0 5% 0 5%;
+    height: 100%;
   }
-}
-@media only screen and (min-width: 1258px) {
-  .wrapper {
-    width: 60%;
+
+  main {
+    padding: 6rem 0 5rem 0;
   }
 }
 input[type=text], input[type=number], input[type=password], select {
@@ -339,7 +419,6 @@ nav {
   flex-flow: row wrap;
   align-items: center;
   margin: 0 auto;
-  display: flex;
 }
 nav ul {
   list-style: none;
@@ -358,7 +437,6 @@ nav .disabled {
   right: 0;
   padding: 0.5rem 12.5%;
   border-radius: 0.2rem;
-  z-index: 1030;
 }
 .navbar ul {
   display: flex;
@@ -366,7 +444,6 @@ nav .disabled {
   flex-flow: row wrap;
   justify-content: flex-end;
   margin-left: auto;
-  z-index: 1000;
 }
 .navbar li {
   margin: 0.25rem;
@@ -377,12 +454,17 @@ nav .disabled {
   text-transform: uppercase;
   background-color: #ffffff;
   border-radius: 0.2rem;
+  z-index: 1040;
+  font-family: "Lato", sans-serif;
 }
 .navbar .brand {
   margin: 0.5rem 0;
   color: #917e63;
   font-size: 1.2rem;
   border-radius: 0.2rem;
+  z-index: 1040;
+  font-family: "Lato", sans-serif;
+  font-style: italic;
 }
 .navbar input {
   display: none;
@@ -394,7 +476,7 @@ nav .disabled {
 .navbar input:checked + .collapse-state + ul {
   transform: scaleY(1);
   opacity: 1;
-  transition: transform 400ms ease-in-out, opacity 200ms ease-in-out;
+  transition: transform 250ms ease-in, opacity 200ms ease-in;
 }
 
 .collapse-state {
@@ -405,7 +487,7 @@ nav .disabled {
   background-color: #ffffff;
   border-radius: 0.2rem;
   font-size: 1.2rem;
-  z-index: 1050;
+  z-index: 1040;
 }
 .collapse-state i {
   vertical-align: middle;
@@ -429,7 +511,7 @@ nav .disabled {
     transform-origin: top;
     transform: scaleY(0.5);
     opacity: 0;
-    transition: transform 400ms ease-in-out, opacity 200ms 200ms ease-in-out;
+    transition: transform 250ms ease-out, opacity 200ms 50ms ease-out;
   }
   .navbar .collapse-state {
     display: table-cell;
@@ -440,7 +522,6 @@ nav .disabled {
   }
 
   .wrapper {
-    padding-top: 5rem;
     min-height: 100%;
   }
 }
@@ -470,15 +551,11 @@ body {
 /**
  * Render the `main` element consistently in IE.
  */
-main {
-  display: block;
-}
-
 /**
  * Correct the font size and margin on `h1` elements within `section` and
  * `article` contexts in Chrome, Firefox, and Safari.
  */
-h1 {
+article h1, section h1 {
   font-size: 2em;
   margin: 0.67em 0;
 }
