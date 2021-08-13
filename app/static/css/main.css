@@ -91,12 +91,18 @@ aside {
 .side {
   width: 200px;
   height: auto;
-  margin: auto 1rem;
+  margin: 1rem 1rem;
+  border-radius: 0.2rem;
+  border: 0.1rem solid #cccccc;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
 }
 
 section {
+  display: flex;
+  flex-direction: column;
   flex: 1 1 400px;
   margin: 1rem;
+  justify-content: center;
 }
 
 .item {
@@ -525,6 +531,108 @@ nav .disabled {
     min-height: 100%;
   }
 }
+.carousel {
+  position: relative;
+  height: 700px;
+  width: 600px;
+  margin: auto;
+}
+
+.carousel__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.carousel__track-container {
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
+}
+
+.carousel__track {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  position: relative;
+  height: 100%;
+}
+
+.carousel__slide {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+button.carousel__button {
+  padding: none;
+  flex: 0;
+  width: auto;
+  height: 1.25rem;
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.4) !important;
+}
+button.carousel__button svg {
+  height: 2rem;
+}
+button.carousel__button :hover, button.carousel__button :focus {
+  background-color: transparent;
+}
+
+.carousel__button--left {
+  left: -3rem;
+}
+
+.carousel__button--right {
+  right: -3rem;
+}
+
+.carousel__nav {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.25rem;
+}
+
+button.carousel__indicator {
+  border: 0;
+  border-radius: 50%;
+  width: 0.4rem;
+  height: 0.4rem;
+  padding: 0.2rem;
+  margin: 0.25rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background-color 300ms;
+}
+button.carousel__indicator :hover, button.carousel__indicator :focus {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+button.carousel__indicator.current-slide {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+button.carousel__indicator.current-slide :hover, button.carousel__indicator.current-slide :focus {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.is-hidden {
+  color: rgba(0, 0, 0, 0.2) !important;
+  pointer-events: none;
+}
+
+.is-hidden svg:hover {
+  cursor: not-allowed;
+}
+
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 /* Document
    ========================================================================== */

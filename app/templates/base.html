@@ -21,7 +21,10 @@
       </label>
       <ul>
         <li>
-          <a href="{{ url_for('drops') }}">DROPS</a>
+          <a href="{{ url_for('drops') }}">PREORDER</a>
+        </li>
+        <li>
+          <a href="{{ url_for('gallery') }}">GALLERY</a>
         </li>
       </ul>
     </nav>
@@ -29,6 +32,7 @@
       <main>
         <header>
         <h1>{{ title }}</h1>
+        <h2>{{ subtitle }}</h2>
         {% if current_user.is_authenticated %}
           <nav>
             <ul class="mr-auto">

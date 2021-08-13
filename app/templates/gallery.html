@@ -1,0 +1,46 @@
+{% extends the_template %}
+{% block title %}PREORDER{% endblock %}
+{% block content %}
+<section class="carousel">
+  <button class="carousel__button carousel__button--left is-hidden">
+    {%- include "chevron-left.svg" -%}
+  </button>
+  <div class="carousel__track-container">
+    <ul class="carousel__track">
+      <li class="carousel__slide current-slide">
+         <img class="carousel__image" src="{{ url_for('static', filename='img/sweat/1.jpg') }}" alt="" />
+      </li>
+      <li class="carousel__slide">
+         <img class="carousel__image" src="{{ url_for('static', filename='img/sweat/2.jpg') }}" alt="" />
+      </li>
+      <li class="carousel__slide">
+         <img class="carousel__image" src="{{ url_for('static', filename='img/beanie/1.jpg') }}" alt="" />
+      </li>
+      <li class="carousel__slide">
+         <img class="carousel__image" src="{{ url_for('static', filename='img/beanie/2.jpg') }}" alt="" />
+      </li>
+      <li class="carousel__slide">
+         <img class="carousel__image" src="{{ url_for('static', filename='img/sweat/0.jpg') }}" alt="" />
+      </li>
+      <li class="carousel__slide current-slide">
+         <img class="carousel__image" src="{{ url_for('static', filename='img/beanie/0.jpg') }}" alt="" />
+      </li>
+    </ul>
+  </div>
+  <button class="carousel__button carousel__button--right">
+    {%- include "chevron-right.svg" -%}
+  </button>
+
+  <div class="carousel__nav">
+    <button class="carousel__indicator current-slide"></button>
+    <button class="carousel__indicator"></button>
+    <button class="carousel__indicator"></button>
+    <button class="carousel__indicator"></button>
+    <button class="carousel__indicator"></button>
+    <button class="carousel__indicator"></button>
+  </div>
+</section>
+{% endblock %}
+{% block script %}
+<script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% endblock %}

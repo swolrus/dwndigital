@@ -3,11 +3,13 @@
 {% block content %}
 {% for item in items if item.active %}
 <article>
-  <img class="side" src="{{ url_for('static', filename=item.img) }}">
+  <img class="side" id="{{item.pk}}" src="{{ url_for('static', filename=item.img) }}">
   <section class="item">
     <h3>{{ item.name }}</h3>
-    <p>{{ item.description }}</p>
-    <h4>{{ item.price }} AUD</h4>
+    <p>{{ item.description }}</p><br>
+    <small>**Please checkout each item individually, available sizes run Small to Extra-Extra-Large**</small>
+    <h4>${{ item.price }} AUD
+    <small><small>(Includes postage within Australia)</small></small></h4>
     <a href="{{ url_for('buy', ref=item.pk) }}" class="action"></a>
   </section>
 </article>

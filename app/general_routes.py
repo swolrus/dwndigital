@@ -19,10 +19,14 @@ def inject_dict_for_all_templates():
 def home():
     return render_template('base.html', home=True, title='WELCOME')
 
+@app.route('/gallery')
+def gallery():
+    return render_template('gallery.html', title='GALLERY')
+
 @app.route('/drops')
 def drops():
     items = Item.objects()
-    return render_template('items.html', title='DROPS', items=items)
+    return render_template('items.html', title='A/W 2021 Lush Collection', subtitle='Shipping late September in a once off preorder ending 20/08/2021 6:00PM', items=items)
 
 @app.route('/buy/<ref>', methods=['GET', 'POST'])
 def buy(ref):
