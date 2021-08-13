@@ -25,9 +25,10 @@ def configure_app(app: object, configkey: str) -> None:
 
 
 def configure_extensions(app: object) -> None:
-    from app.common.extensions import login, db, paypal
+    from app.common.extensions import login, db, mail, paypal
     login.init_app(app)
     db.init_app(app)
+    mail.init_app(app)
     paypal.init_app(app)
 
 

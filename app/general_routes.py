@@ -4,7 +4,7 @@ from app.payments.models import Item
 import json
 from app.payments import errors
 from app.payments.forms import BuyForm
-from app.common.util import toJSON
+from app.common.util import toJSON, send_invoice
 from app.payments.models import Item, PurchasedItem, Buyer, Transaction
 from app.common.extensions import paypal
 
@@ -47,12 +47,17 @@ def buy(ref):
         }]
     }
     if form.validate_on_submit():
-        address = data['street'] + ' ' + data['country'] + ' ' + data['city'] + ' ' + data['state'] + ' ' + data['postcode']
-        name = data['firstname'] + ' ' + data['lastname']
+        name = data['firstname']
+        lastname = data['lastname']
+        street = data['street']
+        country = data['country']
+        city = data['city']
+        state = data['state']
+        postcode = data['postcode']
         
         buyer = Buyer.objects(email=data['email']).first()
         if not buyer:
-            buyer = Buyer(email=data['email'], name=name, address=address).save()
+            buyer = Buyer(email=data['email'], name=name, lastname=lastname, street=street, country=country, city=city, state=state, postcode=postcode).save()
         
         t = Transaction(status='pending', buyer=buyer)
         
@@ -61,11 +66,18 @@ def buy(ref):
                 return errors.bad_request('Request contains invalid items (ಠ¿ಠ)')
             item = PurchasedItem(item=i['id'], quantity=i['quantity'], sizes=i['sizes'])
             t.items.append(item)
-        
+
         data = paypal.build_request(data)
         result = paypal.create_order(data)
 
+        lastTransaction = Transaction.objects().order_by('-time_created').first()
+        if not lastTransaction:
+            invoice = 1
+        else:
+            invoice = lastTransaction.invoice_id + 1
+
         t.order_id = result.result.id
+        t.invoice_id = invoice
         t.set_expire_at(900)
         t.save()
 
@@ -79,6 +91,7 @@ def buy(ref):
 @app.route('/checkout/<order_id>', methods=['GET'])
 def checkout(order_id):
     t = Transaction.objects().get_or_404(pk=order_id)
+    
     return render_template(
         'checkout.html', 
         title='Last step before your new cop!', 
@@ -89,7 +102,7 @@ def checkout(order_id):
 def approved(order_id):
     t = Transaction.objects().get_or_404(pk=order_id)
     status = paypal.get_status(order_id)
-    print(status)
+    send_invoice(t=t)
     title = "Big ups " + t.buyer.name.split(" ")[0] + "! You'll hear from us soon x"
     t.status = status
     t.time_expires = None

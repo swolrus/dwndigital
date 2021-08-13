@@ -23,6 +23,14 @@ class BaseConfig:
     UPLOAD_STATIC_FOLDER = 'img/items'
     ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'svg'])
 
+    # Mail settings
+    MAIL_SERVER= 'smtp.porkbun.com'
+    MAIL_PORT = 587
+    MAIL_USERNAME = 'david@posted.studio'
+    MAIL_PASSWORD = 'Soapy2799'
+    MAIL_USE_TLS = True
+    MAIL_USE_SSL = False
+
 class TestingConfig(BaseConfig):
     TESTING = True
 

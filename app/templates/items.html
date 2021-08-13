@@ -6,7 +6,7 @@
   <img class="side" id="{{item.pk}}" src="{{ url_for('static', filename=item.img) }}">
   <section class="item">
     <h3>{{ item.name }}</h3>
-    <p>{{ item.description }}</p><br>
+    <p>{{ item.description|safe }}</p><br>
     <small>**Please checkout each item individually, available sizes run Small to Extra-Extra-Large**</small>
     <h4>${{ item.price }} AUD
     <small><small>(Includes postage within Australia)</small></small></h4>

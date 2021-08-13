@@ -38,7 +38,7 @@ class BuyForm(FlaskForm):
     postcode = IntegerField('Postcode', validators=[
         v.DataRequired(message=None),
     ])
-    submit = SubmitField('Create')
+    submit = SubmitField('To Payment')
 
 class SetItemForm(FlaskForm):
     ref = StringField('Reference', 

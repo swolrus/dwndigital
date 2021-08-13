@@ -1,0 +1,38 @@
+Hi {{ transaction['name'] }},<br><br>
+
+Thank you for your preorder! Sit tight while we craft your garments with love.<br><br>
+
+Expect an update with a shipping estimate once pre-orders close.<br><br>
+
+Warmest Regards<br><br>
+
+Postman and Kaiman<br><br>
+
+
+<h2>Tax Invoice for {{ invoice }}</h2>
+<h3>Shipping Address</h3>
+{{ shipping|safe }}
+
+<h3>Purchase</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Sizes</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for item in transaction['items'] %}
+    <tr>
+      <td>{{ item['name'] }}</td>
+      <td>{{ item['sizes'] }}</td>
+      <td>{{ item['quantity'] }}</td>
+      <td>{{ item['price'] }}</td>
+      <td>{{ item['total'] }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>

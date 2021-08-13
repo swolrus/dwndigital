@@ -6,8 +6,8 @@ class Item(db.Document):
     ref = db.StringField(required=True, primary_key=True)
     name = db.StringField(required=True)
     price = db.IntField(required=True)
-    img = db.StringField(required=True)
-    active = db.BooleanField(required=True, default=True)
+    img = db.StringField()
+    active = db.BooleanField(default=True)
     description = db.StringField()
     
 class PurchasedItem(db.EmbeddedDocument):
@@ -29,7 +29,12 @@ class PurchasedItem(db.EmbeddedDocument):
 class Buyer(db.Document):
     email = db.StringField(required=True, primary_key=True)
     name = db.StringField(required=True)
-    address = db.StringField(required=True)
+    lastname = db.StringField(required=True)
+    street = db.StringField(required=True)
+    country = db.StringField(required=True)
+    state = db.StringField(required=True)
+    postcode = db.IntField(required=True)
+    city = db.StringField(required=True)
     
     def __init__(self, *args, **kwargs):
         # Set given email address to lowercase.
@@ -38,6 +43,7 @@ class Buyer(db.Document):
 
 class Transaction(TimestampMixin, db.Document):
     order_id = db.StringField(required=True, primary_key=True)
+    invoice_id = db.IntField(required=True)
     status = db.StringField(required=True)
     response = db.StringField()
     buyer = db.ReferenceField(Buyer, required=True)
@@ -49,10 +55,14 @@ class Transaction(TimestampMixin, db.Document):
             total += i.item.price * i.quantity
         return total
 
+    def get_shipping(self):
+        return self.buyer.name + ' ' + self.buyer.lastname + '<br>' + self.buyer.street + '<br>' + self.buyer.city + ' ' + self.buyer.country + ' ' + self.buyer.state + '<br>' + str(self.buyer.postcode)
+
     def to_dict(self, include_email=False):
         data = {
-            'name': self.buyer.name,
-            'address': self.buyer.address,
+            'invoice_id': 'LUSH' + str(self.invoice_id).zfill(3),
+            'name': self.buyer.name + ' ' + self.buyer.lastname,
+            'address': self.buyer.street + ', ' + self.buyer.city + ' ' + self.buyer.country + ' ' + self.buyer.state + ', ' + str(self.buyer.postcode),
             'total': str(self.get_total()) + ' AUD',
             'status': self.status,
             'items': []
