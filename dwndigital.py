@@ -1,7 +1,7 @@
 from app.factory import create_app
 from app.common.extensions import login, db
 from app.admin.models import User
-from app.payments.models import Buyer, Item, PurchasedItem, Transaction
+from app.payments.models import Buyer, Item, PurchasedItem, Transaction, Invoice
 import os, logging
 
 configkey = os.environ.get('FLASK_ENV') or 'development'
@@ -27,4 +27,5 @@ def make_shell_context():
         'PurchasedItem': PurchasedItem,
         'Transaction': Transaction,
         'User': User,
+        'Invoice': Invoice,
     }

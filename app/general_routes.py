@@ -5,7 +5,7 @@ import json
 from app.payments import errors
 from app.payments.forms import BuyForm
 from app.common.util import toJSON, send_invoice
-from app.payments.models import Item, PurchasedItem, Buyer, Transaction
+from app.payments.models import Item, PurchasedItem, Buyer, Transaction, Invoice
 from app.common.extensions import paypal
 
 default_routes = Blueprint('app', __name__)
@@ -70,11 +70,10 @@ def buy(ref):
         data = paypal.build_request(data)
         result = paypal.create_order(data)
 
-        lastTransaction = Transaction.objects().order_by('-time_created').first()
-        if not lastTransaction:
-            invoice = 1
-        else:
-            invoice = lastTransaction.invoice_id + 1
+        i = Invoice.objects().first()
+        invoice = i.invoice
+        i.invoice += 1
+        i.save()
 
         t.order_id = result.result.id
         t.invoice_id = invoice

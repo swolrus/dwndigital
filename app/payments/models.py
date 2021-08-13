@@ -2,6 +2,9 @@ from app.common.models import TimestampMixin
 from werkzeug.security import check_password_hash, generate_password_hash
 from app.common.extensions import db
 
+class Invoice(db.Document):
+    invoice = db.IntField(required=True)
+
 class Item(db.Document):
     ref = db.StringField(required=True, primary_key=True)
     name = db.StringField(required=True)
