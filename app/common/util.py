@@ -20,7 +20,7 @@ def to_pretty_json(value):
 def send_invoice(t):
     transaction = t.to_dict(include_email=True)
     invoice = transaction['invoice_id']
-    msg = Message(subject='POSTMAN x KAIMAN ' + invoice + ' Order Confirmation', sender='david@posted.studio', recipients=[transaction['email']])
+    msg = Message(subject='POSTMAN x KAIMAN -' + invoice + ' Order Confirmation', sender='david@posted.studio', recipients=[transaction['email']])
     msg.html = render_template('invoice.html', transaction=transaction, shipping=t.get_shipping(), invoice=invoice)
     msg.body = msg.html
     mail.send(msg)
