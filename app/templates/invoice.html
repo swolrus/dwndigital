@@ -6,22 +6,24 @@ Expect an update with a shipping estimate once pre-orders close.<br><br>
 
 Warmest Regards<br><br>
 
-Postman and Kaiman<br><br>
+Postman and Kaiman<br><br><br><br>
+Please don't hesitate to reply to this email if you have any questions!<br><br><br><br>
 
 
-<h2>Tax Invoice for {{ invoice }}</h2>
-<h3>Shipping Address</h3>
-{{ shipping|safe }}
+<h2>Tax Invoice</h2>
+<b>Order Number:<b> {{ invoice }}<br><br>
+<b>Shipping Address</b><br>
+{{ shipping|safe }}<br><br>
 
-<h3>Purchase</h3>
+<b>Purchase</b><br>
 <table>
   <thead>
     <tr>
-      <th>Item</th>
-      <th>Sizes</th>
-      <th>Quantity</th>
-      <th>Price</th>
-      <th>Total</th>
+      <th><b>Item</b></th>
+      <th><b>Sizes</b></th>
+      <th><b>Quantity</b></th>
+      <th><b>Price</b></th>
+      <th><b>Total</b></th>
     </tr>
   </thead>
   <tbody>

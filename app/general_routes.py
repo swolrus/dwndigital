@@ -67,16 +67,15 @@ def buy(ref):
             item = PurchasedItem(item=i['id'], quantity=i['quantity'], sizes=i['sizes'])
             t.items.append(item)
 
+        item = PurchasedItem(item='shipping', quantity=1, sizes='')
+        t.items.append(item)
+
         data = paypal.build_request(data)
         result = paypal.create_order(data)
 
-        i = Invoice.objects().first()
-        invoice = i.invoice
-        i.invoice += 1
-        i.save()
-
         t.order_id = result.result.id
-        t.invoice_id = invoice
+        t.invoice_id = 0
+
         t.set_expire_at(900)
         t.save()
 
@@ -101,8 +100,17 @@ def checkout(order_id):
 def approved(order_id):
     t = Transaction.objects().get_or_404(pk=order_id)
     status = paypal.get_status(order_id)
+
+    i = Invoice.objects().first()
+    invoice = i.invoice
+    i.invoice += 1
+    i.save()
+    t.invoice_id=invoice_id
+    t.save()
     send_invoice(t=t)
-    title = "Big ups " + t.buyer.name.split(" ")[0] + "! You'll hear from us soon x"
+
+    title = "Big ups " + t.buyer.name + "! You'll hear from us soon x"
+
     t.status = status
     t.time_expires = None
     t.save()

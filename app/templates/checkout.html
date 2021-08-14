@@ -9,7 +9,7 @@
     <p><i class="fas fa-map-pin"></i> {{ transaction['address'] }}</p>
   </aside>
   <section>
-    <h3>Purchase ({{ transaction['invoice_id'] }})</h3>
+    <h3>Purchase {{ transaction['invoice_id'] if transaction['invoice_id']!='LUSH000' }}</h3>
     <table class="invoice">
       <thead>
         <tr>

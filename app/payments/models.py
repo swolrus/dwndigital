@@ -23,8 +23,8 @@ class PurchasedItem(db.EmbeddedDocument):
         data = {
             'name': self.item.name,
             'quantity': self.quantity,
-            'price': str(self.item.price) + ' AUD',
-            'total': str(self.item.price * self.quantity) + ' AUD',
+            'price': '$' + str(self.item.price) + ' AUD',
+            'total': '$' + str(self.item.price * self.quantity) + ' AUD',
             'sizes': self.sizes
         }
         return data
@@ -46,7 +46,7 @@ class Buyer(db.Document):
 
 class Transaction(TimestampMixin, db.Document):
     order_id = db.StringField(required=True, primary_key=True)
-    invoice_id = db.IntField(required=True)
+    invoice_id = db.IntField()
     status = db.StringField(required=True)
     response = db.StringField()
     buyer = db.ReferenceField(Buyer, required=True)
