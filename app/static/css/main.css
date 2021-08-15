@@ -64,7 +64,7 @@ header h1 {
 
 .wrapper {
   width: 100%;
-  height: 80%;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
   padding: 0 12.5% 2rem 12.5%;
@@ -443,8 +443,7 @@ nav .disabled {
   right: 0;
   padding: 0.5rem 12.5%;
   border-radius: 0.2rem;
-  pointer-events: none;
-  z-index: 1050;
+  z-index: 1040;
 }
 .navbar ul {
   display: flex;
@@ -452,6 +451,7 @@ nav .disabled {
   flex-flow: row wrap;
   justify-content: flex-end;
   margin-left: auto;
+  max-height: 0;
 }
 .navbar li {
   margin: 0.25rem;
@@ -462,19 +462,13 @@ nav .disabled {
   text-transform: uppercase;
   background-color: #ffffff;
   border-radius: 0.2rem;
-  z-index: 1040;
   font-family: "Lato", sans-serif;
-  pointer-events: auto;
-}
-.navbar label {
-  pointer-events: auto;
 }
 .navbar .brand {
   margin: 0.5rem 0;
   color: #917e63;
   font-size: 1.2rem;
   border-radius: 0.2rem;
-  z-index: 1040;
   font-family: "Lato", sans-serif;
   font-style: italic;
 }
@@ -486,6 +480,7 @@ nav .disabled {
   transform: rotate(180deg);
 }
 .navbar input:checked + .collapse-state + ul {
+  max-height: 100%;
   transform: scaleY(1);
   opacity: 1;
   transition: transform 250ms ease-in, opacity 200ms ease-in;
@@ -519,11 +514,11 @@ nav .disabled {
     align-content: flex-start;
     flex: unset;
     width: 100%;
-    height: 80vh;
     transform-origin: top;
     transform: scaleY(0.5);
     opacity: 0;
-    transition: transform 250ms ease-out, opacity 200ms 50ms ease-out;
+    z-index: -1;
+    transition: transform 250ms ease-out, opacity 200ms 50ms ease-out, max-height 50ms 500ms;
   }
   .navbar .collapse-state {
     display: table-cell;
