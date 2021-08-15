@@ -443,6 +443,7 @@ nav .disabled {
   right: 0;
   padding: 0.5rem 12.5%;
   border-radius: 0.2rem;
+  pointer-events: none;
 }
 .navbar ul {
   display: flex;
@@ -462,6 +463,10 @@ nav .disabled {
   border-radius: 0.2rem;
   z-index: 1040;
   font-family: "Lato", sans-serif;
+  pointer-events: auto;
+}
+.navbar label {
+  pointer-events: auto;
 }
 .navbar .brand {
   margin: 0.5rem 0;
