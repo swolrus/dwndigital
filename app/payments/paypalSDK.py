@@ -85,7 +85,7 @@ class PayPalClient:
     def build_request(self, transaction):
         from app.payments.models import Item
         shipmethod = transaction.get('shipmethod') or "AusPost"
-        shipping = transaction.get('shipping') or "0"
+        shipping = transaction.get('shipping') or "14"
         handling = transaction.get('handling')  or "0"
         tax = transaction.get('tax') or "0"
         discount = transaction.get('discount') or "0"
@@ -126,7 +126,7 @@ class PayPalClient:
                 "soft_descriptor": "Fashions",
                 "amount": {
                     "currency_code": "AUD",
-                    "value": str(total),
+                    "value": str(total + 14),
                     "breakdown": {
                         "item_total": {
                             "currency_code": "AUD",

@@ -101,12 +101,15 @@ def approved(order_id):
     t = Transaction.objects().get_or_404(pk=order_id)
     status = paypal.get_status(order_id)
 
+    if t.invoice_id != 0:
+        return render_template('checkout.html', title='Order Status', transaction=t.to_dict(include_email=True))
+
     i = Invoice.objects().first()
     invoice = i.invoice
     i.invoice += 1
     i.save()
-    t.invoice_id=invoice_id
-    t.save()
+
+    t.invoice_id=invoice
     send_invoice(t=t)
 
     title = "Big ups " + t.buyer.name + "! You'll hear from us soon x"
