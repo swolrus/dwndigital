@@ -444,7 +444,7 @@ nav .disabled {
   padding: 0.5rem 12.5%;
   border-radius: 0.2rem;
   pointer-events: none;
-  z-index: 1040;
+  z-index: 1050;
 }
 .navbar ul {
   display: flex;
