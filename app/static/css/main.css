@@ -35,6 +35,7 @@ body::after {
 
 html, body {
   height: 100%;
+  z-index: 1000;
 }
 
 html {
@@ -80,12 +81,14 @@ article {
   flex-wrap: wrap;
   justify-content: center;
   margin-bottom: 1rem;
+  z-index: 1000;
 }
 
 aside {
   flex: 1 1 200px;
   height: auto;
   margin: 1rem;
+  z-index: 1000;
 }
 
 .side {
@@ -95,6 +98,7 @@ aside {
   border-radius: 0.2rem;
   border: 0.1rem solid #cccccc;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  z-index: 1000;
 }
 
 section {
@@ -103,6 +107,7 @@ section {
   flex: 1 1 400px;
   margin: 1rem;
   justify-content: center;
+  z-index: 1000;
 }
 
 .item {
@@ -114,6 +119,7 @@ section {
   background: radial-gradient(50px 50px at calc(100% - 1.33rem) calc(100% - 1.33rem), #e6e6e6 2.7rem, #cccccc 2.75rem, #ffffff 2.8rem);
   margin: 1rem;
   padding: 1rem;
+  z-index: 1000;
 }
 .item a.action {
   position: absolute;
@@ -443,7 +449,7 @@ nav .disabled {
   right: 0;
   padding: 0.5rem 12.5%;
   border-radius: 0.2rem;
-  z-index: 1040;
+  z-index: 1030;
 }
 .navbar ul {
   display: flex;
@@ -463,6 +469,10 @@ nav .disabled {
   background-color: #ffffff;
   border-radius: 0.2rem;
   font-family: "Lato", sans-serif;
+  z-index: 1040;
+}
+.navbar label {
+  z-index: 1040;
 }
 .navbar .brand {
   margin: 0.5rem 0;
@@ -471,6 +481,7 @@ nav .disabled {
   border-radius: 0.2rem;
   font-family: "Lato", sans-serif;
   font-style: italic;
+  z-index: 1040;
 }
 .navbar input {
   display: none;
