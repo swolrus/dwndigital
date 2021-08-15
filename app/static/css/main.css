@@ -463,12 +463,14 @@ nav .disabled {
   border-radius: 0.2rem;
   z-index: 1040;
   font-family: "Lato", sans-serif;
+  position: relative;
   pointer-events: auto;
-  z-index: 2000;
+  z-index: 1040;
 }
 .navbar label {
+  position: relative;
   pointer-events: auto;
-  z-index: 2000;
+  z-index: 1040;
 }
 .navbar .brand {
   margin: 0.5rem 0;
