@@ -464,9 +464,11 @@ nav .disabled {
   z-index: 1040;
   font-family: "Lato", sans-serif;
   pointer-events: auto;
+  z-index: 2000;
 }
 .navbar label {
   pointer-events: auto;
+  z-index: 2000;
 }
 .navbar .brand {
   margin: 0.5rem 0;
