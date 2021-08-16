@@ -10,7 +10,7 @@
     <h3>{{ item.name }}</h3>
     <p>{{ item.description|safe }}</p><br>
     <h4>${{ item.price }} AUD</h4>
-    <p><small style="margin-right: 3rem;">(Shipping calculated at checkout, check out each item individually)</small></p>
+    <p><small style="margin-right: 3rem;">(Checkout is per-item type, as is shipping)</small></p>
     <a href="{{ url_for('buy', ref=item.pk) }}" class="action"></a>
   </section>
 </article>
