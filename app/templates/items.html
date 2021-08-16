@@ -9,9 +9,8 @@
   <section class="item">
     <h3>{{ item.name }}</h3>
     <p>{{ item.description|safe }}</p><br>
-    <small>**Please checkout each item individually, available sizes run Extra-Small to Extra-Extra-Large**</small>
     <h4>${{ item.price }} AUD<br>
-    <small><small>(Shipping calculated at checkout)</small></small></h4>
+    <small><small>(Shipping calculated at checkout, check out each item individually)</small></small></h4>
     <a href="{{ url_for('buy', ref=item.pk) }}" class="action"></a>
   </section>
 </article>
