@@ -126,6 +126,9 @@ section {
   padding: 1rem;
   z-index: 1000;
 }
+.item h3 {
+  margin-top: 0;
+}
 .item a.action {
   position: absolute;
   right: 0.33rem;
