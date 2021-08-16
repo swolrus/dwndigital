@@ -595,7 +595,7 @@ button.carousel__button {
   color: rgba(0, 0, 0, 0.4) !important;
 }
 button.carousel__button svg {
-  height: 4rem;
+  height: 2rem;
   width: auto;
 }
 button.carousel__button :hover, button.carousel__button :focus {
