@@ -30,9 +30,9 @@
         {% endif %}
       </div>
       <div class="inputsize form-item">
-        <label for="sizes"><i class="fas fa-tshirt"></i> Sizes</label>
+        <label for="sizes"><i class="fas fa-tshirt"></i> Sizes/Styles</label>
 
-        {{ form.sizes(class_=class_, placeholder="Please list desired sizes...") }}
+        {{ form.sizes(class_=class_, placeholder="Please list desired sizes/beanie styles...") }}
 
         {% if form.sizes.errors %}
         <span class="error">{{ form.sizes.errors|join(', ') }} <i class="fas fa-arrow-up"></i></span>
