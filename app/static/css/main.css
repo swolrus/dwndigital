@@ -546,7 +546,7 @@ nav .disabled {
 .carousel {
   position: relative;
   height: 700px;
-  width: 80%;
+  width: 90%;
   margin: auto;
 }
 
@@ -603,11 +603,11 @@ button.carousel__button :hover, button.carousel__button :focus {
 }
 
 .carousel__button--left {
-  left: -3rem;
+  left: -2rem;
 }
 
 .carousel__button--right {
-  right: -3rem;
+  right: -2rem;
 }
 
 .carousel__nav {
