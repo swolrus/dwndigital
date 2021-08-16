@@ -457,7 +457,6 @@ nav .disabled {
   flex-flow: row wrap;
   justify-content: flex-end;
   margin-left: auto;
-  max-height: 0;
 }
 .navbar li {
   margin: 0.25rem;
@@ -525,6 +524,7 @@ nav .disabled {
     align-content: flex-start;
     flex: unset;
     width: 100%;
+    max-height: 0;
     transform-origin: top;
     transform: scaleY(0.5);
     opacity: 0;
