@@ -3,7 +3,9 @@
 {% block content %}
 {% for item in items if item.active %}
 <article>
-  <img class="side" id="{{item.pk}}" src="{{ url_for('static', filename=item.img) }}">
+  <div class="side">
+    <img id="{{item.pk}}" src="{{ url_for('static', filename=item.img) }}">
+  </div>
   <section class="item">
     <h3>{{ item.name }}</h3>
     <p>{{ item.description|safe }}</p><br>
