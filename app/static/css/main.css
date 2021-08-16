@@ -545,7 +545,7 @@ nav .disabled {
 }
 .carousel {
   position: relative;
-  height: 700px;
+  max-height: 700px;
   width: 90%;
   margin: auto;
 }
