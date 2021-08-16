@@ -73,7 +73,7 @@ header h1 {
 
 main {
   width: 100%;
-  margin: auto 0;
+  margin: auto 2rem;
 }
 
 article {
@@ -256,7 +256,7 @@ a:hover, a:focus {
   }
 
   main {
-    padding: 6rem 0 5rem 0;
+    padding: 7rem 0 6rem 0;
   }
 }
 input[type=text], input[type=number], input[type=password], select {
