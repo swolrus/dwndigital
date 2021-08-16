@@ -123,7 +123,7 @@ section {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
   background: radial-gradient(50px 50px at calc(100% - 1.33rem) calc(100% - 1.33rem), #e6e6e6 2.7rem, #cccccc 2.75rem, #ffffff 2.8rem);
   margin: 1rem;
-  padding: 1rem;
+  padding: 2rem;
   z-index: 1000;
 }
 .item h3 {
