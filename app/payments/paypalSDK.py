@@ -102,7 +102,7 @@ class PayPalClient:
             anitem = {
                 "name": dbitem.name,
                 "unit_amount": {
-                    "currency_code": "AUD",
+                    "currency": "AUD",
                     "value": str(dbitem.price),
                 },
                 "quantity": str(item['quantity']),
@@ -129,23 +129,23 @@ class PayPalClient:
                     "value": str(total + 14),
                     "breakdown": {
                         "item_total": {
-                            "currency_code": "AUD",
+                            "currency": "AUD",
                             "value": str(total)
                         },
                         "shipping": {
-                            "currency_code": "AUD",
+                            "currency": "AUD",
                             "value": str(shipping)
                         },
                         "handling": {
-                            "currency_code": "AUD",
+                            "currency": "AUD",
                             "value": str(handling)
                         },
                         "total_tax": {
-                            "currency_code": "AUD",
+                            "currency": "AUD",
                             "value": str(tax)
                         },
                         "shipping-discount": {
-                            "currency_code": "AUD",
+                            "currency": "AUD",
                             "value": str(discount)
                         }
                     }
