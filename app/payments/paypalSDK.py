@@ -125,7 +125,7 @@ class PayPalClient:
                 "custom_id": "KPAFashions",
                 "soft_descriptor": "Fashions",
                 "amount": {
-                    "currency_code": "AUD",
+                    "currency": "AUD",
                     "value": str(total + 14),
                     "breakdown": {
                         "item_total": {
