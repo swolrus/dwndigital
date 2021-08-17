@@ -1,7 +1,47 @@
 {% extends the_template %}
-{% block title %}ADMIN{% endblock %}
+{% block title %}TRANSACTIONS{% endblock %}
 {% block content %}
-<section>
-    Welcome {{ current_user.email }}!
+<section style="text-align: center;">
+    <h4>Welcome {{ current_user.email }}!</h4>
+    <p>Below are all completed transactions</p>
+    {% for transaction in transactions if transaction['status']=='COMPLETED' %}
 </section>
+<h4 class="mb-0">Transaction {{ loop.index }}</h4>
+<article>
+    <aside>
+        <p><b>Customer</b></p>
+        <p><i class="fas fa-user"></i> {{ transaction['name'] }}</p>
+        <p><i class="fas fa-envelope"></i> {{ transaction['email'] }}</p>
+        <p><i class="fas fa-map-pin"></i> {{ transaction['address'] }}</p>
+    </aside>
+    <section>
+        <p><b>Purchase {{ transaction['invoice_id'] }}</b></p>
+        <table class="invoice">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Sizes</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in transaction['items'] %}
+            <tr>
+                <td>{{ item['name'] }}</td>
+                <td>{{ item['sizes'] }}</td>
+                <td>{{ item['quantity'] }}</td>
+                <td>{{ item['price'] }}</td>
+                <td>{{ item['total'] }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+              <td colspan="5"><p><b>TOTAL: </b>{{ transaction['total'] }}</p></td>
+            </tr>
+          </tbody>
+        </table>
+    </section>
+</article>
+{% endfor %}
 {% endblock %}

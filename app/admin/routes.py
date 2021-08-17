@@ -7,7 +7,7 @@ from app.common.util import allowed_file, toJSON
 from app.admin.forms import LoginForm, RegisterForm
 from app.payments.forms import SetItemForm, DeleteItemForm
 from app.admin.models import User
-from app.payments.models import Item
+from app.payments.models import Item, Transaction
 from app.payments import errors
 
 admin_routes = Blueprint('admin', __name__, url_prefix='/admin')
@@ -108,6 +108,7 @@ def login():
     return render_template('form.html', title='Sign In', form=form)
 
 @admin_routes.route('/register', methods=['GET', 'POST'])
+@login_required
 def register():
     form = RegisterForm()
     email = form.email.data
@@ -134,4 +135,9 @@ def logout():
 
 @admin_routes.route("/home")
 def home():
-    return render_template('admin/home.html', title='Admin Home')
+    transaction_query = Transaction.objects()
+    transactions = []
+    for transaction in transaction_query:
+        transactions.append(transaction.to_dict(include_email=True))
+
+    return render_template('admin/home.html', title='Admin - Transactions', transactions = transactions)

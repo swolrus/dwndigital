@@ -13,6 +13,10 @@
   margin-right: auto;
 }
 
+.mb-0 {
+  margin-bottom: 0;
+}
+
 body::after {
   position: absolute;
   width: 0;
@@ -451,6 +455,9 @@ nav {
 nav ul {
   list-style: none;
 }
+nav li {
+  margin: 0.25rem;
+}
 nav a.active {
   color: #917e63;
 }
@@ -473,9 +480,6 @@ nav .disabled {
   flex-flow: row wrap;
   justify-content: flex-end;
   margin-left: auto;
-}
-.navbar li {
-  margin: 0.25rem;
 }
 .navbar a {
   display: inline-block;
