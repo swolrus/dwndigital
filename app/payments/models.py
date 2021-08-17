@@ -66,7 +66,7 @@ class Transaction(TimestampMixin, db.Document):
             'invoice_id': 'LUSH' + str(self.invoice_id).zfill(3),
             'name': self.buyer.name + ' ' + self.buyer.lastname,
             'address': self.buyer.street + ', ' + self.buyer.city + ' ' + self.buyer.country + ' ' + self.buyer.state + ', ' + str(self.buyer.postcode),
-            'total': str(self.get_total()) + ' AUD',
+            'total': '$' + str(self.get_total()) + ' AUD',
             'status': self.status,
             'items': []
         }
