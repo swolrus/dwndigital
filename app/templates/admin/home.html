@@ -6,7 +6,7 @@
     <p>Below are all completed transactions</p>
     {% for transaction in transactions if transaction['status']=='COMPLETED' %}
 </section>
-<h4 class="mb-0">Transaction {{ loop.index }}</h4>
+<h4 class="mb-0">Transaction {{ transaction['invoice_id'] }}</h4>
 <article>
     <aside>
         <p><b>Customer</b></p>
@@ -15,7 +15,7 @@
         <p><i class="fas fa-map-pin"></i> {{ transaction['address'] }}</p>
     </aside>
     <section>
-        <p><b>Purchase {{ transaction['invoice_id'] }}</b></p>
+        <p><b>Purchase</b></p>
         <table class="invoice">
         <thead>
             <tr>
