@@ -7,10 +7,8 @@
 
 <div class="form-item">
 {% if field.type == 'BooleanField' %}
-    <label for="{{ field.id }}">
-        {{ field(class_=class_, placeholder=placeholder) }}
-        {{ label|safe }}
-    </label>
+    {{ field(placeholder=placeholder) }}
+    <label class="on" for="{{ field.id }}">{{ label|safe }}</label>
 {% else %}
     {% if with_label %}
     <label for="{{ field.id }}">

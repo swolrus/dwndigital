@@ -4,8 +4,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.utils import secure_filename
 import os
 from app.common.util import allowed_file, toJSON
-from app.admin.forms import LoginForm, RegisterForm
-from app.payments.forms import SetItemForm, DeleteItemForm
+from app.admin.forms import LoginForm, RegisterForm, SetItemForm, DeleteItemForm
 from app.admin.models import User
 from app.payments.models import Item, Transaction
 from app.payments import errors
