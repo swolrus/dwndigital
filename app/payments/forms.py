@@ -3,12 +3,6 @@ from wtforms import StringField, SubmitField, IntegerField
 from wtforms import validators as v
 
 class BuyForm(FlaskForm):
-    quantity = StringField('Quantity', validators=[
-        v.DataRequired(message=None),
-    ])
-    sizes = StringField('Sizes', validators=[
-        v.DataRequired(message=None),
-    ])
     firstname = StringField('First Name', validators=[
         v.DataRequired(message=None),
     ])

@@ -5,39 +5,21 @@
 <article>
   <aside>
     <h3>Pre-order Details</h3>
-    <div id="prices"></div>
+    {% set grand_total = namespace(value=0) %}
+    {% for item in session['items'] %}
+    {% set grand_total.value = (grand_total.value + item.total_int) %}
+    <p>
+      {{ item.quantity }} x {{ item.name }}- {{ item.total }}
+    </p>
+    {% endfor %}
     <div id="totalprice">
-      <h4>TOTAL:</h4>
+      <h4>TOTAL: <b>${{ grand_total.value }} AUD</b></h4>
     </div>
   </aside>
   <section>
     <form action="" method="post" enctype="multipart/form-data">
       {{ form.csrf_token }}
-      <h3>Required Details</h3>
-      <div class="quantity form-item">
-        <label for="quantity"><i class="fas fa-times"></i> Quantity</label><br>
-        <button class="minus-btn" type="button" name="button">
-          <i class="fas fa-sm fa-minus"></i>
-        </button>
-
-        {{ form.quantity(class_=class_, placeholder=placeholder, value="1") }}
-
-        <button class="plus-btn" type="button" name="button">
-          <i class="fas fa-sm fa-plus"></i>
-        </button>
-        {% if form.quantity.errors %}
-        <span class="error">{{ form.quantity.errors|join(', ') }} <i class="fas fa-arrow-up"></i></span>
-        {% endif %}
-      </div>
-      <div class="inputsize form-item">
-        <label for="sizes"><i class="fas fa-tshirt"></i> Sizes/Styles</label>
-
-        {{ form.sizes(class_=class_, placeholder="Please list desired sizes/beanie styles...") }}
-
-        {% if form.sizes.errors %}
-        <span class="error">{{ form.sizes.errors|join(', ') }} <i class="fas fa-arrow-up"></i></span>
-        {% endif %}
-      </div>
+      <h3>Billing/Shipping Details</h3>
       <label for="firstname lastname"><i class="fas fa-mail"></i> Name</label>
       <div class="row">
         <div class="col-6 form-item">

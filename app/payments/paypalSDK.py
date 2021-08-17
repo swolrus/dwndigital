@@ -93,22 +93,26 @@ class PayPalClient:
         total = 0
         items = []
         for item in transaction['items']:
-            dbitem = Item.objects(pk=item['id']).first()
-            print(dbitem.price)
-            print(item['quantity'])
+            if item['ref'] != 'shipping':
+                dbitem = Item.objects(pk=item['ref']).first()
+                print(dbitem.price)
+                print(item['quantity'])
 
-            itemtotal = int(dbitem.price) * int(item['quantity'])
-            total += itemtotal
-            anitem = {
-                "name": dbitem.name,
-                "unit_amount": {
-                    "currency": "AUD",
-                    "value": str(dbitem.price),
-                },
-                "quantity": str(item['quantity']),
-                "category": "PHYSICAL_GOODS"
-            }
-            items.append(anitem)
+                itemtotal = int(dbitem.price) * int(item['quantity'])
+                total += itemtotal
+                anitem = {
+                    "name": dbitem.name,
+                    "unit_amount": {
+                        "currency_code": "AUD",
+                        "value": str(dbitem.price),
+                    },
+                    "quantity": str(item['quantity']),
+                    "category": "PHYSICAL_GOODS"
+                }
+                items.append(anitem)
+            else:
+                shipping = str(item['price_int'])
+                shipmethod = item['name']
         
         data = {
             "intent": "CAPTURE",
@@ -125,27 +129,27 @@ class PayPalClient:
                 "custom_id": "KPAFashions",
                 "soft_descriptor": "Fashions",
                 "amount": {
-                    "currency": "AUD",
+                    "currency_code": "AUD",
                     "value": str(total + 14),
                     "breakdown": {
                         "item_total": {
-                            "currency": "AUD",
+                            "currency_code": "AUD",
                             "value": str(total)
                         },
                         "shipping": {
-                            "currency": "AUD",
+                            "currency_code": "AUD",
                             "value": str(shipping)
                         },
                         "handling": {
-                            "currency": "AUD",
+                            "currency_code": "AUD",
                             "value": str(handling)
                         },
                         "total_tax": {
-                            "currency": "AUD",
+                            "currency_code": "AUD",
                             "value": str(tax)
                         },
                         "shipping-discount": {
-                            "currency": "AUD",
+                            "currency_code": "AUD",
                             "value": str(discount)
                         }
                     }

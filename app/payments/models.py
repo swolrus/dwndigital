@@ -24,7 +24,9 @@ class PurchasedItem(db.EmbeddedDocument):
             'ref': self.item.pk,
             'name': self.item.name,
             'quantity': self.quantity,
+            'price_int': self.item.price,
             'price': '$' + str(self.item.price) + ' AUD',
+            'total_int': int(self.item.price * self.quantity),
             'total': '$' + str(self.item.price * self.quantity) + ' AUD',
             'sizes': self.sizes
         }

@@ -32,10 +32,16 @@
           <i class="fas fa-sm fa-plus"></i>
         </button>
       </div>
-      <div class="inputsize form-item">
-        <label for="sizes"><i class="fas fa-tshirt"></i> Sizes/Styles</label>
 
-        <input id="sizes" name="sizes" placeholder="Please list for each item..." required type="text" value="">
+      <div class="inputsize form-item">
+        <label for="sizes"><i class="fas fa-tshirt"></i> Order Notes</label>
+        {% if item.pk == 'LSHCR' %}
+          <input id="sizes" name="sizes" placeholder="Enter desired sizes from XS to XXL..." required type="text" value="">
+        {% elif item.pk == 'EYE' %}
+        <input id="sizes" name="sizes" placeholder="Style choice brown-fisherman/cream-tall..." required type="text" value="">
+        {% else %}
+        <input id="sizes" name="sizes" placeholder="Order Notes..." required type="text" value="">
+        {% endif %}
 
       </div>
       <div class="totalprice"><h5>TOTAL: <b>${{item.price}} AUD</b></h5></div>

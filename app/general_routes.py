@@ -36,34 +36,30 @@ def add(ref):
 
     session.modified = True
     if quantity and sizes and request.method == 'POST':
-
+        item = PurchasedItem(item=Item.objects().get_or_404(pk=ref), quantity=quantity, sizes=sizes).to_dict()
         if 'items' in session:
             for i in session['items']:
-                if i.ref == ref:
-                    item = Item.objects().get_or_404(pk=ref)
-                    i.quantity += quantity
-                    i.total += quantity * item.price
-                    i.sizes = item.sizes + ' ' + sizes
+                if i['ref'] == ref:
+                    i['quantity'] += quantity
+                    i['total'] += quantity * item.price
+                    i['sizes'] = item.sizes + ' ' + sizes
+                    flash('Successfully added ' + str(quantity) + ' to cart!')
                     return redirect(url_for('drops'))
-
         else:
-            print('added list')
             session['items'] = []
-        
-        item = PurchasedItem(item=Item.objects().get_or_404(pk=ref), quantity=quantity, sizes=sizes).to_dict()
         session['items'].append(item)
-        print(session['items'][0])
-        
-        return redirect(url_for('drops'))
-    else:
-        return redirect(url_for('drops'))
+        flash('Successfully added ' + str(quantity) + ' to cart!')
+
+    return redirect(url_for('drops'))
 
 @app.route('/delete/<string:ref>')
 def delete():
     if items in session:
-        for purchasedItem in session['items']:
-            if purchasedItem.item.ref == ref:
-                del item
+        for i in session['items']:
+            if i['ref'] == ref:
+                del i
+                flash('Item successfully deleted')
+                return redirect(url_for('drops'))
 
 @app.route('/empty')
 def empty():
@@ -86,11 +82,7 @@ def checkout():
         'state': form.state.data,
         'city': form.city.data,
         'postcode': str(form.postcode.data),
-        'items': [{
-            'id': 'LSHCR',
-            'quantity': form.quantity.data,
-            'sizes': form.sizes.data
-        }]
+        'items': []
     }
     if form.validate_on_submit():
         name = data['firstname']
@@ -107,14 +99,15 @@ def checkout():
         
         t = Transaction(status='pending', buyer=buyer)
         
-        for i in data['items']:
-            if not Item.objects().get(pk=i['id']):
-                return errors.bad_request('Request contains invalid items (ಠ¿ಠ)')
-            item = PurchasedItem(item=i['id'], quantity=i['quantity'], sizes=i['sizes'])
+        for i in session['items']:
+            print(i)
+            item = PurchasedItem(item=Item.objects().get_or_404(pk=i['ref']).ref, quantity=i['quantity'], sizes=i['sizes'])
             t.items.append(item)
+            data['items'].append(item.to_dict())
 
         item = PurchasedItem(item='shipping', quantity=1, sizes='')
         t.items.append(item)
+        data['items'].append(item.to_dict())
 
         data = paypal.build_request(data)
         result = paypal.create_order(data)
