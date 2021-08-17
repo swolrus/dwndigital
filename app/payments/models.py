@@ -19,8 +19,9 @@ class PurchasedItem(db.EmbeddedDocument):
     sizes = db.StringField()
 
     def to_dict(self):
-        item = Item.objects.get(pk=self.item.id)
+        item = Item.objects.get(pk=self.item.pk)
         data = {
+            'ref': self.item.pk,
             'name': self.item.name,
             'quantity': self.quantity,
             'price': '$' + str(self.item.price) + ' AUD',

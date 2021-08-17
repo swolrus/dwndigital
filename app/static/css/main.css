@@ -18,6 +18,10 @@
   margin-bottom: 0;
 }
 
+.hidden {
+  display: none;
+}
+
 body::after {
   position: absolute;
   width: 0;
@@ -284,11 +288,19 @@ input[type=text]:focus, input[type=number]:focus, input[type=password]:focus, se
   background-color: #fbfaf8;
 }
 
+.form-item input[type=checkbox] {
+  display: none;
+}
+
 input[type=checkbox] + label.on {
   display: block;
   margin: 0.2em;
   cursor: pointer;
   padding: 0.2em;
+}
+
+input[type=checkbox] + label.on:active:before {
+  transform: scale(0);
 }
 
 input[type=checkbox] + label.on:before {
@@ -307,20 +319,16 @@ input[type=checkbox] + label.on:before {
   transition: 0.2s;
 }
 
-input[type=checkbox] + label.on:active:before {
-  transform: scale(0);
+input[type=checkbox]:checked:disabled + label.on:before {
+  transform: scale(1);
+  background-color: rgba(0, 0, 0, 0.3);
+  border-color: rgba(0, 0, 0, 0.1);
 }
 
 input[type=checkbox]:checked + label.on:before {
   background-color: #d88b17;
   border-color: #d88b17;
   color: #fff;
-}
-
-input[type=checkbox]:checked:disabled + label.on:before {
-  transform: scale(1);
-  background-color: rgba(0, 0, 0, 0.3);
-  border-color: rgba(0, 0, 0, 0.1);
 }
 
 button, .button, input[type=button], input[type=submit] {
@@ -383,7 +391,7 @@ button:hover, button:focus, .button:hover, .button:focus, input[type=button]:hov
 
 .quantity {
   display: block;
-  width: 8rem;
+  width: 100%;
 }
 .quantity input {
   display: inline-block;
@@ -393,6 +401,9 @@ button:hover, button:focus, .button:hover, .button:focus, input[type=button]:hov
   text-align: center;
   width: 2rem;
   font-size: 16px;
+}
+.quantity label i, .quantity label p {
+  display: inline-block;
 }
 .quantity button {
   display: inline-block;
@@ -711,6 +722,69 @@ button.carousel__indicator.current-slide :hover, button.carousel__indicator.curr
   .carousel {
     height: 400px;
     width: 95%;
+  }
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+  padding: 20px;
+  margin: 0;
+  background: #f4f4f4;
+  border-radius: 0.2rem;
+  border: 0.1rem solid #cccccc;
+  width: 40%;
+  position: relative;
+  transition: all 1s ease-in-out;
+  z-index: 2010;
+}
+
+.popup h3 {
+  margin-top: 0;
+  padding-right: 2rem;
+}
+
+.popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #917e63;
+}
+
+.popup .close:hover {
+  color: #d88b17;
+}
+
+.popup .content {
+  max-height: 30%;
+  overflow: auto;
+}
+
+@media screen and (max-width: 700px) {
+  .popup {
+    width: 70%;
   }
 }
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */

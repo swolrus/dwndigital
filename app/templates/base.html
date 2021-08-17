@@ -26,6 +26,11 @@
         <li>
           <a href="{{ url_for('gallery') }}">GALLERY</a>
         </li>
+        {% if 'items' in session %}
+        <li>
+          <a href="{{ url_for('checkout') }}">CHECKOUT ({{ session['items']|length }})</a>
+        </li>
+        {% endif %}
       </ul>
     </nav>
     <div class="wrapper">

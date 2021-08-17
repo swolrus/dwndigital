@@ -4,17 +4,112 @@
 {% for item in items if item.active %}
 <article>
   <div class="side">
-    <img id="{{item.pk}}" src="{{ url_for('static', filename=item.img) }}">
+    <img src="{{ url_for('static', filename=item.img) }}">
   </div>
   <section class="item">
     <h3>{{ item.name }}</h3>
     {{ item.description|safe }}
     <h4>${{ item.price }} AUD</h4>
     <p><small style="margin-right: 3rem;">(Checkout is per-item type, as is shipping)</small></p>
-    <a href="{{ url_for('buy', ref=item.pk) }}" class="action"></a>
+    <a href="#deetpopup{{item.pk}}" class="action"></a>
   </section>
 </article>
+<div id="deetpopup{{item.pk}}" class="overlay">
+  <div class="popup">
+    <a class="close" href="#">&times;</a>
+    <form action="/add/{{item.pk}}" method="POST" enctype="multipart/form-data">
+      <h3>{{ item.name }} <small><span>($</span><span class="price">{{ item.price }}</span><span>ea)</span></small></h3>
+      <div class="quantity form-item">
+        <label for="quantity"><i class="fas fa-times"></i> Quantity</label>
+        <br>
+        <button onclick="" class="minus-btn" type="button" name="button">
+          <i class="fas fa-sm fa-minus"></i>
+        </button>
+
+        <input id="quantity" name="quantity" placeholder="" required type="text" value="1">
+
+        <button class="plus-btn" type="button" name="button">
+          <i class="fas fa-sm fa-plus"></i>
+        </button>
+      </div>
+      <div class="inputsize form-item">
+        <label for="sizes"><i class="fas fa-tshirt"></i> Sizes/Styles</label>
+
+        <input id="sizes" name="sizes" placeholder="Please list for each item..." required type="text" value="">
+
+      </div>
+      <div class="totalprice"><h5>TOTAL: <b>${{item.price}} AUD</b></h5></div>
+      <div class="form-submit">
+
+        <input id="submit" name="submit" type="submit" value="Add to Cart">
+        
+      </div>
+    </form>
+  </div>
+</div>
 {% endfor %}
 {% endblock %}
 {% block script %}
+<script type="text/javascript">
+    var total;
+    function updateprices(o) {
+      o.querySelector('.totalprice').innerHTML = 
+        '<h5>TOTAL:<b> ' + 
+        '$' + total + ' AUD' +
+        '</b></h5>';
+    }
+    function minus(e) {
+      e = e || window.event;
+      e.preventDefault();
+      var f = e.target.closest('form');
+      var price = parseInt(f.querySelector('.price').innerHTML);
+
+      var input = f.querySelector('input');
+      let value = parseInt(input.value);
+
+      if (value > 2) {
+        value = value - 1;
+      } else {
+        value = 1;
+      }
+  
+      input.value = value;
+
+      total = parseInt(f.querySelector('.price').innerHTML * value);
+
+      updateprices(f);
+    }
+
+    function plus(e) {
+      e.preventDefault();
+      let f = e.target.closest('form');
+      let input = f.querySelector('input');
+      let value = parseInt(input.value);
+
+      if (value < 10) {
+        value = value + 1;
+      } else {
+        value = 5;
+      }
+  
+      input.value = value;
+    
+      total = parseInt(f.querySelector('.price').innerHTML * value);
+
+      updateprices(f);
+    }
+    var minusList = document.querySelectorAll('.minus-btn')
+    var plusList = document.querySelectorAll('.plus-btn')
+    minusList.forEach(
+      function(n) {
+       n.addEventListener("click", minus.bind(event));
+      }
+    );
+    plusList.forEach(
+      function(n) {
+       n.addEventListener("click", plus.bind(event));
+      }
+    );
+    
+  </script>
 {% endblock %}

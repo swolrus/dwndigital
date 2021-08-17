@@ -1,5 +1,5 @@
 from flask import current_app as app
-from flask import Flask, Blueprint, render_template, request, url_for, flash, redirect
+from flask import Flask, Blueprint, session, render_template, request, url_for, flash, redirect
 from app.payments.models import Item
 import json
 from app.payments import errors
@@ -28,8 +28,54 @@ def drops():
     items = Item.objects()
     return render_template('items.html', title='A/W 2021 Lush Collection', subtitle='Shipping late September in a once off preorder ending 27/08/2021 12:00PM', items=items)
 
-@app.route('/buy/<ref>', methods=['GET', 'POST'])
-def buy(ref):
+@app.route('/add/<string:ref>', methods=['POST'])
+def add(ref):
+    # validate the received values
+    quantity = int(request.form['quantity'])
+    sizes = request.form['sizes']
+
+    session.modified = True
+    if quantity and sizes and request.method == 'POST':
+
+        if 'items' in session:
+            for i in session['items']:
+                if i.ref == ref:
+                    item = Item.objects().get_or_404(pk=ref)
+                    i.quantity += quantity
+                    i.total += quantity * item.price
+                    i.sizes = item.sizes + ' ' + sizes
+                    return redirect(url_for('drops'))
+
+        else:
+            print('added list')
+            session['items'] = []
+        
+        item = PurchasedItem(item=Item.objects().get_or_404(pk=ref), quantity=quantity, sizes=sizes).to_dict()
+        session['items'].append(item)
+        print(session['items'][0])
+        
+        return redirect(url_for('drops'))
+    else:
+        return redirect(url_for('drops'))
+
+@app.route('/delete/<string:ref>')
+def delete():
+    if items in session:
+        for purchasedItem in session['items']:
+            if purchasedItem.item.ref == ref:
+                del item
+
+@app.route('/empty')
+def empty():
+    try:
+        session.clear()
+        flash('Cart emptied! Hope you just changed your mind x')
+        return redirect(url_for('drops'))
+    except Exception as e:
+        print(e)
+
+@app.route('/checkout', methods=['GET', 'POST'])
+def checkout():
     form = BuyForm()
     data = {
         'firstname': form.firstname.data,
@@ -41,7 +87,7 @@ def buy(ref):
         'city': form.city.data,
         'postcode': str(form.postcode.data),
         'items': [{
-            'id': ref,
+            'id': 'LSHCR',
             'quantity': form.quantity.data,
             'sizes': form.sizes.data
         }]
@@ -80,14 +126,13 @@ def buy(ref):
         t.save()
 
         flash('This transaction is available to confirm for 15 minutes :)')
-        return redirect(url_for('checkout', order_id=t.order_id))
+        return redirect(url_for('payment', order_id=t.order_id))
 
-    item = Item.objects().get_or_404(pk=ref)
-    return render_template('details.html', title='Buyer Information', form=form, item=item)
+    return render_template('details.html', title='Buyer Information', form=form)
 
 
-@app.route('/checkout/<order_id>', methods=['GET'])
-def checkout(order_id):
+@app.route('/payment/<string:order_id>', methods=['GET'])
+def payment(order_id):
     t = Transaction.objects().get_or_404(pk=order_id)
     
     return render_template(
