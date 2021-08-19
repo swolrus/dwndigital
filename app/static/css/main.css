@@ -28,7 +28,7 @@ body::after {
   height: 0;
   overflow: hidden;
   z-index: -1;
-  content: url(../img/buy-now-orange.svg) url(../img/buy-now.svg) url(../img/items/lush.png);
+  content: url(../img/cart-orange.svg) url(../img/cart-brown.svg) url(../img/items/lush.png);
 }
 
 *, *::before, *::after {
@@ -146,13 +146,13 @@ section {
   height: 3rem;
   padding: 0;
   text-decoration: none;
-  background-image: url(../img/buy-now-orange.svg);
+  background-image: url(../img/cart-orange.svg);
   background-position: right 0 bottom 0;
   background-size: contain;
   background-repeat: no-repeat;
 }
 .item a.action:hover, .item a.action:focus {
-  background-image: url(../img/buy-now.svg);
+  background-image: url(../img/cart-brown.svg);
 }
 
 .error {
@@ -251,7 +251,7 @@ a {
   position: relative;
 }
 a:hover, a:focus {
-  color: #917e63;
+  color: #917e63 !important;
 }
 
 #paypal-button {

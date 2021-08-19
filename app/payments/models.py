@@ -12,6 +12,7 @@ class Item(db.Document):
     img = db.StringField()
     active = db.BooleanField(default=True)
     description = db.StringField()
+    options = db.DictField()
     
 class PurchasedItem(db.EmbeddedDocument):
     item = db.ReferenceField(Item)
@@ -21,7 +22,7 @@ class PurchasedItem(db.EmbeddedDocument):
     def to_dict(self):
         item = Item.objects.get(pk=self.item.pk)
         data = {
-            'ref': self.item.pk,
+            'ref': self.item.pk, 
             'name': self.item.name,
             'quantity': self.quantity,
             'price_int': self.item.price,
@@ -54,6 +55,7 @@ class Transaction(TimestampMixin, db.Document):
     response = db.StringField()
     buyer = db.ReferenceField(Buyer, required=True)
     items = db.EmbeddedDocumentListField(PurchasedItem)
+    needs_shipping = db.BooleanField()
 
     def get_total(self):
         total = 0

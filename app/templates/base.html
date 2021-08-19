@@ -26,16 +26,12 @@
         <li>
           <a href="{{ url_for('gallery') }}">GALLERY</a>
         </li>
-        {% if 'items' in session %}
+        {% if 'items' in session and session['items']|length > 0 %}
         <li>
           <a href="{{ url_for('empty') }}">EMPTY CART</a>
         </li>
         <li>
-          {% set grand_quantity = namespace(value=0) %}
-          {% for item in session['items'] %}
-            {% set grand_quantity.value = (grand_quantity.value + item.quantity) %}
-          {% endfor %}
-          <a href="{{ url_for('checkout') }}">CHECKOUT ({{ grand_quantity.value }})</a>
+          <a href="{{ url_for('checkout') }}">CHECKOUT ({{ session['items']|length }})</a>
         </li>
         {% endif %}
       </ul>

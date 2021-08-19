@@ -32,38 +32,37 @@ def drops():
 def add(ref):
     # validate the received values
     quantity = int(request.form['quantity'])
-    sizes = request.form['sizes']
+    sizes = request.form['options']
 
     session.modified = True
     if quantity and sizes and request.method == 'POST':
         item = PurchasedItem(item=Item.objects().get_or_404(pk=ref), quantity=quantity, sizes=sizes).to_dict()
         if 'items' in session:
             for i in session['items']:
-                if i['ref'] == ref:
+                if i['ref'] == ref and i['sizes'] == sizes:
                     i['quantity'] += quantity
                     i['total'] += quantity * item.price
-                    i['sizes'] = item.sizes + ' ' + sizes
                     flash('Successfully added ' + str(quantity) + ' to cart!')
                     return redirect(url_for('drops'))
         else:
             session['items'] = []
+
         session['items'].append(item)
         flash('Successfully added ' + str(quantity) + ' to cart!')
 
     return redirect(url_for('drops'))
 
-@app.route('/delete/<string:ref>')
-def delete():
-    if items in session:
-        for i in session['items']:
-            if i['ref'] == ref:
-                del i
-                flash('Item successfully deleted')
-                return redirect(url_for('drops'))
+@app.route('/delete/<string:ref>/<string:sizes>')
+def delete(ref, sizes):
+    if 'items' in session:
+        session['items'] = [i for i in session['items'] if not (ref == i['ref'] and sizes == i['sizes'])]
+
+    return redirect(url_for('checkout'))
 
 @app.route('/empty')
 def empty():
     try:
+        print(session['items'])
         session.clear()
         flash('Cart emptied! Hope you just changed your mind x')
         return redirect(url_for('drops'))
@@ -82,6 +81,7 @@ def checkout():
         'state': form.state.data,
         'city': form.city.data,
         'postcode': str(form.postcode.data),
+        'pickup': form.pickup.data,
         'items': []
     }
     if form.validate_on_submit():
@@ -92,6 +92,7 @@ def checkout():
         city = data['city']
         state = data['state']
         postcode = data['postcode']
+        pickup = data['pickup']
         
         buyer = Buyer.objects(email=data['email']).first()
         if not buyer:
@@ -105,9 +106,14 @@ def checkout():
             t.items.append(item)
             data['items'].append(item.to_dict())
 
-        item = PurchasedItem(item='shipping', quantity=1, sizes='')
-        t.items.append(item)
-        data['items'].append(item.to_dict())
+        if not len(data['items']) > 0:
+          flash('Please add items to cart first :)')
+          return(redirect(url_for('drops')))
+
+        if not pickup:
+          item = PurchasedItem(item='shipping', quantity=1, sizes='')
+          t.items.append(item)
+          data['items'].append(item.to_dict())
 
         data = paypal.build_request(data)
         result = paypal.create_order(data)
@@ -121,7 +127,7 @@ def checkout():
         flash('This transaction is available to confirm for 15 minutes :)')
         return redirect(url_for('payment', order_id=t.order_id))
 
-    return render_template('details.html', title='Buyer Information', form=form)
+    return render_template('checkout.html', title='Buyer Information', form=form)
 
 
 @app.route('/payment/<string:order_id>', methods=['GET'])
@@ -129,18 +135,19 @@ def payment(order_id):
     t = Transaction.objects().get_or_404(pk=order_id)
     
     return render_template(
-        'checkout.html', 
+        'order.html', 
         title='Last step before your new cop!', 
         transaction=t.to_dict(include_email=True), 
         order_id=order_id)
 
-@app.route('/reciept/<order_id>/', methods=['GET'])
+
+@app.route('/reciept/<string:order_id>/', methods=['GET'])
 def approved(order_id):
     t = Transaction.objects().get_or_404(pk=order_id)
     status = paypal.get_status(order_id)
 
     if t.invoice_id != 0:
-        return render_template('checkout.html', title='Order Status', transaction=t.to_dict(include_email=True))
+        return render_template('order.html', title='Order Status', transaction=t.to_dict(include_email=True))
 
     i = Invoice.objects().first()
     invoice = i.invoice

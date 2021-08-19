@@ -10,7 +10,6 @@
     <h3>{{ item.name }}</h3>
     {{ item.description|safe }}
     <h4>${{ item.price }} AUD</h4>
-    <p><small style="margin-right: 3rem;">(Checkout is per-item type, as is shipping)</small></p>
     <a href="#deetpopup{{item.pk}}" class="action"></a>
   </section>
 </article>
@@ -26,7 +25,7 @@
           <i class="fas fa-sm fa-minus"></i>
         </button>
 
-        <input id="quantity" name="quantity" placeholder="" required type="text" value="1">
+        <input name="quantity" placeholder="" required type="text" value="1">
 
         <button class="plus-btn" type="button" name="button">
           <i class="fas fa-sm fa-plus"></i>
@@ -34,20 +33,19 @@
       </div>
 
       <div class="inputsize form-item">
-        <label for="sizes"><i class="fas fa-tshirt"></i> Order Notes</label>
-        {% if item.pk == 'LSHCR' %}
-          <input id="sizes" name="sizes" placeholder="Enter desired sizes from XS to XXL..." required type="text" value="">
-        {% elif item.pk == 'EYE' %}
-        <input id="sizes" name="sizes" placeholder="Style choice brown-fisherman/cream-tall..." required type="text" value="">
-        {% else %}
-        <input id="sizes" name="sizes" placeholder="Order Notes..." required type="text" value="">
-        {% endif %}
+        <label for="sizes"><i class="fas fa-tshirt"></i> Order Options</label>
+
+        <select name="options" placeholder="" required type="text" value="">
+          {% for option in item.options %}
+            <option value="{{ option }}">{{ option }}</option>
+          {% endfor %}
+        </select>
 
       </div>
       <div class="totalprice"><h5>TOTAL: <b>${{item.price}} AUD</b></h5></div>
       <div class="form-submit">
 
-        <input id="submit" name="submit" type="submit" value="Add to Cart">
+        <input name="submit" type="submit" value="Add to Cart">
         
       </div>
     </form>

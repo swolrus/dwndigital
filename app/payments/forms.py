@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, IntegerField
+from wtforms import StringField, SubmitField, IntegerField, BooleanField
 from wtforms import validators as v
 
 class BuyForm(FlaskForm):
@@ -31,4 +31,5 @@ class BuyForm(FlaskForm):
     postcode = IntegerField('Postcode', validators=[
         v.DataRequired(message=None),
     ])
+    pickup = BooleanField('Don\'t ship? (check you are picking up)')
     submit = SubmitField('To Payment')
