@@ -729,6 +729,11 @@ button.carousel__indicator.current-slide :hover, button.carousel__indicator.curr
     width: 95%;
   }
 }
+@media only screen and (max-width: 480px) {
+  .carousel {
+    height: 200px;
+  }
+}
 .overlay {
   position: fixed;
   top: 0;
