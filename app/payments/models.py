@@ -10,6 +10,7 @@ class Item(db.Document):
     name = db.StringField(required=True)
     price = db.IntField(required=True)
     img = db.StringField()
+    carousel_imgs = db.DictField()
     active = db.BooleanField(default=True)
     description = db.StringField()
     options = db.DictField()

@@ -1,7 +1,7 @@
 {% extends the_template %}
 {% block title %}PREORDER{% endblock %}
 {% block content %}
-<section class="carousel">
+<section class="carousel carousel--gallery">
   <button class="carousel__button carousel__button--left is-hidden">
     {%- include "chevron-left.svg" -%}
   </button>
@@ -42,5 +42,5 @@
 </section>
 {% endblock %}
 {% block script %}
-<script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/carousel.js') }}"></script>
 {% endblock %}

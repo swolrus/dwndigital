@@ -2,7 +2,7 @@
 {% block title %}PREORDER{% endblock %}
 {% block content %}
 <article>
-  <h2 >Pre-Order ends in <span id="countdown"></span> (27/08)</h2>
+  <h2 >Pre-Order ends in:<big style="padding:0 0.75rem;"><span id="countdown"></span></big>(27/08)</h2>
 </article>
 {% for item in items if item.active %}
 <article>
@@ -18,9 +18,36 @@
 </article>
 <div id="deetpopup{{item.pk}}" class="overlay">
   <div class="popup">
+
     <a class="close" href="#">&times;</a>
+
+    <h3>{{ item.name }} <small><span>($</span><span class="price">{{ item.price }}</span><span>ea)</span></small></h3>
+
+    <section class="carousel">
+      <button class="carousel__button carousel__button--left is-hidden">
+        {%- include "chevron-left.svg" -%}
+      </button>
+      <div class="carousel__track-container">
+        <ul class="carousel__track">
+          {% for image in item.carousel_imgs %}
+            <li class="carousel__slide{{ ' current-slide' if loop.index == 1 }}">
+               <img class="carousel__image" src="{{ url_for('static', filename=image) }}" alt="" />
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <button class="carousel__button carousel__button--right">
+        {%- include "chevron-right.svg" -%}
+      </button>
+
+      <div class="carousel__nav">
+        {% for image in item.carousel_imgs %}
+        <button class="carousel__indicator{{ ' current-slide' if loop.index == 1 }}"></button>
+        {% endfor %}
+      </div>
+    </section>
+
     <form action="/add/{{item.pk}}" method="POST" enctype="multipart/form-data">
-      <h3>{{ item.name }} <small><span>($</span><span class="price">{{ item.price }}</span><span>ea)</span></small></h3>
       <div class="quantity form-item">
         <label for="quantity"><i class="fas fa-times"></i> Quantity</label>
         <br>
@@ -57,97 +84,103 @@
 {% endfor %}
 {% endblock %}
 {% block script %}
+<script type="text/javascript" src="{{ url_for('static', filename='js/carousel.js') }}"></script>
 <script type="text/javascript">
-    var end = new Date('08/27/2021 12:00 PM');
+  var end = new Date('08/27/2021 12:00 PM');
 
-    var _second = 1000;
-    var _minute = _second * 60;
-    var _hour = _minute * 60;
-    var _day = _hour * 24;
-    var timer;
+  var _second = 1000;
+  var _minute = _second * 60;
+  var _hour = _minute * 60;
+  var _day = _hour * 24;
+  var timer;
+  var timer_span = document.getElementById('countdown')
 
-    function showRemaining() {
-        var now = new Date();
-        var distance = end - now;
-        if (distance < 0) {
+  // 
+  function showRemaining() {
+    var now = new Date();
+    var distance = end - now;
+    if (distance < 0) {
 
-            clearInterval(timer);
-            document.getElementById('countdown').innerHTML = 'EXPIRED!';
+      clearInterval(timer);
+      timer_span.innerHTML = 'EXPIRED!';
 
-            return;
-        }
-        var days = Math.floor(distance / _day);
-        var hours = Math.floor((distance % _day) / _hour);
-        var minutes = Math.floor((distance % _hour) / _minute);
-        var seconds = Math.floor((distance % _minute) / _second);
+      return;
+    }
+    var days = Math.floor(distance / _day);
+    var hours = Math.floor((distance % _day) / _hour);
+    var minutes = Math.floor((distance % _hour) / _minute);
+    var seconds = Math.floor((distance % _minute) / _second);
 
-        document.getElementById('countdown').innerHTML = days + 'd ';
-        document.getElementById('countdown').innerHTML += hours + 'h ';
-        document.getElementById('countdown').innerHTML += minutes + 'm ';
-        document.getElementById('countdown').innerHTML += seconds + 's';
+    timer_span.innerHTML = days + 'd ';
+    timer_span.innerHTML += hours + 'h ';
+    timer_span.innerHTML += minutes + 'm ';
+    timer_span.innerHTML += seconds + 's';
+  }
+
+  // loop timer every 1000 ms
+  timer = setInterval(showRemaining, 1000);
+
+  var total;
+  function updateprices(o) {
+    o.querySelector('.totalprice').innerHTML = 
+      '<h5>TOTAL:<b> ' + 
+      '$' + total + ' AUD' +
+      '</b></h5>';
+  }
+
+  function minus(e) {
+    e = e || window.event;
+    e.preventDefault();
+    var f = e.target.closest('form');
+    var price = parseInt(f.querySelector('.price').innerHTML);
+
+    var input = f.querySelector('input');
+    let value = parseInt(input.value);
+
+    if (value > 2) {
+      value = value - 1;
+    } else {
+      value = 1;
     }
 
-    timer = setInterval(showRemaining, 1000);
+    input.value = value;
 
-    var total;
-    function updateprices(o) {
-      o.querySelector('.totalprice').innerHTML = 
-        '<h5>TOTAL:<b> ' + 
-        '$' + total + ' AUD' +
-        '</b></h5>';
+    total = parseInt(f.querySelector('.price').innerHTML * value);
+
+    updateprices(f);
+  }
+
+  function plus(e) {
+    e.preventDefault();
+    let f = e.target.closest('form');
+    let input = f.querySelector('input');
+    let value = parseInt(input.value);
+
+    if (value < 10) {
+      value = value + 1;
+    } else {
+      value = 5;
     }
-    function minus(e) {
-      e = e || window.event;
-      e.preventDefault();
-      var f = e.target.closest('form');
-      var price = parseInt(f.querySelector('.price').innerHTML);
 
-      var input = f.querySelector('input');
-      let value = parseInt(input.value);
-
-      if (value > 2) {
-        value = value - 1;
-      } else {
-        value = 1;
-      }
+    input.value = value;
   
-      input.value = value;
+    total = parseInt(f.querySelector('.price').innerHTML * value);
 
-      total = parseInt(f.querySelector('.price').innerHTML * value);
+    updateprices(f);
+  }
 
-      updateprices(f);
+  var minusList = document.querySelectorAll('.minus-btn')
+  var plusList = document.querySelectorAll('.plus-btn')
+  minusList.forEach(
+    function(n) {
+     n.addEventListener("click", minus.bind(event));
     }
-
-    function plus(e) {
-      e.preventDefault();
-      let f = e.target.closest('form');
-      let input = f.querySelector('input');
-      let value = parseInt(input.value);
-
-      if (value < 10) {
-        value = value + 1;
-      } else {
-        value = 5;
-      }
-  
-      input.value = value;
-    
-      total = parseInt(f.querySelector('.price').innerHTML * value);
-
-      updateprices(f);
+  );
+  plusList.forEach(
+    function(n) {
+     n.addEventListener("click", plus.bind(event));
     }
-    var minusList = document.querySelectorAll('.minus-btn')
-    var plusList = document.querySelectorAll('.plus-btn')
-    minusList.forEach(
-      function(n) {
-       n.addEventListener("click", minus.bind(event));
-      }
-    );
-    plusList.forEach(
-      function(n) {
-       n.addEventListener("click", plus.bind(event));
-      }
-    );
+  );
     
-  </script>
+</script>
 {% endblock %}

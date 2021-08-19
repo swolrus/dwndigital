@@ -616,9 +616,14 @@ nav .disabled {
 }
 .carousel {
   position: relative;
+  height: 300px;
+  width: 95%;
+  margin: auto;
+}
+
+.carousel--gallery {
   height: 700px;
   width: 80%;
-  margin: auto;
 }
 
 .carousel__image {
@@ -674,11 +679,11 @@ button.carousel__button :hover, button.carousel__button :focus {
 }
 
 .carousel__button--left {
-  left: -2rem;
+  left: -1.5rem;
 }
 
 .carousel__button--right {
-  right: -2rem;
+  right: -1.5rem;
 }
 
 .carousel__nav {
@@ -719,7 +724,7 @@ button.carousel__indicator.current-slide :hover, button.carousel__indicator.curr
 }
 
 @media only screen and (max-width: 900px) {
-  .carousel {
+  .carousel--gallery {
     height: 400px;
     width: 95%;
   }
@@ -764,10 +769,10 @@ button.carousel__indicator.current-slide :hover, button.carousel__indicator.curr
 
 .popup .close {
   position: absolute;
-  top: 20px;
-  right: 30px;
+  top: 0.5rem;
+  right: 1.5rem;
   transition: all 200ms;
-  font-size: 30px;
+  font-size: 2rem;
   font-weight: bold;
   text-decoration: none;
   color: #917e63;
