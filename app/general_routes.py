@@ -84,6 +84,7 @@ def checkout():
         'pickup': form.pickup.data,
         'items': []
     }
+
     if form.validate_on_submit():
         name = data['firstname']
         lastname = data['lastname']
@@ -93,6 +94,7 @@ def checkout():
         state = data['state']
         postcode = data['postcode']
         pickup = data['pickup']
+
         
         buyer = Buyer.objects(email=data['email']).first()
         if not buyer:
@@ -112,8 +114,11 @@ def checkout():
 
         if not pickup:
           item = PurchasedItem(item='shipping', quantity=1, sizes='')
-          t.items.append(item)
-          data['items'].append(item.to_dict())
+        else:
+          item = PurchasedItem(item='handling', quantity=1, sizes='')
+
+        t.items.append(item)
+        data['items'].append(item.to_dict())
 
         data = paypal.build_request(data)
         result = paypal.create_order(data)
