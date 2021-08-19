@@ -1,6 +1,9 @@
 {% extends the_template %}
 {% block title %}PREORDER{% endblock %}
 {% block content %}
+<article>
+  <h2 >Pre-Order ends in <span id="countdown">0d 0h 0m 0s (27/08)</span></h2>
+</article>
 {% for item in items if item.active %}
 <article>
   <div class="side">
@@ -55,6 +58,37 @@
 {% endblock %}
 {% block script %}
 <script type="text/javascript">
+    var end = new Date('08/27/2021 12:00 PM');
+
+    var _second = 1000;
+    var _minute = _second * 60;
+    var _hour = _minute * 60;
+    var _day = _hour * 24;
+    var timer;
+
+    function showRemaining() {
+        var now = new Date();
+        var distance = end - now;
+        if (distance < 0) {
+
+            clearInterval(timer);
+            document.getElementById('countdown').innerHTML = 'EXPIRED!';
+
+            return;
+        }
+        var days = Math.floor(distance / _day);
+        var hours = Math.floor((distance % _day) / _hour);
+        var minutes = Math.floor((distance % _hour) / _minute);
+        var seconds = Math.floor((distance % _minute) / _second);
+
+        document.getElementById('countdown').innerHTML = days + 'd ';
+        document.getElementById('countdown').innerHTML += hours + 'h ';
+        document.getElementById('countdown').innerHTML += minutes + 'm ';
+        document.getElementById('countdown').innerHTML += seconds + 's';
+    }
+
+    timer = setInterval(showRemaining, 1000);
+
     var total;
     function updateprices(o) {
       o.querySelector('.totalprice').innerHTML = 

@@ -26,7 +26,7 @@ def gallery():
 @app.route('/drops')
 def drops():
     items = Item.objects()
-    return render_template('items.html', title='A/W 2021 Lush Collection', subtitle='Shipping late September in a once off preorder ending 27/08/2021 12:00PM', items=items)
+    return render_template('items.html', title='A/W 2021 Lush Collection', items=items)
 
 @app.route('/add/<string:ref>', methods=['POST'])
 def add(ref):
