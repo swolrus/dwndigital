@@ -1,0 +1,59 @@
+{% extends the_template %}
+{% block title %}PREORDER ITEMS{% endblock %}
+{% block content %}
+<article>
+  <h2 >Pre-Order Ended 27/08</h2>
+  <h3>We are now busy crafting your items, expect a delivery date in your inbox within the coming few weeks!</h3>
+</article>
+<section>
+  <h4>Here's a recap of the products:</h4>
+</section>
+{% for item in items if item.active %}
+<article class="">
+  <aside>
+    <img src="{{ url_for('static', filename=item.img) }}">
+  </div>
+  <section>
+    <h3>{{ item.name }}</h3>
+    {{ item.description|safe }}
+    <h4>${{ item.price }} AUD</h4>
+    <a href="#deetpopup{{item.pk}}" class="action"></a>
+  </section>
+</article>
+<div id="deetpopup{{item.pk}}" class="overlay">
+  <div class="popup">
+
+    <a class="close" href="#">&times;</a>
+
+    <h3>{{ item.name }} <small><span>($</span><span class="price">{{ item.price }}</span><span>ea)</span></small></h3>
+
+    <section class="carousel">
+      <button class="carousel__button carousel__button--left is-hidden">
+        {%- include "chevron-left.svg" -%}
+      </button>
+      <div class="carousel__track-container">
+        <ul class="carousel__track">
+          {% for image in item.carousel_imgs %}
+            <li class="carousel__slide{{ ' current-slide' if loop.index == 1 }}">
+               <img class="carousel__image" src="{{ url_for('static', filename=image) }}" alt="" />
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <button class="carousel__button carousel__button--right">
+        {%- include "chevron-right.svg" -%}
+      </button>
+
+      <div class="carousel__nav">
+        {% for image in item.carousel_imgs %}
+        <button class="carousel__indicator{{ ' current-slide' if loop.index == 1 }}"></button>
+        {% endfor %}
+      </div>
+    </section>
+  </div>
+</div>
+{% endfor %}
+{% endblock %}
+{% block script %}
+<script type="text/javascript" src="{{ url_for('static', filename='js/carousel.js') }}"></script>
+{% endblock %}

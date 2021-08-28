@@ -17,17 +17,21 @@ def inject_dict_for_all_templates():
 
 @app.route('/')
 def home():
-    return render_template('base.html', home=True, title='WELCOME')
+    return render_template('base.html', home=True, title='PREORDER OVER!')
 
 @app.route('/gallery')
 def gallery():
     return render_template('gallery.html', title='GALLERY')
 
-@app.route('/drops')
-def drops():
-    items = Item.objects()
-    return render_template('items.html', title='A/W 2021 Lush Collection', items=items)
+# @app.route('/drops')
+# def drops():
+#     items = Item.objects()
+#     return render_template('items.html', title='A/W 2021 Lush Collection', items=items)
 
+@app.route('/info')
+def info():
+  return render_template("info.html", title='Preorder Information')
+  
 @app.route('/add/<string:ref>', methods=['POST'])
 def add(ref):
     # validate the received values

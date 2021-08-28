@@ -1,3 +1,10 @@
+/* 
+ *  ============================
+ *  ADD CAROUSEL FUNCTIONALITY
+ *  ============================
+*/
+var slideWidth;
+// Function to add listeners for click events to a carousel
 function carouselise(carousel, index) {
   var animationDuration = '500ms';
   var track = carousel.querySelector(".carousel__track");
@@ -100,34 +107,52 @@ function carouselise(carousel, index) {
     moveToSlide(track, currentSlide, targetSlide);
     updateDots(currentDot, targetDot);
     hideShowArrows(prevButton, nextButton, targetIndex);
-  })
-
-  window.addEventListener('resize', e => {
-    var carousels = document.querySelectorAll('.carousel');
-  
-    carousels.forEach(function(carousel) {
-      var track = carousel.querySelector(".carousel__track");
-      var slides = Array.from(track.children);
-
-      track.style.transition = 'transform 0ms';
-
-      var currentSlide = track.querySelector('.current-slide');
-
-      slideWidth = track.getBoundingClientRect().width;
-      slides.forEach(setSlidePosition);
-      track.style.transform = 'translateX(-' + currentSlide.style.left + ')';
-
-      setTimeout(() => { 
-        track.style.transition = 'transform ' + animationDuration + ' ease-in';
-        console.log(track.style.transition);
-      }, 100);
-    });
-  })
-
+  });
 }
 
+// CREATE CAROUSEL EVENTS
 window.onload = () => {
   var carousels = document.querySelectorAll('.carousel');
   
   carousels.forEach(carouselise);
 }
+
+/* 
+ *  ============================
+ *  ADD WINDOW RESIZE SMOOTHING
+ *  ============================
+*/
+// Var
+var rtime;
+var timeout = false;
+var delta = 200;
+
+// Function
+function resizeend() {
+  if (new Date() - rtime < delta) {
+      setTimeout(resizeend, delta);
+  }
+  else {
+    timeout = false;
+
+    var carousels = document.querySelectorAll('.carousel');
+
+    carousels.forEach(function(carousel) {
+      var track = carousel.querySelector(".carousel__track");
+      var slides = Array.from(track.children);
+      var currentSlide = track.querySelector('.current-slide');
+      slideWidth = track.getBoundingClientRect().width;
+
+      slides.forEach(setSlidePosition);
+    });
+  }
+}
+
+// Listener
+window.addEventListener('resize', e => {
+  rtime = new Date();
+  if (timeout === false) {
+      timeout = true;
+      setTimeout(resizeend, delta);
+  };
+});
