@@ -21,12 +21,12 @@
       </label>
       <ul>
         <li>
-          <a href="{{ url_for('drops') }}">PREORDER</a>
+          <a href="{{ url_for('info') }}">PREORDER INFO</a>
         </li>
         <li>
           <a href="{{ url_for('gallery') }}">GALLERY</a>
         </li>
-        {% if 'items' in session and session['items']|length > 0 %}
+        {# {% if 'items' in session and session['items']|length > 0 %}
         <li>
           <a href="{{ url_for('empty') }}">EMPTY CART</a>
         </li>
@@ -37,7 +37,7 @@
           {% endfor %}
           <a href="{{ url_for('checkout') }}">CHECKOUT ({{ grand_quantity.value }})</a>
         </li>
-        {% endif %}
+        {% endif %} #}
       </ul>
     </nav>
     <div class="wrapper">

@@ -17,7 +17,7 @@ def inject_dict_for_all_templates():
 
 @app.route('/')
 def home():
-    return render_template('base.html', home=True, title='PREORDER OVER!')
+    return render_template('base.html', home=True, title='PREORDER OVER - THANK YOU TO EVERYONE WHO ORDERED :)')
 
 @app.route('/gallery')
 def gallery():
@@ -31,7 +31,7 @@ def gallery():
 @app.route('/info')
 def info():
   return render_template("info.html", title='Preorder Information')
-  
+
 @app.route('/add/<string:ref>', methods=['POST'])
 def add(ref):
     # validate the received values
